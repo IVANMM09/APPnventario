@@ -1,0 +1,13 @@
+<app-header titulo="Datos Fijos"></app-header>
+
+<ion-content>
+
+    <ion-segment mode="md" color="primary" (ionChange)="cambioCategoria( $event )">
+        <ion-segment-button mode="md" *ngFor="let categoria of categorias" [value]="categoria">
+            <ion-label text-capitalize>{{ categoria }}</ion-label>
+        </ion-segment-button>
+
+    </ion-segment>
+    <app-activos-form *ngIf="banderacat === 'captura' "></app-activos-form>
+    <app-activos-data *ngIf="banderacat === 'consulta' "></app-activos-data>
+</ion-content>

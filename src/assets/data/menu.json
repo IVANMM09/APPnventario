@@ -1,0 +1,42 @@
+[{
+        "icon": "person",
+        "name": "Datos Fijos",
+        "redirectTo": "/datos-fijos"
+    },
+    {
+        "icon": "add",
+        "name": "Importar Archivo",
+        "redirectTo": "/importar-archivo"
+    },
+    {
+        "icon": "cube",
+        "name": "Importar Base Auxiliar",
+        "redirectTo": "/"
+    },
+    {
+        "icon": "print",
+        "name": "Imprimir",
+        "redirectTo": "/"
+    },
+    {
+        "icon": "list",
+        "name": "Captura",
+        "redirectTo": "/"
+    },
+    {
+        "icon": "grid",
+        "name": "Captura RFID",
+        "redirectTo": "/"
+    },
+    {
+        "icon": "archive",
+        "name": "Exportar Archivo",
+        "redirectTo": "/"
+    },
+    {
+        "icon": "podium",
+        "name": "Grafica",
+        "redirectTo": "/"
+    }
+
+]

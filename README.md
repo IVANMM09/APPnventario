@@ -1,3 +1,2 @@
-# grinc-localstorage
+# inventary
 
-aplicación ionic de inventario con almacenamiento local

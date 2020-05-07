@@ -1,0 +1,49 @@
+<ion-list>
+    <ion-list-header>
+        <ion-label>
+            <h2>Información de Activos</h2>
+        </ion-label>
+
+    </ion-list-header>
+</ion-list>
+
+
+<form #formulario="ngForm" (ngSubmit)="onSubmitDatosFijos()">
+    <ion-list>
+        <ion-item>
+            <ion-label position="floating">Id Empleado:</ion-label>
+            <ion-input type="text" name="idEmpleado" [(ngModel)]="activo.idEmpleado" required></ion-input>
+        </ion-item>
+
+        <ion-item>
+            <ion-label position="floating">Nombre:</ion-label>
+            <ion-input type="text" name="nombre" [(ngModel)]="activo.nombre" required></ion-input>
+        </ion-item>
+
+        <ion-item>
+            <ion-label position="floating">CC:</ion-label>
+            <ion-input type="text" name="centroCosto" [(ngModel)]="activo.centroCostos" required></ion-input>
+        </ion-item>
+
+        <ion-item>
+            <ion-label position="floating">Area:</ion-label>
+            <ion-input type="text" name="area" [(ngModel)]="activo.area" required></ion-input>
+        </ion-item>
+
+        <ion-item>
+            <ion-label position="floating">Codigo Inmueble:</ion-label>
+            <ion-input type="text" name="codInmueble" [(ngModel)]="activo.codInmueble" required></ion-input>
+        </ion-item>
+
+        <ion-item>
+            <ion-label position="floating">Piso:</ion-label>
+            <ion-input type="text" name="piso" [(ngModel)]="activo.piso" required></ion-input>
+        </ion-item>
+
+        <ion-item>
+            <ion-label position="floating">Usuario:</ion-label>
+            <ion-input type="text" name="usuario" [(ngModel)]="activo.usuario" required></ion-input>
+        </ion-item>
+    </ion-list>
+    <ion-button expand="full" type="submit" [disabled]="formulario.invalid">Guardar Datos</ion-button>
+</form>
