@@ -15,6 +15,10 @@ const routes: Routes = [
     path: 'importar-archivo',
     loadChildren: () => import('./pages/importar-archivo/importar-archivo.module').then( m => m.ImportarArchivoPageModule)
   },
+  {
+    path: 'captura',
+    loadChildren: () => import('./pages/captura/captura.module').then( m => m.CapturaPageModule)
+  },
 ];
 
 @NgModule({

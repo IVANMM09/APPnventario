@@ -1,0 +1,77 @@
+<ion-list>
+  <ion-list-header>
+      <ion-label>
+          <h2>Información de Scan</h2>
+      </ion-label>
+
+  </ion-list-header>
+</ion-list>
+
+
+<form #formulario="ngForm" (ngSubmit)="onSubmitScan()">
+  <ion-list>
+      <ion-item>
+          <ion-label position="floating">NumInv:</ion-label>
+          <!-- <ion-input type="text" name="numInv" [(ngModel)]="activosInfo.numInv"></ion-input> -->
+          <ion-input type="text" name="numInv" value="{{dataLocal.infoScan.numInv}}" [(ngModel)]="concentrado.CODIGO_1"></ion-input>
+          <ion-button slot="end" expand="block" (click)="scan()">Buscar</ion-button>
+      </ion-item>
+
+      <ion-item >
+        <ion-label position="floating">No_SAP:</ion-label>
+        <ion-input type="text" name="noSAP" value="{{dataLocal.infoScan.noSAP}}" [(ngModel)]="concentrado.CODIGO_2"></ion-input>
+      </ion-item>
+      <ion-item>
+        <ion-label position="floating">Descripcion:</ion-label>
+        <ion-input type="text" name="descripcion" value="{{dataLocal.infoScan.descripcion}}" [(ngModel)]="concentrado.DESCRIPCION"></ion-input>
+        <!-- <ion-input type="text" name="descripcion" [(ngModel)]="activosInfo.descripcion"></ion-input> -->
+      </ion-item>
+      <ion-item>
+        <ion-label position="floating">Ubicación Int:</ion-label>
+        <ion-input type="text" name="ubicacionInt" value="{{dataLocal.infoScan.ubicacionInt}}" [(ngModel)]="concentrado.DESCRIPCION"></ion-input>
+        <!-- <ion-input type="text" name="ubicacionInt" [(ngModel)]="activosInfo.ubicacionInt"></ion-input> -->
+      </ion-item>
+      <ion-item>
+        <ion-label position="floating">Ubicación Ant:</ion-label>
+        <ion-input type="text" name="ubicacionAnt" [(ngModel)]="activosInfo.ubicacionAnt"></ion-input>
+      </ion-item>
+      <ion-item>
+        <ion-label position="floating">Estado Fisico: </ion-label>
+        <ion-input type="text" name="estadoFisico" [(ngModel)]="activosInfo.estadoFisico"></ion-input>
+      </ion-item>
+      <ion-item>
+        <ion-label position="floating">Descripcion Corta:</ion-label>
+        <ion-input type="text" name="descCorta" value="{{dataLocal.infoScan.descCorta}}" [(ngModel)]="activosInfo.descCorta"></ion-input>
+        <!-- <ion-input type="text" name="descCorta" [(ngModel)]="activosInfo.descCorta"></ion-input> -->
+      </ion-item>
+      <ion-item>
+        <ion-label position="floating">Marca:</ion-label>
+        <ion-input type="text" name="marca" value="{{dataLocal.infoScan.marca}}"></ion-input>
+        <!-- <ion-input type="text" name="marca" [(ngModel)]="activosInfo.marca"></ion-input> -->
+      </ion-item>
+      <ion-item>
+        <ion-label position="floating">Modelo:</ion-label>
+        <ion-input type="text" name="modelo" value="{{dataLocal.infoScan.modelo}}"></ion-input>
+        <!-- <ion-input type="text" name="modelo" [(ngModel)]="activosInfo.modelo"></ion-input> -->
+      </ion-item>
+      <ion-item>
+        <ion-label position="floating">Serie:</ion-label>
+        <ion-input type="text" name="serie" value="{{dataLocal.infoScan.serie}}"></ion-input>
+        <!-- <ion-input type="text" name="serie" [(ngModel)]="activosInfo.serie"></ion-input> -->
+      </ion-item>
+      <ion-item>
+        <ion-label position="floating">Color:</ion-label>
+        <ion-input type="text" name="color" value="{{dataLocal.infoScan.color}}"></ion-input>
+        <!-- <ion-input type="text" name="color" [(ngModel)]="activosInfo.color"></ion-input> -->
+      </ion-item>
+      <ion-item>
+        <ion-label position="floating">Dimenciones:</ion-label>
+        <ion-input type="text" name="altura" value="{{dataLocal.infoScan.altura}}"></ion-input>
+        <!-- <ion-input type="text" name="altura" [(ngModel)]="activosInfo.altura"></ion-input> -->
+      </ion-item>
+  </ion-list>
+  <ion-buttons slot="end" expand="block">
+    <ion-button type="submit" [disabled]="formulario.invalid">Limpiar</ion-button>
+    <ion-button type="submit" [disabled]="formulario.invalid">Guardar</ion-button>
+  </ion-buttons>
+</form>

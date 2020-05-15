@@ -21,7 +21,7 @@
     {
         "icon": "list",
         "name": "Captura",
-        "redirectTo": "/"
+        "redirectTo": "/captura"
     },
     {
         "icon": "grid",

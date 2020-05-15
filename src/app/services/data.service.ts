@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpClient} from '@angular/common/http';
-import { Componente } from 'src/app/interfaces/interfaces';
+import { Componente, Concentrado } from 'src/app/interfaces/interfaces';
 
 @Injectable({
   providedIn: 'root'
@@ -14,6 +14,9 @@ export class DataService {
     return this.http.get<Componente[]>('/assets/data/menu.json');
   }
 
+  getConcentrado(){
+    return this.http.get<Concentrado[]>('/assets/data/concentrado.json');
+  }
 
 
 }

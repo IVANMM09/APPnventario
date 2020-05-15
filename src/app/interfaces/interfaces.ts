@@ -14,3 +14,18 @@ export interface DatoF {
         usuario: string;
         fecha: string;
       }
+
+export interface Concentrado{
+    CODIGO_1: string;
+    NUMERO_SERIE: string;
+    MODELO: string;
+    MARCA: string;
+    DESCRIPCION: string;
+    COLOR: string;
+    ALTO: string;
+    FONDO: string;
+    FRENTE: string;
+    CODIGO_2: string;
+    UBICACION: string;
+    DESCRIPCION_CORTA: string;
+}

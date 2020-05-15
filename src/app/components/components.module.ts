@@ -8,6 +8,7 @@ import { ActivosFormComponent } from './activos-form/activos-form.component';
 import { FormsModule } from '@angular/forms';
 import { ActivosDataComponent } from './activos-data/activos-data.component';
 import { PipesModule } from '../pipes/pipes.module';
+import { ActivosInfoComponent } from './activos-info/activos-info.component';
 
 
 @NgModule({
@@ -15,7 +16,8 @@ import { PipesModule } from '../pipes/pipes.module';
     HeaderComponent,
     MenuComponent,
     ActivosFormComponent,
-    ActivosDataComponent
+    ActivosDataComponent,
+    ActivosInfoComponent
   ],
   imports: [
     CommonModule,
@@ -29,7 +31,8 @@ import { PipesModule } from '../pipes/pipes.module';
     HeaderComponent,
     MenuComponent,
     ActivosFormComponent,
-    ActivosDataComponent
+    ActivosDataComponent,
+    ActivosInfoComponent
   ]
 })
 export class ComponentsModule { }
