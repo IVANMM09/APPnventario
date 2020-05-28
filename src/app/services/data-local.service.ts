@@ -1,6 +1,9 @@
-import { Injectable } from '@angular/core';
+import { Injectable, wtfLeave } from '@angular/core';
 import { Storage } from '@ionic/storage';
-import { DatoF } from '../interfaces/interfaces';
+import { DatoF, Concentrado } from '../interfaces/interfaces';
+import { Scan } from '../models/scan.model';
+import { DataService } from './data.service';
+import { Observable } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
@@ -8,8 +11,31 @@ import { DatoF } from '../interfaces/interfaces';
 export class DataLocalService {
 
   activos: DatoF[] = [];
+  concentrado: Observable<Concentrado[]>;
+  concentra: Concentrado = {
+    CODIGO_1: '',
+    NUMERO_SERIE: '',
+    MODELO: '',
+    MARCA: '',
+    DESCRIPCION: '',
+    COLOR: '',
+    ALTO: '',
+    FONDO: '',
+    FRENTE: '',
+    CODIGO_2: '',
+    UBICACION: '',
+    DESCRIPCION_CORTA: ''
+  };
 
-  constructor(private storage: Storage) { 
+  centro: any[];
+
+  infoScan: Scan;
+
+  constructor(private storage: Storage,
+              private dataService: DataService) { 
+    
+    let scan = new Scan(this.concentra);  
+    this.infoScan = scan;          
 
     this.cargarActivos();
   }
@@ -36,6 +62,27 @@ async cargarActivos() {
   }
 
 }
+
+  muestraInfoScan(format: string, text: string){
+    this.concentrado = this.dataService.getConcentrado();
+
+    this.concentrado.forEach(cntro =>{
+      this.centro = cntro;
+      const finded = this.centro.find(ele => ele.CODIGO_2 == parseInt(text));
+ 
+      if( finded !== null){
+        const scan = new Scan(finded);
+        this.infoScan = scan;
+      }  
+    })
+
+    if(this.infoScan === null){
+      this.concentra.CODIGO_2 = text;
+      const scan = new Scan(this.concentra);
+      this.infoScan = scan;
+    }
+    
+  }
 
 }
 

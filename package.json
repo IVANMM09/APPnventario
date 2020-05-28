@@ -20,6 +20,7 @@
         "@angular/platform-browser-dynamic": "~8.2.14",
         "@angular/router": "~8.2.14",
         "@babel/compat-data": "^7.8.0",
+        "@ionic-native/barcode-scanner": "^5.25.0",
         "@ionic-native/core": "^5.0.0",
         "@ionic-native/file-chooser": "^5.25.0",
         "@ionic-native/file-path": "^5.25.0",
@@ -36,6 +37,7 @@
         "cordova-plugin-filepath": "^1.5.8",
         "cordova-sqlite-storage": "^5.0.0",
         "core-js": "^2.5.4",
+        "phonegap-plugin-barcodescanner": "^8.1.0",
         "rxjs": "~6.5.1",
         "tslib": "^1.9.0",
         "zone.js": "~0.9.1"
@@ -83,7 +85,8 @@
             "cordova-plugin-ionic-keyboard": {},
             "cordova-plugin-file-transfer": {},
             "cordova-plugin-filechooser": {},
-            "cordova-plugin-filepath": {}
+            "cordova-plugin-filepath": {},
+            "phonegap-plugin-barcodescanner": {}
         },
         "platforms": [
             "ios",

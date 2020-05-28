@@ -14,6 +14,7 @@ import { PipesModule } from './pipes/pipes.module';
 import { IonicStorageModule } from '@ionic/storage';
 import { FileChooser } from '@ionic-native/file-chooser/ngx';
 import { FilePath } from '@ionic-native/file-path/ngx';
+import { BarcodeScanner } from '@ionic-native/barcode-scanner/ngx';
 
 
 @NgModule({
@@ -34,6 +35,7 @@ import { FilePath } from '@ionic-native/file-path/ngx';
     { provide: RouteReuseStrategy, useClass: IonicRouteStrategy },
     FilePath,
     FileChooser,
+    BarcodeScanner
   ],
   bootstrap: [AppComponent]
 })
