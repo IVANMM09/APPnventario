@@ -9,6 +9,8 @@ import { FormsModule } from '@angular/forms';
 import { ActivosDataComponent } from './activos-data/activos-data.component';
 import { PipesModule } from '../pipes/pipes.module';
 import { ActivosInfoComponent } from './activos-info/activos-info.component';
+import { ImportarLoadComponent } from './importar-load/importar-load.component';
+import { ImportarQueryComponent } from './importar-query/importar-query.component';
 
 
 @NgModule({
@@ -17,7 +19,9 @@ import { ActivosInfoComponent } from './activos-info/activos-info.component';
     MenuComponent,
     ActivosFormComponent,
     ActivosDataComponent,
-    ActivosInfoComponent
+    ActivosInfoComponent,
+    ImportarLoadComponent,
+    ImportarQueryComponent
   ],
   imports: [
     CommonModule,
@@ -25,14 +29,16 @@ import { ActivosInfoComponent } from './activos-info/activos-info.component';
     RouterModule,
     FormsModule,
     PipesModule
- 
+
   ],
   exports: [
     HeaderComponent,
     MenuComponent,
     ActivosFormComponent,
     ActivosDataComponent,
-    ActivosInfoComponent
+    ActivosInfoComponent,
+    ImportarLoadComponent,
+    ImportarQueryComponent
   ]
 })
 export class ComponentsModule { }

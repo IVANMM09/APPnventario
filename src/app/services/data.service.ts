@@ -18,5 +18,8 @@ export class DataService {
     return this.http.get<Concentrado[]>('/assets/data/concentrado.json');
   }
 
+getCsv(){
+  
+}
 
 }

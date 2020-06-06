@@ -15,6 +15,9 @@ import { IonicStorageModule } from '@ionic/storage';
 import { FileChooser } from '@ionic-native/file-chooser/ngx';
 import { FilePath } from '@ionic-native/file-path/ngx';
 import { BarcodeScanner } from '@ionic-native/barcode-scanner/ngx';
+import { PapaParseModule } from 'ngx-papaparse';
+import { File } from '@ionic-native/file/ngx';
+import { SocialSharing } from '@ionic-native/social-sharing/ngx';
 
 
 @NgModule({
@@ -25,6 +28,7 @@ import { BarcodeScanner } from '@ionic-native/barcode-scanner/ngx';
     AppRoutingModule,
     ComponentsModule,
     HttpClientModule,
+    PapaParseModule,
     PipesModule,
     IonicStorageModule.forRoot(),
 
@@ -34,6 +38,8 @@ import { BarcodeScanner } from '@ionic-native/barcode-scanner/ngx';
     SplashScreen,
     { provide: RouteReuseStrategy, useClass: IonicRouteStrategy },
     FilePath,
+    File,
+    SocialSharing,
     FileChooser,
     BarcodeScanner
   ],

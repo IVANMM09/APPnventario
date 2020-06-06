@@ -1,6 +1,14 @@
 <app-header titulo="Importar Archivo"></app-header>
 
 <ion-content>
-    <ion-button expand="full" class="boton-importar" (click)="pickFile()">Actualizar Catalogo</ion-button>
-    <div>{{returnpath}}</div>
+    <ion-segment mode="md" color="primary" (ionChange)="cambioCategoria( $event )">
+        <ion-segment-button mode="md" *ngFor="let categoria of categorias" [value]="categoria">
+            <ion-label text-capitalize>{{ categoria }}</ion-label>
+        </ion-segment-button>
+
+    </ion-segment>
+
+    <app-importar-load *ngIf="banderainv === 'carga' "></app-importar-load>
+    <app-importar-query *ngIf="banderainv === 'consulta' "></app-importar-query>
+
 </ion-content>

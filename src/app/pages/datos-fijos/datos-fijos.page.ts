@@ -8,7 +8,7 @@ import { Component, OnInit, ViewChild } from '@angular/core';
 })
 export class DatosFijosPage implements OnInit {
 
-   categorias = ['captura', 'consulta'];
+   categorias = ['carga', 'consulta'];
    banderacat = this.categorias[0];
 
   constructor() { }
