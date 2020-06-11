@@ -11,6 +11,7 @@ import { PipesModule } from '../pipes/pipes.module';
 import { ActivosInfoComponent } from './activos-info/activos-info.component';
 import { ImportarLoadComponent } from './importar-load/importar-load.component';
 import { ImportarQueryComponent } from './importar-query/importar-query.component';
+import { SQLite } from '@ionic-native/sqlite/ngx';
 
 
 @NgModule({
@@ -39,6 +40,8 @@ import { ImportarQueryComponent } from './importar-query/importar-query.componen
     ActivosInfoComponent,
     ImportarLoadComponent,
     ImportarQueryComponent
+  ], providers: [
+    SQLite
   ]
 })
 export class ComponentsModule { }

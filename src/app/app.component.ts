@@ -6,6 +6,8 @@ import { StatusBar } from '@ionic-native/status-bar/ngx';
 import { DataService } from './services/data.service';
 import { Observable } from 'rxjs';
 import { Componente } from 'src/app/interfaces/interfaces';
+import { SQLite } from '@ionic-native/sqlite/ngx';
+import { TasksService } from './services/tasks-service';
 
 @Component({
   selector: 'app-root',
@@ -20,10 +22,12 @@ export class AppComponent {
     private platform: Platform,
     private splashScreen: SplashScreen,
     private statusBar: StatusBar,
-    private dataService: DataService
-
+    private dataService: DataService,
+    private taskService: TasksService,
+    public sqlite: SQLite
   ) {
     this.initializeApp();
+        this.createDatabase();
   }
 
   initializeApp() {
@@ -33,4 +37,20 @@ export class AppComponent {
       this.componentes = this.dataService.getMenuOpts();
     });
   }
+  private createDatabase(){
+    this.sqlite.create({
+      name: 'data.db',
+      location: 'default' // the location field is required
+    })
+    .then((db) => {
+      console.log(db);
+      this.taskService.setDatabase(db);
+      this.taskService.createTableLayout();
+      return this.taskService.createTable();
+    })
+    .catch(error =>{
+      console.error(error);
+    });
+  }
+
 }

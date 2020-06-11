@@ -51,8 +51,9 @@ export class ImportarLoadComponent implements OnInit {
  
     this.papa.parse(csvData, {
       complete: parsedData => {
-        this.headerRow = parsedData.data.splice(0, 1)[0];
+        this.headerRow = parsedData.data.splice(0, 1)[0]; 
         this.csvData = parsedData.data;
+        console.log(parsedData.data)
       }
     });
   

@@ -18,7 +18,8 @@ import { BarcodeScanner } from '@ionic-native/barcode-scanner/ngx';
 import { PapaParseModule } from 'ngx-papaparse';
 import { File } from '@ionic-native/file/ngx';
 import { SocialSharing } from '@ionic-native/social-sharing/ngx';
-
+import { SQLite } from '@ionic-native/sqlite/ngx';
+import { TasksService } from './services/tasks-service';
 
 @NgModule({
   declarations: [AppComponent],
@@ -41,7 +42,9 @@ import { SocialSharing } from '@ionic-native/social-sharing/ngx';
     File,
     SocialSharing,
     FileChooser,
-    BarcodeScanner
+    BarcodeScanner,
+    SQLite,
+    TasksService,
   ],
   bootstrap: [AppComponent]
 })

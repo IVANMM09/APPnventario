@@ -1,9 +1,9 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 
 import { IonList, ToastController } from '@ionic/angular';
-import { DataLocalService } from '../../services/data-local.service';
-
-
+//import { DataLocalService } from '../../services/data-local.service';
+import { TasksService } from '../../services/tasks-service';
+import { DatoF } from '../../interfaces/interfaces';
 
 @Component({
   selector: 'app-activos-data',
@@ -14,22 +14,31 @@ export class ActivosDataComponent implements OnInit {
 
   @ViewChild('lista', {static: true}) Lista: IonList;
 
- datosFijos: any[] = [];
+ //datosFijos: any[] = [];
+ datosFijos: DatoF[] = [];
  textoBuscar = '';
-  constructor(public toastController: ToastController, public dataLocalService: DataLocalService) { 
+  constructor(
+    public toastController: ToastController, 
+   // public dataLocalService: DataLocalService,
+    public tasksService: TasksService,
+    
+    ) { 
     
 
   }
  
   ngOnInit() {
-    this.datosFijos = this.dataLocalService.activos;
+    //this.datosFijos = this.dataLocalService.activos;
+    this.datosFijos = this.tasksService.activos;
+   // this.tasksService.create(this.datosFijos);
     // this.datosFijos = this.dataService.getDatosfijos();
 
     /*  this.dataService.getDatosfijos().subscribe((data: any) => {
       this.datosFijos = data.data;
 
     });*/
-
+  
+    this.getAllActivos();
   }
 
   async presentToast(message: string) {
@@ -52,4 +61,16 @@ export class ActivosDataComponent implements OnInit {
     this.textoBuscar = event.detail.value;
   }
 
+  getAllActivos(){
+    
+     this.tasksService.getAll()
+    .then(datosFijos => {
+      this.datosFijos = datosFijos;
+      console.log("longitud" + this.datosFijos.length);
+    })
+    .catch( error => {
+      console.error( error );
+    });
+  }
+  
 }

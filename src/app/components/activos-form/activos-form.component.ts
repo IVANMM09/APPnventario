@@ -4,6 +4,9 @@ import { DataService } from '../../services/data.service';
 import { HttpHeaders } from '@angular/common/http';
 import { ToastController } from '@ionic/angular';
 import { DataLocalService } from '../../services/data-local.service';
+import  { TasksService } from 'src/app/services/tasks-service';
+import { DatoF } from '../../interfaces/interfaces';
+import { from } from 'rxjs';
 
 @Component({
   selector: 'app-activos-form',
@@ -11,7 +14,8 @@ import { DataLocalService } from '../../services/data-local.service';
   styleUrls: ['./activos-form.component.scss'],
 })
 export class ActivosFormComponent implements OnInit {
- 
+
+  activos: DatoF[] = [];
   fechaActualDf: Date = new Date();
 
   activo = {
@@ -25,7 +29,8 @@ export class ActivosFormComponent implements OnInit {
     fecha: String (this.fechaActualDf)
   };
 
-  constructor(private dataService: DataService, public toastController: ToastController, private dataLocalService: DataLocalService) { }
+  constructor(private dataService: DataService, public toastController: ToastController, 
+    private dataLocalService: DataLocalService, private taskService: TasksService) { }
 
   ngOnInit() {}
 
@@ -45,7 +50,10 @@ export class ActivosFormComponent implements OnInit {
       })
     };
     this.dataService.postDatosfijos(this.activo, headers); */
-    this.dataLocalService.guardarActivo(this.activo);
+    //this.dataLocalService.guardarActivo(this.activo);
+   
+    this.taskService.create(this.activo);
+    console.log(this.activo.nombre);
     this.presentToast();
   }
 
