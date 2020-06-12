@@ -1,0 +1,32 @@
+<ion-slides *ngIf="datosFijos.length === 0">
+    <ion-slide>
+        <ion-label>No hay datos guardados</ion-label>
+    </ion-slide>
+</ion-slides>
+<div *ngIf="datosFijos.length > 0">
+    <ion-searchbar (ionChange)="buscar( $event )"></ion-searchbar>
+    <ion-list #lista>
+        <ion-item-sliding *ngFor="let dato of datosFijos | filtro: textoBuscar: 'name'">
+
+            <ion-item>
+                <ion-label>
+                    <h3><strong>ID Datos Fijos:</strong>{{dato.id_datos_fijos}}</h3>
+                    <p><strong>ID Empleado:</strong>{{dato.id_employee}}</p>
+                    <p><strong>Nombre:</strong>{{ dato.name }}</p>
+                    <p><strong>CC:</strong>{{ dato.centro_costos }}</p>
+                    <p><strong>Area:</strong>{{dato.area}}</p>
+                    <p><strong>Codigo Inmueble:</strong> {{ dato.cod_inmueble }}</p>
+                    <p><strong>Piso:</strong>{{dato.piso}}</p>
+                    <p><strong>Usuario:</strong>{{dato.usuario}}</p>
+                </ion-label>
+
+            </ion-item>
+
+            <ion-item-options side="end">
+                <ion-item-option color="danger" (click)="borrar(dato)">
+                    <ion-icon slot="icon-only" name="trash"></ion-icon>
+                </ion-item-option>
+            </ion-item-options>
+        </ion-item-sliding>
+    </ion-list>
+</div>
