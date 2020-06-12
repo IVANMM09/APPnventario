@@ -6,7 +6,7 @@
 <div *ngIf="datosFijos.length > 0">
     <ion-searchbar (ionChange)="buscar( $event )"></ion-searchbar>
     <ion-list #lista>
-        <ion-item-sliding *ngFor="let dato of datosFijos | filtro: textoBuscar: 'nombre'">
+        <ion-item-sliding *ngFor="let dato of datosFijos | filtro: textoBuscar: 'name'">
 
             <ion-item>
                 <ion-label>
