@@ -10,12 +10,16 @@
 
             <ion-item>
                 <ion-label>
-                    <h3>Nombre: {{ dato.name }}</h3>
-                    <p>CC: {{ dato.centro_costos }}</p>
+                    <h3><strong>ID Datos Fijos:</strong>{{dato.id_datos_fijos}}</h3>
+                    <p><strong>ID Empleado:</strong>{{dato.id_employee}}</p>
+                    <p><strong>Nombre:</strong>{{ dato.name }}</p>
+                    <p><strong>CC:</strong>{{ dato.centro_costos }}</p>
+                    <p><strong>Area:</strong>{{dato.area}}</p>
+                    <p><strong>Codigo Inmueble:</strong> {{ dato.cod_inmueble }}</p>
+                    <p><strong>Piso:</strong>{{dato.piso}}</p>
+                    <p><strong>Usuario:</strong>{{dato.usuario}}</p>
                 </ion-label>
-                <ion-label slot="end" text-right>
-                    Codigo: {{ dato.cod_inmueble }}
-                </ion-label>
+
             </ion-item>
 
             <ion-item-options side="end">

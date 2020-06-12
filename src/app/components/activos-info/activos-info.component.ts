@@ -9,7 +9,7 @@ import { DataLocalService } from '../../services/data-local.service';
   styleUrls: ['./activos-info.component.scss'],
 })
 export class ActivosInfoComponent implements OnInit {
-
+  estadoCheck: boolean;
   scanInfo: Concentrado[] = [];
   concentrado: Concentrado = {
     CODIGO_1: '',
@@ -49,6 +49,11 @@ export class ActivosInfoComponent implements OnInit {
      }).catch(err => {
          console.log('Error', err);
      });
+  }
+
+  updateSelect(event) {
+    this.estadoCheck = event.detail.checked;
+   
   }
 
 }
