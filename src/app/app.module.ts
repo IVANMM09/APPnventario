@@ -44,7 +44,7 @@ import { TasksService } from './services/tasks-service';
     FileChooser,
     BarcodeScanner,
     SQLite,
-    TasksService,
+    TasksService
   ],
   bootstrap: [AppComponent]
 })

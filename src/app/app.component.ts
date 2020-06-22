@@ -46,6 +46,7 @@ export class AppComponent {
       console.log(db);
       this.taskService.setDatabase(db);
       this.taskService.createTableLayout();
+      this.taskService.createTableCaptura();
       return this.taskService.createTable();
     })
     .catch(error =>{
