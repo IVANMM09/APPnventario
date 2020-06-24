@@ -12,6 +12,7 @@ import { ToastController } from '@ionic/angular';
 })
 export class ActivosInfoComponent implements OnInit {
   estadoCheck: boolean;
+  estadoCheckC: boolean;
   scanInfo: Concentrado[] = [];
   datosActivos: any [];
   concentrado = {
@@ -91,8 +92,8 @@ export class ActivosInfoComponent implements OnInit {
  }
 
 
-  scan(){
-   /* this.barcodeScanner.scan().then(barcodeData => {
+  scanCel(){
+    this.barcodeScanner.scan().then(barcodeData => {
       console.log('Barcode data', barcodeData);
 
       if( !barcodeData.cancelled){
@@ -102,15 +103,21 @@ export class ActivosInfoComponent implements OnInit {
 
      }).catch(err => {
          console.log('Error', err);
-     });*/
+     });
 
-     this.getNumInv();
+    // this.getNumInv();
   }
 
   updateSelect(event) {
     this.estadoCheck = event.detail.checked;
    
   }
+
+  updateSelectCamara(event) {
+    this.estadoCheckC = event.detail.checked;
+   
+  }
+
 
 
 }
