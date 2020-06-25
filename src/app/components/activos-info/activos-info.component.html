@@ -12,7 +12,7 @@
     <ion-list>
         <ion-item>
             <ion-label>Carga Masiva:</ion-label>
-            <ion-checkbox color="primary" (ionChange)="updateSelect( $event )"></ion-checkbox>
+            <ion-checkbox color="primary" (ionChange)="updateSelectCargaMasiva( $event )"></ion-checkbox>
         </ion-item>
         <ion-item *ngIf="estadoCheck === true ">
             <ion-label position="floating">Numero de Capturas: </ion-label>
@@ -91,7 +91,7 @@
         </ion-item>
     </ion-list>
     <ion-buttons slot="end" expand="block">
-        <ion-button type="submit" [disabled]="formulario.invalid">Limpiar</ion-button>
+        <ion-button (click)="limpiarForm()">Limpiar</ion-button>
 
         <ion-button type="submit" [disabled]="formulario.invalid">Guardar</ion-button>
         <ion-button (click)="getNumInv()">Consultar</ion-button>

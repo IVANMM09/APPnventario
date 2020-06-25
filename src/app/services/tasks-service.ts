@@ -90,18 +90,18 @@ export class TasksService {
             catch(error=>console.log(error));
       }
     
-      getCapturaByNumInv(numInv: any){
+      getCapturaByNumInv(numInv){
         let sql = 'select * from captura where num_inv = ?';
         return this.db.executeSql(sql, [numInv])
         .then(response => {
-          let captura = [];
-          if(response.row.length>1 ){
+          let captura = [];    
+          if(response.rows.length > 0 ){
             for (let index = 0; index < response.rows.length; index++) {
               captura.push( response.rows.item(index) );
-              console.log("Captura " + captura.length )
             }
-          }else  if(response.row.length==1 ){
-            captura.push( response.rows.item(0));
+          }else  if(response.rows.length === 0 ){
+            // captura.push( response.rows );
+            captura = [];
           }
           return Promise.resolve( captura );
         })

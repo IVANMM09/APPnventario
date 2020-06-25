@@ -66,27 +66,33 @@ export class ActivosInfoComponent implements OnInit {
     console.log("Concentrado", this.concentrado);
   }
 
-  async presentToastMsgVacio() {
+ 
+
+  async presentToastMsgResp( message: string ) {
+    
     const toast = await this.toastController.create({
-      message: 'Numero Inventario se encuentra vacio ',
+      message,
       duration: 1500
     });
     toast.present();
   }
 
   getNumInv(){
-    console.log()
     if(this.concentrado.numInv!=''){
       this.taskService.getCapturaByNumInv(this.concentrado.numInv)
       .then(response => {
       this.datosActivos = response;
-      console.log("Regreso " + this.datosActivos);
+      if (this.datosActivos.length === 2){
+      this.presentToastMsgResp('registro duplicado');
+      } else {
+        this.presentToastMsgResp('numero de veces registrado: ' + this.datosActivos.length  );
+      }
       })
       .catch( error => {
       console.error( error );
       });
-    }else{
-      this.presentToastMsgVacio();
+    } else {
+      this.presentToastMsgResp('El campo NumInv esta vacio');
     }
 
  }
@@ -108,7 +114,7 @@ export class ActivosInfoComponent implements OnInit {
     // this.getNumInv();
   }
 
-  updateSelect(event) {
+  updateSelectCargaMasiva(event) {
     this.estadoCheck = event.detail.checked;
    
   }
@@ -118,6 +124,25 @@ export class ActivosInfoComponent implements OnInit {
    
   }
 
+
+  limpiarForm(){
+    this.  concentrado = {
+      idDatofijo: '',
+      noCapturas: '',
+      numInv: '',
+      noSap: '',
+      descripcion: '',
+      ubicacionInt: '',
+      ubicacionAnt: '',
+      edoFisico: '',
+      descCorta: '',
+      marca: '',
+      modelo: '',
+      serie: '',
+      color: '',
+      dimensiones: ''
+    };
+  }
 
 
 }
