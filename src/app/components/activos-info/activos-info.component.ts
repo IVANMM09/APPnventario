@@ -50,20 +50,20 @@ export class ActivosInfoComponent implements OnInit {
   }
 
   async onSubmitScan(){
+    console.log("capturas" +this.concentrado.noCapturas);
     if(this.concentrado.noCapturas!==null && this.concentrado.noCapturas!==""){
       for (let index = 0; index < Number(this.concentrado.noCapturas); index++) {
-        console.log("Entro a guardar en el ciclo ");
+        console.log("NumInv " + this.concentrado.numInv);
         this.taskService.insertCaptura(this.concentrado);
-        this.concentrado.numInv = this.concentrado.numInv+1;
+
+        this.concentrado.numInv = String(Number(this.concentrado.numInv)+1);
+
       }
     }else{
-      console.log("Entro a guardar ");
       this.taskService.insertCaptura(this.concentrado);
 
     }
     this.presentToast();
-
-    console.log("Concentrado", this.concentrado);
   }
 
  
@@ -81,12 +81,32 @@ export class ActivosInfoComponent implements OnInit {
     if(this.concentrado.numInv!=''){
       this.taskService.getCapturaByNumInv(this.concentrado.numInv)
       .then(response => {
-      this.datosActivos = response;
-      if (this.datosActivos.length === 2){
-      this.presentToastMsgResp('registro duplicado');
-      } else {
-        this.presentToastMsgResp('numero de veces registrado: ' + this.datosActivos.length  );
-      }
+        this.datosActivos = response;
+        if (this.datosActivos.length === 2){
+          this.presentToastMsgResp('registro duplicado');
+        } else {
+          this.presentToastMsgResp('numero de veces registrado: ' + this.datosActivos.length  );
+        }
+        if(response.length===1){
+          for (let index = 0; index < response.length; index++) {
+            console.log("serie "+ JSON.stringify(response));
+          
+            this.concentrado.idDatofijo = response[0].id_dato_fijo;
+            this.concentrado.noSap = response[0].num_sap;
+            this.concentrado.descripcion = response[0].descripcion;
+            this.concentrado.ubicacionInt = response[0].ubicacion_int;
+            this.concentrado.ubicacionAnt = response[0].ubicacion_ant;
+            this.concentrado.edoFisico = response[0].edo_fisico;
+            this.concentrado.descCorta = response[0].desc_corta;
+            this.concentrado.marca = response[0].marca;
+            this.concentrado.modelo = response[0].modelo;
+            this.concentrado.serie = response[0].serie;
+            this.concentrado.color = response[0].color;
+            this.concentrado.dimensiones = response[0].dimensiones;
+
+           } 
+         
+        } 
       })
       .catch( error => {
       console.error( error );

@@ -82,11 +82,11 @@ export class TasksService {
     
       insertCaptura (concentrado: any){
         console.log("entro al insert captura ");
-        let sql = 'INSERT INTO captura(id_dato_fijo, num_inv, num_sap, ubicacion_int, ubicacion_ant, edo_fisico, '+
-                 'desc_corta, marca, modelo, serie, color, dimensiones ) VALUES(?,?,?,?,?,?,?,?,?,?,?,?)';
-        return this.db.executeSql(sql, [concentrado.idDatoFijo, concentrado.numInv, concentrado.noSap, concentrado.ubicacionInt,
-                                        concentrado.ubicacionAnt, concentrado.edoFisico, concentrado.descCorta, concentrado.marca,
-                                        concentrado.modelo, concentrado.serie, concentrado.color, concentrado.dimensiones]).
+        let sql = 'INSERT INTO captura(id_dato_fijo, num_inv, num_sap, descripcion, ubicacion_int, ubicacion_ant, edo_fisico, '+
+                 'desc_corta, marca, modelo, serie, color, dimensiones ) VALUES(?,?,?,?,?,?,?,?,?,?,?,?,?)';
+        return this.db.executeSql(sql, [concentrado.idDatofijo, concentrado.numInv, concentrado.noSap, concentrado.descripcion,
+           concentrado.ubicacionInt, concentrado.ubicacionAnt, concentrado.edoFisico, concentrado.descCorta, concentrado.marca,
+           concentrado.modelo, concentrado.serie, concentrado.color, concentrado.dimensiones]).
             catch(error=>console.log(error));
       }
     
