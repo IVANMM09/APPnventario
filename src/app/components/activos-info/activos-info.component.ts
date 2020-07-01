@@ -4,6 +4,9 @@ import { BarcodeScanner } from '@ionic-native/barcode-scanner/ngx';
 import { DataLocalService } from '../../services/data-local.service';
 import { TasksService } from '../../services/tasks-service';
 import { ToastController } from '@ionic/angular';
+import { AlertController } from '@ionic/angular';
+
+
 
 @Component({
   selector: 'app-activos-info',
@@ -13,6 +16,7 @@ import { ToastController } from '@ionic/angular';
 export class ActivosInfoComponent implements OnInit {
   estadoCheck: boolean;
   estadoCheckC: boolean;
+  edoButtonEdit: false;
   scanInfo: Concentrado[] = [];
   datosActivos: any [];
   concentrado = {
@@ -36,18 +40,40 @@ export class ActivosInfoComponent implements OnInit {
   constructor(public barcodeScanner: BarcodeScanner,
               public dataLocal: DataLocalService,
               public taskService: TasksService,
-              public toastController: ToastController) { }
+              public toastController: ToastController,
+              public alertController: AlertController) { }
 
   ngOnInit() {
   }
 
-  async presentToast() {
-    const toast = await this.toastController.create({
-      message: 'Datos guardados existosamente',
-      duration: 1500
+
+  async presentAlertConfirm() {
+    const alert = await this.alertController.create({
+      cssClass: 'my-custom-class',
+      header: 'Registro Duplicado',
+      message: 'Elija una Opción',
+      buttons: [
+        {
+          text: 'Cancelar',
+          role: 'cancel',
+          cssClass: 'secondary',
+          handler: () => {
+            this.limpiarForm();
+          }
+        }, {
+          text: 'Editar',
+          handler: () => {
+          this.mostrarBotonEditar(true);
+          }
+        }
+      ],
+      backdropDismiss: false
     });
-    toast.present();
+
+    await alert.present();
   }
+
+  
 
   async onSubmitScan(){
     console.log("capturas" +this.concentrado.noCapturas);
@@ -63,7 +89,7 @@ export class ActivosInfoComponent implements OnInit {
       this.taskService.insertCaptura(this.concentrado);
 
     }
-    this.presentToast();
+    this.presentToastMsgResp('Datos guardados');
   }
 
  
@@ -78,19 +104,22 @@ export class ActivosInfoComponent implements OnInit {
   }
 
   getNumInv(){
-    if(this.concentrado.numInv!=''){
+    if(this.concentrado.numInv.trim() !== '' && this.concentrado.numInv.trim() !== '0' ){
       this.taskService.getCapturaByNumInv(this.concentrado.numInv)
       .then(response => {
         this.datosActivos = response;
-        if (this.datosActivos.length === 2){
+       /* if (this.datosActivos.length === 2){
           this.presentToastMsgResp('registro duplicado');
         } else {
           this.presentToastMsgResp('numero de veces registrado: ' + this.datosActivos.length  );
-        }
-        if(response.length===1){
+        } */
+        if(response.length===1 ){
+
+          this.presentToastMsgResp('registro duplicado');
+          // tslint:disable-next-line:prefer-for-of
           for (let index = 0; index < response.length; index++) {
-            console.log("serie "+ JSON.stringify(response));
-          
+            console.log('serie ' + JSON.stringify(response));
+
             this.concentrado.idDatofijo = response[0].id_dato_fijo;
             this.concentrado.noSap = response[0].num_sap;
             this.concentrado.descripcion = response[0].descripcion;
@@ -105,14 +134,18 @@ export class ActivosInfoComponent implements OnInit {
             this.concentrado.dimensiones = response[0].dimensiones;
 
            } 
-         
-        } 
+          this.presentAlertConfirm();
+
+        } else {
+
+          this.presentToastMsgResp('El registro se guarda por ser nuevo o estar mas de dos veces ');
+        }
       })
       .catch( error => {
       console.error( error );
       });
     } else {
-      this.presentToastMsgResp('El campo NumInv esta vacio');
+      this.presentToastMsgResp('se guarda por ser 0 o vacio ');
     }
 
  }
@@ -144,6 +177,11 @@ export class ActivosInfoComponent implements OnInit {
    
   }
 
+  mostrarBotonEditar(estado) {
+    this.edoButtonEdit = estado;
+   
+  }
+
 
   limpiarForm(){
     this.  concentrado = {
@@ -164,5 +202,9 @@ export class ActivosInfoComponent implements OnInit {
     };
   }
 
+  guardarEdicion(){
+    this.mostrarBotonEditar(false);
+    this.presentToastMsgResp('Registro Actualizado');
+  }
 
 }

@@ -4,7 +4,7 @@ import { DataService } from '../../services/data.service';
 import { HttpHeaders } from '@angular/common/http';
 import { ToastController } from '@ionic/angular';
 import { DataLocalService } from '../../services/data-local.service';
-import  { TasksService } from 'src/app/services/tasks-service';
+import { TasksService } from 'src/app/services/tasks-service';
 import { DatoF } from '../../interfaces/interfaces';
 import { from } from 'rxjs';
 
@@ -29,8 +29,8 @@ export class ActivosFormComponent implements OnInit {
     fecha: String (this.fechaActualDf)
   };
 
-  constructor(private dataService: DataService, public toastController: ToastController, 
-    private dataLocalService: DataLocalService, private taskService: TasksService) { }
+  constructor(public toastController: ToastController,
+              private taskService: TasksService) { }
 
   ngOnInit() {}
 
@@ -50,8 +50,8 @@ export class ActivosFormComponent implements OnInit {
       })
     };
     this.dataService.postDatosfijos(this.activo, headers); */
-    //this.dataLocalService.guardarActivo(this.activo);
-   
+    // this.dataLocalService.guardarActivo(this.activo);
+
     this.taskService.create(this.activo);
     console.log(this.activo.nombre);
     this.presentToast();
