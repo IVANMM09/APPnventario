@@ -7,6 +7,8 @@ import { File } from '@ionic-native/file/ngx';
 import { HttpClient } from '@angular/common/http';
 import { ToastController } from '@ionic/angular';
 import { SocialSharing } from '@ionic-native/social-sharing/ngx';
+import { TasksService } from '../../services/tasks-service';
+import { stringify } from '@angular/compiler/src/util';
 
 @Component({
   selector: 'app-importar-load',
@@ -17,12 +19,22 @@ export class ImportarLoadComponent implements OnInit {
 
   csvData: any[] = [];
   headerRow: any[] = [];
+  datos: any[] = [];
   returnpath = '';
   private win: any = window;
   // tslint:disable-next-line:max-line-length
-  constructor(private socialSharing: SocialSharing, public toastController: ToastController, private filePath: FilePath, private fileChooser: FileChooser,  private papa: Papa, private plt: Platform, private file: File, private http: HttpClient ) { }
+  constructor(private socialSharing: SocialSharing, 
+    public toastController: ToastController, 
+    private filePath: FilePath, private fileChooser: FileChooser,  
+    private papa: Papa, private plt: Platform, private file: File, 
+    private http: HttpClient,
+    public tasksService: TasksService ) { 
+
+    }
 
   ngOnInit() {
+     this.tasksService.getAllCaptura();
+     console.log(JSON.stringify(this.tasksService.getAllCaptura()));
   }
 
   pickFile() {
@@ -42,18 +54,33 @@ export class ImportarLoadComponent implements OnInit {
     });
 
 
+
+  }
+
+  private saveData(data: any){
+      console.log("Entro Save Data " +JSON.stringify(data));
+
+      for (let index = 0; index < data.length; index++) {
+        //let id_data = this.tasksService.getCC(data.CC);      
+        data[index][21] = 'faltante'; 
+        this.tasksService.insertCapturaLayout(data[index]);
+      
+    }
   }
 
 
   private extractData(res) {
     // tslint:disable-next-line:prefer-const
+
     let csvData = res || '';
  
     this.papa.parse(csvData, {
       complete: parsedData => {
         this.headerRow = parsedData.data.splice(0, 1)[0]; 
         this.csvData = parsedData.data;
-        console.log(parsedData.data)
+      
+        console.log("extract data " + parsedData.data)
+        this.saveData(parsedData.data);
       }
     });
   

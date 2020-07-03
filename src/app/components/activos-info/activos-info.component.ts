@@ -20,6 +20,7 @@ export class ActivosInfoComponent implements OnInit {
   scanInfo: Concentrado[] = [];
   datosActivos: any [];
   concentrado = {
+    idCaptura :'',
     idDatofijo: '',
     noCapturas: '',
     numInv: '',
@@ -95,7 +96,6 @@ export class ActivosInfoComponent implements OnInit {
  
 
   async presentToastMsgResp( message: string ) {
-    
     const toast = await this.toastController.create({
       message,
       duration: 1500
@@ -120,6 +120,7 @@ export class ActivosInfoComponent implements OnInit {
           for (let index = 0; index < response.length; index++) {
             console.log('serie ' + JSON.stringify(response));
 
+            this.concentrado.idCaptura = response[0].id_captura;
             this.concentrado.idDatofijo = response[0].id_dato_fijo;
             this.concentrado.noSap = response[0].num_sap;
             this.concentrado.descripcion = response[0].descripcion;
@@ -185,6 +186,7 @@ export class ActivosInfoComponent implements OnInit {
 
   limpiarForm(){
     this.  concentrado = {
+      idCaptura :'',
       idDatofijo: '',
       noCapturas: '',
       numInv: '',
@@ -204,6 +206,9 @@ export class ActivosInfoComponent implements OnInit {
 
   guardarEdicion(){
     this.mostrarBotonEditar(false);
+    console.log("update " + JSON.stringify(this.concentrado));    
+    this.taskService.updateCaptura(this.concentrado);
+
     this.presentToastMsgResp('Registro Actualizado');
   }
 

@@ -45,6 +45,13 @@ export class TasksService {
             catch(error=>console.log(error));
       }
 
+      deleteIdDatosFijos(dato:any){
+        console.log("Objeto " +JSON.stringify(dato));
+        let sql = 'DELETE FROM datosFijos where id_datos_fijos=?';
+        return this.db.executeSql(sql, [Number(dato.id_datos_fijos)]).
+          catch(error=>console.log("error"+ error));
+      }
+
       insertLayout (layout:any ){
         let sql = 'INSERT INTO layout( empresa, codigo1, codigo2, serie, modelo, marca, descripcion) VALUES(?,?,?,?,?,?,?)';
         console.log("create " + sql);
@@ -68,14 +75,33 @@ export class TasksService {
         .catch(error => Promise.reject(error));
       }
 
+      getCC(cc : any){
+        var dato: any;
+        let sql = 'Select id_datos_fijos FROM datosFijos where centro_costos = ?';
+        return this.db.executeSql(sql,[cc]).
+          then(response =>{
+           console.log(JSON.stringify(response));
+            if(response!== null){
+              dato = response; 
+            }
+            return Promise.resolve(dato);
+          }).catch(error => Promise.reject(error));
+          
+          
+      }
+
+
       createTableCaptura(){
         let sql = 'CREATE TABLE IF NOT EXISTS captura('+
             ' id_captura INTEGER PRIMARY KEY AUTOINCREMENT, ' +
             ' id_dato_fijo INTEGER, num_inv TEXT, '+
             ' num_sap TEXT, descripcion TEXT, ' +
-            ' ubicacion_int TEXT, ubicacion_ant TEXT, edo_fisico TEXT,'+
-            ' desc_corta TEXT, marca TEXT, modelo TEXT, serie TEXT, ' +
-            ' color TEXT, dimensiones TEXT )';
+            ' ubicacion_int TEXT, ubicacion_ant TEXT, edo_fisico TEXT, '+
+            ' desc_corta TEXT, marca TEXT, modelo TEXT, serie TEXT, encontrados TEXT, ' +
+            ' color TEXT, dimensiones TEXT, centro_costos TEXT, expediente TEXT,' +
+            ' ubicacion_people TEXT, area TEXT, alto TEXT, largo TEXT,'+
+            ' ancho TEXT, largo TEXT, piso TEXT, observaciones TEXT, '+
+            ' estatus TEXT, campo_add1 TEXT, campo_add2 TEXT)';
             console.log("sql captura " +sql);
         return this.db.executeSql(sql, []);
       }
@@ -88,6 +114,44 @@ export class TasksService {
            concentrado.ubicacionInt, concentrado.ubicacionAnt, concentrado.edoFisico, concentrado.descCorta, concentrado.marca,
            concentrado.modelo, concentrado.serie, concentrado.color, concentrado.dimensiones]).
             catch(error=>console.log(error));
+      }
+
+      insertCapturaLayout(concentrado: any){
+        console.log(" Guardado "+JSON.stringify(concentrado[3]));
+        let sql = 'INSERT INTO captura (encontrados, num_sap, centro_costos, expediente, ubicacion_people, area, num_inv,serie, marca, modelo, '+ 
+            ' color, descripcion, alto, ancho, largo, piso, observaciones, edo_fisico, ubicacion_int, ubicacion_ant,estatus) '+
+            ' VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)';
+            return this.db.executeSql(sql,[concentrado[0],concentrado[1], concentrado[2], concentrado[3], concentrado[4],concentrado[5], 
+              concentrado[6], concentrado[7], concentrado[8],concentrado[9], concentrado[10], concentrado[11], concentrado[12],concentrado[13], 
+              concentrado[14], concentrado[15], concentrado[16],concentrado[17], concentrado[18], concentrado[19], concentrado[20],
+              concentrado[21]]).
+            catch(error=>console.log(error));
+      }
+
+      updateCaptura(datosCaptura:any){
+        let sql = 'UPDATE FROM SET id_dato_fijo = ?, num_inv =?, num_sap =?, descripcion = ?, ubicacion_int=?,'+
+                  'ubicacion_ant=?, edo_fisico=?, desc_corta =?,  marca =?, modelo =?, serie =?, color=?, dimensiones =? '+
+                  ' where id_captura =?';
+        return this.db.executeSql(sql,[ datosCaptura.id_dato_fijo, datosCaptura.num_inv, datosCaptura.num_sap, datosCaptura.descripcion,
+                datosCaptura.ubicacion_int, datosCaptura.ubicacion_ant, datosCaptura.edo_fisico, datosCaptura.desc_corta, datosCaptura.marca,
+                datosCaptura.modelo, datosCaptura.serie, datosCaptura.color, datosCaptura.dimensiones, datosCaptura.id_captura]).
+                catch(error=>console.log(error)
+                );
+      }
+
+      getAllCaptura(){
+        let sql = 'SELECT * FROM captura';
+        return  this.db.executeSql(sql, [])
+        .then(response => {
+          let datosCaptura = [];
+          if(response.rows.length>0){
+            for (let index = 0; index < response.rows.length; index++) {
+              datosCaptura.push( response.rows.item(index));
+            }
+          }
+          return Promise.resolve( datosCaptura );
+        })
+        .catch(error => Promise.reject(error));
       }
     
       getCapturaByNumInv(numInv){
