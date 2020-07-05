@@ -129,12 +129,13 @@ export class TasksService {
       }
 
       updateCaptura(datosCaptura:any){
-        let sql = 'UPDATE FROM SET id_dato_fijo = ?, num_inv =?, num_sap =?, descripcion = ?, ubicacion_int=?,'+
+        console.log("datos Captura: "  + JSON.stringify(datosCaptura));
+        let sql = 'UPDATE prueba SET id_dato_fijo = ?, num_inv =?, num_sap =?, descripcion = ?, ubicacion_int=?,'+
                   'ubicacion_ant=?, edo_fisico=?, desc_corta =?,  marca =?, modelo =?, serie =?, color=?, dimensiones =? '+
                   ' where id_captura =?';
-        return this.db.executeSql(sql,[ datosCaptura.id_dato_fijo, datosCaptura.num_inv, datosCaptura.num_sap, datosCaptura.descripcion,
-                datosCaptura.ubicacion_int, datosCaptura.ubicacion_ant, datosCaptura.edo_fisico, datosCaptura.desc_corta, datosCaptura.marca,
-                datosCaptura.modelo, datosCaptura.serie, datosCaptura.color, datosCaptura.dimensiones, datosCaptura.id_captura]).
+        return this.db.executeSql(sql,[ datosCaptura.idDatofijo, datosCaptura.numInv, datosCaptura.noSap, datosCaptura.descripcion,
+                datosCaptura.ubicacionInt, datosCaptura.ubicacionAnt, datosCaptura.edoFisico, datosCaptura.descCorta, datosCaptura.marca,
+                datosCaptura.modelo, datosCaptura.serie, datosCaptura.color, datosCaptura.dimensiones, datosCaptura.idCaptura]).
                 catch(error=>console.log(error)
                 );
       }

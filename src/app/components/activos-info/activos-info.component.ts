@@ -34,7 +34,8 @@ export class ActivosInfoComponent implements OnInit {
     modelo: '',
     serie: '',
     color: '',
-    dimensiones: ''
+    dimensiones: '',
+    estatus: ''
   };
 
 
@@ -87,6 +88,7 @@ export class ActivosInfoComponent implements OnInit {
 
       }
     }else{
+      this.concentrado.estatus = 'nuevo';
       this.taskService.insertCaptura(this.concentrado);
 
     }
@@ -154,10 +156,12 @@ export class ActivosInfoComponent implements OnInit {
 
   scanCel(){
     this.barcodeScanner.scan().then(barcodeData => {
-      console.log('Barcode data', barcodeData);
+     
+      this.presentToastMsgResp(barcodeData.text);
 
       if( !barcodeData.cancelled){
-        console.log(barcodeData);
+        this.presentToastMsgResp(barcodeData.text);
+        this.presentToastMsgResp('Entro a funcion');
         this.dataLocal.muestraInfoScan(barcodeData.format, barcodeData.text);
       }
 
@@ -200,7 +204,8 @@ export class ActivosInfoComponent implements OnInit {
       modelo: '',
       serie: '',
       color: '',
-      dimensiones: ''
+      dimensiones: '',
+      estatus:''
     };
   }
 
