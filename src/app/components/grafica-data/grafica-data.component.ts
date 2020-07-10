@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { TasksService } from '../../services/tasks-service';
 
 @Component({
   selector: 'app-grafica-data',
@@ -7,7 +8,13 @@ import { Component, OnInit } from '@angular/core';
 })
 export class GraficaDataComponent implements OnInit {
 
-  constructor() { }
+  conteo = {
+    faltante : 0,
+    encontrado: 1,
+    nuevo: 2
+  };
+
+  constructor(public taskService: TasksService) { }
 
   ngOnInit() {}
 
