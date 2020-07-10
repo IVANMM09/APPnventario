@@ -1,10 +1,11 @@
 import { SQLiteObject } from '@ionic-native/sqlite/ngx';
 import { DatoF } from '../interfaces/interfaces';
+import { JsonPipe } from '@angular/common';
 
 export class TasksService {
     db: SQLiteObject = null;
     activos: DatoF[] = [];
-  
+    cc: any;
     constructor() {
       
      }
@@ -14,6 +15,11 @@ export class TasksService {
         if(this.db === null){
           this.db = db;
         }
+      }
+
+      dropTableCaptura(){
+        let sql = 'DROP TABLE captura';
+        return this.db.executeSql(sql, []);
       }
 
       createTable(){
@@ -75,19 +81,53 @@ export class TasksService {
         .catch(error => Promise.reject(error));
       }
 
-      getCC(cc : any){
+      getIdDatosFijos(cc : any){
+        console.log("cc " + JSON.stringify(cc));
         var dato: any;
         let sql = 'Select id_datos_fijos FROM datosFijos where centro_costos = ?';
         return this.db.executeSql(sql,[cc]).
           then(response =>{
            console.log(JSON.stringify(response));
             if(response!== null){
-              dato = response; 
+              cc = response; 
             }
             return Promise.resolve(dato);
           }).catch(error => Promise.reject(error));
-          
-          
+             
+      }
+
+      getCC(idDatofijo : any){
+        console.log("idDatoFijo " + JSON.stringify(idDatofijo));
+        var dato = [] ;
+        let sql = 'Select centro_costos FROM datosFijos where id_datos_fijos = ?';
+        return this.db.executeSql(sql,[Number(idDatofijo)]).
+          then(response =>{
+           console.log("dato  " + JSON.stringify(response));
+            if(response!== null){
+              dato = response; 
+              console.log("dato2 " + JSON.stringify(dato));
+            }
+            return Promise.resolve(dato);
+          }).catch(error => Promise.reject(error));
+             
+      }
+
+      getIdDatoFijo (){
+        let idDatosFijos: any [];
+        let sql = 'Select id_datos_fijos FROM datosFijos ';
+        return  this.db.executeSql(sql, [])
+        .then(response => {
+          let DatoF = [];
+          if(response.rows.length>0){
+            for (let index = 0; index < response.rows.length; index++) {
+              DatoF.push( response.rows.item(index));
+              console.log("1"+ response.rows.item(index).id_datos_fijos
+              );
+            }
+          }
+          return Promise.resolve( DatoF );
+        })
+        .catch(error => Promise.reject(error));
       }
 
 
@@ -100,8 +140,8 @@ export class TasksService {
             ' desc_corta TEXT, marca TEXT, modelo TEXT, serie TEXT, encontrados TEXT, ' +
             ' color TEXT, dimensiones TEXT, centro_costos TEXT, expediente TEXT,' +
             ' ubicacion_people TEXT, area TEXT, alto TEXT, largo TEXT,'+
-            ' ancho TEXT, largo TEXT, piso TEXT, observaciones TEXT, '+
-            ' estatus TEXT, campo_add1 TEXT, campo_add2 TEXT)';
+            ' ancho TEXT, piso TEXT, observaciones TEXT, '+
+            ' estatus TEXT, campo_add1 TEXT, campo_add2 TEXT )';
             console.log("sql captura " +sql);
         return this.db.executeSql(sql, []);
       }
@@ -109,10 +149,10 @@ export class TasksService {
       insertCaptura (concentrado: any){
         console.log("entro al insert captura ");
         let sql = 'INSERT INTO captura(id_dato_fijo, num_inv, num_sap, descripcion, ubicacion_int, ubicacion_ant, edo_fisico, '+
-                 'desc_corta, marca, modelo, serie, color, dimensiones ) VALUES(?,?,?,?,?,?,?,?,?,?,?,?,?)';
+                 'desc_corta, marca, modelo, serie, color, dimensiones, estatus ) VALUES(?,?,?,?,?,?,?,?,?,?,?,?,?,?)';
         return this.db.executeSql(sql, [concentrado.idDatofijo, concentrado.numInv, concentrado.noSap, concentrado.descripcion,
            concentrado.ubicacionInt, concentrado.ubicacionAnt, concentrado.edoFisico, concentrado.descCorta, concentrado.marca,
-           concentrado.modelo, concentrado.serie, concentrado.color, concentrado.dimensiones]).
+           concentrado.modelo, concentrado.serie, concentrado.color, concentrado.dimensiones, concentrado.estatus]).
             catch(error=>console.log(error));
       }
 
@@ -130,15 +170,24 @@ export class TasksService {
 
       updateCaptura(datosCaptura:any){
         console.log("datos Captura: "  + JSON.stringify(datosCaptura));
-        let sql = 'UPDATE prueba SET id_dato_fijo = ?, num_inv =?, num_sap =?, descripcion = ?, ubicacion_int=?,'+
+        let sql = 'UPDATE captura SET id_dato_fijo = ?, num_inv =?, num_sap =?, descripcion = ?, ubicacion_int=?,'+
                   'ubicacion_ant=?, edo_fisico=?, desc_corta =?,  marca =?, modelo =?, serie =?, color=?, dimensiones =? '+
                   ' where id_captura =?';
         return this.db.executeSql(sql,[ datosCaptura.idDatofijo, datosCaptura.numInv, datosCaptura.noSap, datosCaptura.descripcion,
                 datosCaptura.ubicacionInt, datosCaptura.ubicacionAnt, datosCaptura.edoFisico, datosCaptura.descCorta, datosCaptura.marca,
-                datosCaptura.modelo, datosCaptura.serie, datosCaptura.color, datosCaptura.dimensiones, datosCaptura.idCaptura]).
+                datosCaptura.modelo, datosCaptura.serie, datosCaptura.color, datosCaptura.dimensiones,Number(datosCaptura.idCaptura)]).
                 catch(error=>console.log(error)
                 );
       }
+
+      updateStatus(datosCap: any){
+      console.log("estatus " +JSON.stringify(datosCap.estatus));
+      console.log("id " + JSON.stringify(datosCap.idCaptura));
+        let sql = 'UPDATE captura SET estatus = ? where id_captura = ?'
+        return this.db.executeSql(sql, [datosCap.estatus, Number(datosCap.idCaptura)]).
+          catch(error=>console.log(error));
+      }
+
 
       getAllCaptura(){
         let sql = 'SELECT * FROM captura';
@@ -173,6 +222,23 @@ export class TasksService {
         .catch(error => Promise.reject(error));
       }
     
+      getEstatus(estado){
+        let sql = 'select estatus from captura where estatus = ?';
+        return this.db.executeSql(sql, [estado])
+        .then(response => {
+          let graficaestado = [];    
+          if(response.rows.length > 0 ){
+            for (let index = 0; index < response.rows.length; index++) {
+              graficaestado.push( response.rows.item(index) );
+            }
+          } else  if(response.rows.length === 0 ){
+            // captura.push( response.rows );
+            graficaestado = [];
+          }
+          return Promise.resolve( graficaestado );
 
+        })
+        .catch(error => Promise.reject(error));
+      }
 
 }

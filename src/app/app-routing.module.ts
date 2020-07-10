@@ -19,6 +19,10 @@ const routes: Routes = [
     path: 'captura',
     loadChildren: () => import('./pages/captura/captura.module').then( m => m.CapturaPageModule)
   },
+  {
+    path: 'grafica',
+    loadChildren: () => import('./pages/grafica/grafica.module').then( m => m.GraficaPageModule)
+  },
 ];
 
 @NgModule({

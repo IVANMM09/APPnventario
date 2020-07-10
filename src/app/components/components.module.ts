@@ -11,6 +11,7 @@ import { PipesModule } from '../pipes/pipes.module';
 import { ActivosInfoComponent } from './activos-info/activos-info.component';
 import { ImportarLoadComponent } from './importar-load/importar-load.component';
 import { ImportarQueryComponent } from './importar-query/importar-query.component';
+import { GraficaDataComponent } from './grafica-data/grafica-data.component';
 import { SQLite } from '@ionic-native/sqlite/ngx';
 
 
@@ -22,7 +23,8 @@ import { SQLite } from '@ionic-native/sqlite/ngx';
     ActivosDataComponent,
     ActivosInfoComponent,
     ImportarLoadComponent,
-    ImportarQueryComponent
+    ImportarQueryComponent,
+    GraficaDataComponent
   ],
   imports: [
     CommonModule,
@@ -39,7 +41,8 @@ import { SQLite } from '@ionic-native/sqlite/ngx';
     ActivosDataComponent,
     ActivosInfoComponent,
     ImportarLoadComponent,
-    ImportarQueryComponent
+    ImportarQueryComponent,
+    GraficaDataComponent
   ], providers: [
     SQLite
   ]

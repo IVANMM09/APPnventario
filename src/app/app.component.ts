@@ -37,6 +37,7 @@ export class AppComponent {
       this.componentes = this.dataService.getMenuOpts();
     });
   }
+
   private createDatabase(){
     this.sqlite.create({
       name: 'data.db',
@@ -45,6 +46,7 @@ export class AppComponent {
     .then((db) => {
       console.log(db);
       this.taskService.setDatabase(db);
+     // this.taskService.dropTableCaptura();
       this.taskService.createTableLayout();
       this.taskService.createTableCaptura();
       return this.taskService.createTable();

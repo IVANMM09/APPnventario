@@ -29,3 +29,8 @@ export interface Concentrado{
     UBICACION: string;
     DESCRIPCION_CORTA: string;
 }
+
+export interface Data{
+    name:string;
+    value:string;
+}

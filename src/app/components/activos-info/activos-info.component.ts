@@ -5,8 +5,8 @@ import { DataLocalService } from '../../services/data-local.service';
 import { TasksService } from '../../services/tasks-service';
 import { ToastController } from '@ionic/angular';
 import { AlertController } from '@ionic/angular';
-
-
+import { Platform } from '@ionic/angular';
+import { Data } from 'src/app/interfaces/interfaces';
 
 @Component({
   selector: 'app-activos-info',
@@ -19,6 +19,9 @@ export class ActivosInfoComponent implements OnInit {
   edoButtonEdit: false;
   scanInfo: Concentrado[] = [];
   datosActivos: any [];
+  datos :Data[];
+
+  data: any [];
   concentrado = {
     idCaptura :'',
     idDatofijo: '',
@@ -35,7 +38,8 @@ export class ActivosInfoComponent implements OnInit {
     serie: '',
     color: '',
     dimensiones: '',
-    estatus: ''
+    estatus: '',
+    centroCostos: ''
   };
 
 
@@ -43,9 +47,21 @@ export class ActivosInfoComponent implements OnInit {
               public dataLocal: DataLocalService,
               public taskService: TasksService,
               public toastController: ToastController,
-              public alertController: AlertController) { }
+              public alertController: AlertController, 
+	            private platform: Platform 
+              ) {
+                
+              }
 
   ngOnInit() {
+    console.log('datos combo '+ JSON.stringify(this.taskService.getIdDatoFijo()));
+    this.platform.ready().then(()=>{
+      this.taskService.getIdDatoFijo().
+      then(datosFijos => {
+        console.log('datos combo '+ JSON.stringify(datosFijos));
+        this.datos = datosFijos;
+    })
+   })
   }
 
 
@@ -88,11 +104,17 @@ export class ActivosInfoComponent implements OnInit {
 
       }
     }else{
+      /*var cc;
+
+      cc = this.taskService.getCC(this.concentrado.idDatofijo);
+      console.log("Centro costos " +JSON.stringify(cc));
+      this.concentrado.centroCostos = cc;*/
       this.concentrado.estatus = 'nuevo';
       this.taskService.insertCaptura(this.concentrado);
 
     }
     this.presentToastMsgResp('Datos guardados');
+    this.limpiarForm();
   }
 
  
@@ -116,8 +138,12 @@ export class ActivosInfoComponent implements OnInit {
           this.presentToastMsgResp('numero de veces registrado: ' + this.datosActivos.length  );
         } */
         if(response.length===1 ){
-
+          this.concentrado.idCaptura = response[0].id_captura
+          this.concentrado.estatus = 'encontrado';
+          this.taskService.updateStatus(this.concentrado);
           this.presentToastMsgResp('registro duplicado');
+          
+
           // tslint:disable-next-line:prefer-for-of
           for (let index = 0; index < response.length; index++) {
             console.log('serie ' + JSON.stringify(response));
@@ -205,8 +231,10 @@ export class ActivosInfoComponent implements OnInit {
       serie: '',
       color: '',
       dimensiones: '',
-      estatus:''
+      estatus:'',
+      centroCostos: ''
     };
+    this.ngOnInit();
   }
 
   guardarEdicion(){
@@ -216,5 +244,7 @@ export class ActivosInfoComponent implements OnInit {
 
     this.presentToastMsgResp('Registro Actualizado');
   }
+
+
 
 }

@@ -9,24 +9,9 @@
         "redirectTo": "/importar-archivo"
     },
     {
-        "icon": "cube",
-        "name": "Importar Base Auxiliar",
-        "redirectTo": "/"
-    },
-    {
-        "icon": "print",
-        "name": "Imprimir",
-        "redirectTo": "/"
-    },
-    {
         "icon": "list",
         "name": "Captura",
         "redirectTo": "/captura"
-    },
-    {
-        "icon": "grid",
-        "name": "Captura RFID",
-        "redirectTo": "/"
     },
     {
         "icon": "archive",
@@ -36,7 +21,7 @@
     {
         "icon": "podium",
         "name": "Grafica",
-        "redirectTo": "/"
+        "redirectTo": "/grafica"
     }
 
 ]
