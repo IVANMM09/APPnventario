@@ -22,6 +22,12 @@ export class TasksService {
         return this.db.executeSql(sql, []);
       }
 
+      dropTableDatosFijos(){
+        let sql = 'DROP TABLE datosFijos';
+        return this.db.executeSql(sql, []);
+      }
+
+
       createTable(){
         let sql = 'CREATE TABLE IF NOT EXISTS datosFijos('+
             ' id_datos_fijos INTEGER PRIMARY KEY AUTOINCREMENT, ' +
@@ -67,7 +73,7 @@ export class TasksService {
       }
 
       getAll(){
-        let sql = 'SELECT * FROM datosFijos';
+        let sql = 'SELECT *  FROM datosFijos where name <> "generico" order by id_datos_fijos desc';
         return  this.db.executeSql(sql, [])
         .then(response => {
           let DatoF = [];
@@ -114,7 +120,7 @@ export class TasksService {
 
       getIdDatoFijo (){
         let idDatosFijos: any [];
-        let sql = 'Select id_datos_fijos FROM datosFijos ';
+        let sql = 'Select id_datos_fijos FROM datosFijos where name <> "generico"';
         return  this.db.executeSql(sql, [])
         .then(response => {
           let DatoF = [];
@@ -141,7 +147,8 @@ export class TasksService {
             ' color TEXT, dimensiones TEXT, centro_costos TEXT, expediente TEXT,' +
             ' ubicacion_people TEXT, area TEXT, alto TEXT, largo TEXT,'+
             ' ancho TEXT, piso TEXT, observaciones TEXT, '+
-            ' estatus TEXT, campo_add1 TEXT, campo_add2 TEXT )';
+            ' estatus TEXT, campo_add1 TEXT, campo_add2 TEXT, '+
+            ' foreign key(id_dato_fijo) references datosFijos(id_datos_fijos))';
             console.log("sql captura " +sql);
         return this.db.executeSql(sql, []);
       }
@@ -159,12 +166,12 @@ export class TasksService {
       insertCapturaLayout(concentrado: any){
         console.log(" Guardado "+JSON.stringify(concentrado[3]));
         let sql = 'INSERT INTO captura (encontrados, num_sap, centro_costos, expediente, ubicacion_people, area, num_inv,serie, marca, modelo, '+ 
-            ' color, descripcion, alto, ancho, largo, piso, observaciones, edo_fisico, ubicacion_int, ubicacion_ant,estatus) '+
-            ' VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)';
+            ' color, descripcion, alto, ancho, largo, piso, observaciones, edo_fisico, ubicacion_int, ubicacion_ant,estatus,id_dato_fijo) '+
+            ' VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)';
             return this.db.executeSql(sql,[concentrado[0],concentrado[1], concentrado[2], concentrado[3], concentrado[4],concentrado[5], 
               concentrado[6], concentrado[7], concentrado[8],concentrado[9], concentrado[10], concentrado[11], concentrado[12],concentrado[13], 
               concentrado[14], concentrado[15], concentrado[16],concentrado[17], concentrado[18], concentrado[19], concentrado[20],
-              concentrado[21]]).
+              Number(concentrado[21])]).
             catch(error=>console.log(error));
       }
 
@@ -181,8 +188,8 @@ export class TasksService {
       }
 
       updateStatus(datosCap: any){
-      console.log("estatus " +JSON.stringify(datosCap.estatus));
-      console.log("id " + JSON.stringify(datosCap.idCaptura));
+        console.log("estatus " +JSON.stringify(datosCap.estatus));
+        console.log("id " + JSON.stringify(datosCap.idCaptura));
         let sql = 'UPDATE captura SET estatus = ? where id_captura = ?'
         return this.db.executeSql(sql, [datosCap.estatus, Number(datosCap.idCaptura)]).
           catch(error=>console.log(error));
@@ -222,7 +229,7 @@ export class TasksService {
         .catch(error => Promise.reject(error));
       }
     
-      getEstatus(estado){
+     /* getEstatus(estado){
         let sql = 'select estatus from captura where estatus = ?';
         return this.db.executeSql(sql, [estado])
         .then(response => {
@@ -239,6 +246,44 @@ export class TasksService {
 
         })
         .catch(error => Promise.reject(error));
+      }*/
+
+      getStatus(){
+        let sql = 'select estatus, count(*) as cantidad from captura group by estatus';
+        return this.db.executeSql(sql, [])
+        .then(response => {
+          let estatus = [];    
+          if(response.rows.length > 0 ){
+            for (let index = 0; index < response.rows.length; index++) {
+              estatus.push( response.rows.item(index) );
+            }
+          }else  if(response.rows.length === 0 ){
+            // captura.push( response.rows );
+            estatus = [];
+          }
+          console.log('estatus' +JSON.stringify(estatus));
+          return Promise.resolve( estatus );
+        })
+        .catch(error => Promise.reject(error));
       }
 
+      getHeaderCaptura(){
+        const captura = 'captura';
+        let sql = 'SELECT name FROM PRAGMA table_info(' + captura + ')';
+        return  this.db.executeSql(sql, [])
+        .then(response => {
+          let headerCaptura = [];
+          if(response.rows.length>0){
+            for (let index = 0; index < response.rows.length; index++) {
+              headerCaptura.push( response.rows.item(index));
+            }
+          }
+          return Promise.resolve( headerCaptura );
+        })
+        .catch(error => Promise.reject(error));
+
+      }
+
+
 }
+

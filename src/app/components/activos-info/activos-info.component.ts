@@ -105,7 +105,7 @@ export class ActivosInfoComponent implements OnInit {
       }
     }else{
       /*var cc;
-
+      
       cc = this.taskService.getCC(this.concentrado.idDatofijo);
       console.log("Centro costos " +JSON.stringify(cc));
       this.concentrado.centroCostos = cc;*/

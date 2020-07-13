@@ -16,12 +16,17 @@
     {
         "icon": "archive",
         "name": "Exportar Archivo",
-        "redirectTo": "/"
+        "redirectTo": "/exportar-archivo"
     },
     {
         "icon": "podium",
         "name": "Grafica",
         "redirectTo": "/grafica"
+    },
+    {
+        "icon": "arrow-back",
+        "name": "Salir",
+        "redirectTo": "/"
     }
 
 ]

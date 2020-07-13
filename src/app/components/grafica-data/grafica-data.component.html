@@ -4,17 +4,23 @@
     <ion-label>
         <h3>Faltante</h3>
     </ion-label>
-    <ion-badge slot="end">22</ion-badge>
+    <ion-badge slot="end">{{conteo.faltante}}</ion-badge>
 </ion-item>
 <ion-item>
     <ion-label>
         <h3>Encontrado</h3>
     </ion-label>
-    <ion-badge slot="end">33</ion-badge>
+    <ion-badge slot="end" >{{conteo.encontrado}}</ion-badge>
 </ion-item>
 <ion-item>
     <ion-label>
         <h3>Nuevo</h3>
     </ion-label>
-    <ion-badge slot="end">44</ion-badge>
+    <ion-badge slot="end">{{conteo.nuevo}}</ion-badge>
+</ion-item>
+<ion-item>
+    <ion-label>
+        <h3>Total</h3>
+    </ion-label>
+    <ion-badge slot="end">{{conteo.total}}</ion-badge>
 </ion-item>

@@ -34,3 +34,9 @@ export interface Data{
     name:string;
     value:string;
 }
+
+export interface Conteo{
+    faltante : string,
+    encontrado: string,
+    nuevo: string
+  }

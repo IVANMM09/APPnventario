@@ -23,6 +23,10 @@ const routes: Routes = [
     path: 'grafica',
     loadChildren: () => import('./pages/grafica/grafica.module').then( m => m.GraficaPageModule)
   },
+  {
+    path: 'exportar-archivo',
+    loadChildren: () => import('./pages/exportar-archivo/exportar-archivo.module').then( m => m.ExportarArchivoPageModule)
+  },
 ];
 
 @NgModule({

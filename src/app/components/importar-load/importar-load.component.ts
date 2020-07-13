@@ -58,15 +58,20 @@ export class ImportarLoadComponent implements OnInit {
   }
 
   private saveData(data: any){
-      console.log("Entro Save Data " +JSON.stringify(data));
-
-      for (let index = 0; index < data.length; index++) {
-        //let id_data = this.tasksService.getCC(data.CC);      
-        data[index][21] = 'faltante'; 
-        this.tasksService.insertCapturaLayout(data[index]);
       
+
+      for (let index = 0; index <data.length; index++) {
+        //let id_data = this.tasksService.getCC(data.CC);   
+        if(data[index]!='' && data[index]!=null ){
+          data[index][20] = 'faltante'; 
+          data[index][21] = 1; 
+          this.tasksService.insertCapturaLayout(data[index]);
+          console.log("Entro Save Data " +JSON.stringify(data[index]));
+        }   
+        
     }
   }
+  
 
 
   private extractData(res) {
@@ -97,6 +102,11 @@ export class ImportarLoadComponent implements OnInit {
   }
  
   exportCSV() {
+    this.tasksService.getAllCaptura()
+    .then(response => {
+      this.csvData = response;
+    });
+
     let csv = this.papa.unparse({
       fields: this.headerRow,
       data: this.csvData
