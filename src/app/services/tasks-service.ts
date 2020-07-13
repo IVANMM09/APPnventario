@@ -206,6 +206,7 @@ export class TasksService {
               datosCaptura.push( response.rows.item(index));
             }
           }
+          console.log('datosCapturaR' +JSON.stringify(datosCaptura));
           return Promise.resolve( datosCaptura );
         })
         .catch(error => Promise.reject(error));

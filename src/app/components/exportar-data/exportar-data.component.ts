@@ -6,6 +6,8 @@ import { FilePath } from '@ionic-native/file-path/ngx';
 import { Platform } from '@ionic/angular';
 import { File } from '@ionic-native/file/ngx';
 
+
+
 @Component({
   selector: 'app-exportar-data',
   templateUrl: './exportar-data.component.html',
@@ -23,7 +25,8 @@ export class ExportarDataComponent implements OnInit {
                public tasksService: TasksService,
                private socialSharing: SocialSharing,
                private filePath: FilePath,
-               private file: File) { }
+               private file: File,
+               private fileSystem: File) { }
 
   ngOnInit() {
     this.tasksService.getAllCaptura().then(response => {
@@ -33,18 +36,18 @@ export class ExportarDataComponent implements OnInit {
     console.error( error );
     });
 
-    this.tasksService.getHeaderCaptura().then(response => {
+   /* this.tasksService.getHeaderCaptura().then(response => {
       this.headerRow = response;
     })
     .catch( error => {
     console.error( error );
-    });
+    });*/
   }
   
   downloadFile(){
-   
+
       let csv = this.papa.unparse({
-        fields: this.headerRow,
+        /*fields: this.headerRow,*/
         data: this.csvData
       });
    
@@ -73,4 +76,36 @@ export class ExportarDataComponent implements OnInit {
       }
     
   }
+
+  downloadCSV() {
+
+    let path = this.fileSystem.externalRootDirectory + '/Download/'; // for Android
+    let csv = this.papa.unparse({
+      /*fields: this.headerRow,*/
+      data: this.csvData
+    });
+ 
+    this.file.writeFile(path, 'layout.csv', csv, { replace: true })
+    .then(
+    _ => {
+      alert('Archivo descargado en /Download');
+    }
+    )
+    .catch(
+    err => {
+
+      this.file.writeExistingFile(path, 'layout.csv', csv)
+        .then(
+        _ => {
+          alert('Archivo sobreescrito en /Download' + path);
+        }
+        )
+        .catch(
+        err => {
+          alert(err + 'Error en Descarga' + path)
+        }
+        )
+    }
+    )
+}
 }
