@@ -1,7 +1,7 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 
 import { IonList, ToastController } from '@ionic/angular';
-//import { DataLocalService } from '../../services/data-local.service';
+// import { DataLocalService } from '../../services/data-local.service';
 import { TasksService } from '../../services/tasks-service';
 import { DatoF } from '../../interfaces/interfaces';
 

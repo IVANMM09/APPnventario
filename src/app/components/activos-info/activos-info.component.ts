@@ -16,7 +16,7 @@ import { Data } from 'src/app/interfaces/interfaces';
 export class ActivosInfoComponent implements OnInit {
   estadoCheck: boolean;
   estadoCheckC: boolean;
-  edoButtonEdit: false;
+  edoButtonEdit: boolean;
   scanInfo: Concentrado[] = [];
   datosActivos: any [];
   datos :Data[];

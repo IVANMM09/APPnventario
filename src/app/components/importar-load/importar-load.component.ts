@@ -17,6 +17,16 @@ import { stringify } from '@angular/compiler/src/util';
 })
 export class ImportarLoadComponent implements OnInit {
 
+fechaActualDf: Date = new Date();
+
+activo = {
+  idEmpleado: 'generico',
+  nombre: 'generico',
+  centroCostos: 'generico',
+  piso: 'generico',
+  usuario: 'generico',
+  fecha: String(this.fechaActualDf)
+}
   csvData: any[] = [];
   headerRow: any[] = [];
   datos: any[] = [];
@@ -24,11 +34,11 @@ export class ImportarLoadComponent implements OnInit {
   private win: any = window;
   // tslint:disable-next-line:max-line-length
   constructor(private socialSharing: SocialSharing, 
-    public toastController: ToastController, 
-    private filePath: FilePath, private fileChooser: FileChooser,  
-    private papa: Papa, private plt: Platform, private file: File, 
-    private http: HttpClient,
-    public tasksService: TasksService ) { 
+              public toastController: ToastController, 
+              private filePath: FilePath, private fileChooser: FileChooser,  
+              private papa: Papa, private plt: Platform, private file: File, 
+              private http: HttpClient,
+              public tasksService: TasksService ) { 
 
     }
 
@@ -38,12 +48,19 @@ export class ImportarLoadComponent implements OnInit {
   }
 
   pickFile() {
+    
     this.fileChooser.open().then((fileuri) => {
+      this.tasksService.dropTableCaptura();
+      this.tasksService.dropTableDatosFijos();
+      this.tasksService.createTableCaptura();
+      this.tasksService.createTable();
+      this.tasksService.create(this.activo);
       this.filePath.resolveNativePath(fileuri).then((resolvednativepath) => {
         this.returnpath = resolvednativepath;
         this.http
       .get(this.win.Ionic.WebView.convertFileSrc(this.returnpath), {
         responseType: 'text'
+
       })
       .subscribe(
         data => this.extractData(data),
@@ -53,7 +70,7 @@ export class ImportarLoadComponent implements OnInit {
       });
     });
 
-
+    
 
   }
 
@@ -90,18 +107,18 @@ export class ImportarLoadComponent implements OnInit {
     });
   
 
-    this.presentToast();
+    this.presentToast('Carga completa, archivos cargados ' + this.csvData.length.toString());
   }
 
-  async presentToast() {
+  async presentToast(message: string) {
     const toast = await this.toastController.create({
-      message: 'Archivo importado existosamente',
-      duration: 1500
+      message,
+      duration: 2500
     });
     toast.present();
   }
  
-  exportCSV() {
+  /* exportCSV() {
     this.tasksService.getAllCaptura()
     .then(response => {
       this.csvData = response;
@@ -135,10 +152,10 @@ export class ImportarLoadComponent implements OnInit {
       a.click();
       document.body.removeChild(a);
     }
-  }
+  } 
 
  
   trackByFn(index: any, item: any) {
     return index;
-  }
+  } */
 }

@@ -43,39 +43,7 @@ export class ExportarDataComponent implements OnInit {
     console.error( error );
     });*/
   }
-  
-  downloadFile(){
 
-      let csv = this.papa.unparse({
-        /*fields: this.headerRow,*/
-        data: this.csvData
-      });
-   
-      if (this.plt.is('cordova')) {
-        this.file.writeFile(this.file.dataDirectory, 'data.csv', csv, {replace: true}).then( res => {
-          this.socialSharing.share(null, null, res.nativeURL, null).then(e =>{
-            // Success
-          }).catch(e =>{
-            console.log('Share failed:', e)
-          });
-        }, err => {
-          console.log('Error: ', err);
-        });
-   
-      } else {
-        // Dummy implementation for Desktop download purpose
-        // tslint:disable-next-line:prefer-const
-        let blob = new Blob([csv]);
-        // tslint:disable-next-line:prefer-const
-        let a = window.document.createElement('a');
-        a.href = window.URL.createObjectURL(blob);
-        a.download = 'newdata.csv';
-        document.body.appendChild(a);
-        a.click();
-        document.body.removeChild(a);
-      }
-    
-  }
 
   downloadCSV() {
 

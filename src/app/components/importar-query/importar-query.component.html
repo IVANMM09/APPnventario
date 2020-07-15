@@ -1,14 +1,27 @@
-<ion-content scrollX="true">
-    <h1>Consulta</h1>
-    <!--  <table border="1" class="data-table">
+<ion-slides *ngIf="datosCaptura.length === 0">
+    <ion-slide>
+        <ion-label>No hay datos guardados</ion-label>
+    </ion-slide>
+</ion-slides>
+<div *ngIf="datosCaptura.length > 0">
+    <ion-searchbar (ionChange)="buscar( $event )"></ion-searchbar>
+    <ion-list #lista>
+        <ion-item-sliding *ngFor="let dato of datosCaptura | filtro: textoBuscar: 'num_inv'">
 
-        <tr>
-            <td *ngFor="let header of headerRow" text-center><b>{{ header }}</b></td>
-        </tr>
-        <tr *ngFor="let row of csvData; let i = index">
-            <td *ngFor="let data of row; let j = index; trackBy: trackByFn" class="data-col ">
-                <ion-input type="text" [(ngModel)]="csvData[i][j]"></ion-input>
-            </td>
-        </tr>
-    </table>-->
-</ion-content>
+            <ion-item>
+                <ion-label>
+                    <h3><strong>ID Capturas:</strong>{{dato.id_captura}}</h3>
+                    <p><strong>ID Dato Fijo:</strong>{{dato.id_dato_fijo}}</p>
+                    <p><strong>Num Inv:</strong>{{dato.num_inv}}</p>
+                    <p><strong>Num Sap</strong>{{ dato.num_sap }}</p>
+                    <p><strong>descripcion:</strong>{{dato.descripcion}}</p>
+                    <p><strong>Ubicacion Int:</strong> {{dato.ubicacion_int}}</p>
+                    <p><strong>Unnicacion Ant:</strong>{{dato.ubicacion_ant}}</p>
+                    <p><strong>Estatus:</strong>{{dato.estatus}}</p>
+                </ion-label>
+
+            </ion-item>
+
+        </ion-item-sliding>
+    </ion-list>
+</div>
