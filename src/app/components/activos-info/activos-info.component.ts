@@ -8,6 +8,7 @@ import { AlertController } from '@ionic/angular';
 import { Platform } from '@ionic/angular';
 import { Data } from 'src/app/interfaces/interfaces';
 
+
 @Component({
   selector: 'app-activos-info',
   templateUrl: './activos-info.component.html',
@@ -17,6 +18,8 @@ export class ActivosInfoComponent implements OnInit {
   estadoCheck: boolean;
   estadoCheckC: boolean;
   edoButtonEdit: boolean;
+  dFijoCheck = 1;
+  dFormCheck: boolean;
   scanInfo: Concentrado[] = [];
   datosActivos: any [];
   datos :Data[];
@@ -48,7 +51,7 @@ export class ActivosInfoComponent implements OnInit {
               public taskService: TasksService,
               public toastController: ToastController,
               public alertController: AlertController, 
-	            private platform: Platform 
+              private platform: Platform
               ) {
                 
               }
@@ -62,6 +65,8 @@ export class ActivosInfoComponent implements OnInit {
         this.datos = datosFijos;
     })
    })
+
+  
   }
 
 
@@ -122,7 +127,7 @@ export class ActivosInfoComponent implements OnInit {
   async presentToastMsgResp( message: string ) {
     const toast = await this.toastController.create({
       message,
-      duration: 1500
+      duration: 2500
     });
     toast.present();
   }
@@ -245,6 +250,14 @@ export class ActivosInfoComponent implements OnInit {
     this.presentToastMsgResp('Registro Actualizado');
   }
 
-
+mostrarForm(){
+  if(this.concentrado.idDatofijo !== undefined){
+    console.log( this.concentrado.idDatofijo );
+    this.dFormCheck = true;
+    this.dFijoCheck = 2;
+  } else {
+    this.presentToastMsgResp('No hay datos fijos cargados');
+  }
+}
 
 }

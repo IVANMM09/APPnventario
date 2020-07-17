@@ -17,6 +17,7 @@ import { SQLite } from '@ionic-native/sqlite/ngx';
 
 
 @NgModule({
+  
   declarations: [
     HeaderComponent,
     MenuComponent,
@@ -33,7 +34,8 @@ import { SQLite } from '@ionic-native/sqlite/ngx';
     IonicModule,
     RouterModule,
     FormsModule,
-    PipesModule
+    PipesModule,
+    
 
   ],
   exports: [
