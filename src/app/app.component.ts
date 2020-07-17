@@ -18,15 +18,6 @@ export class AppComponent {
 
   fechaActualDf: Date = new Date();
 
-  activo = {
-    idEmpleado: 'generico',
-    nombre: 'generico',
-    centroCostos: 'generico',
-    piso: 'generico',
-    usuario: 'generico',
-    fecha: String (this.fechaActualDf)
-  };
-
   componentes: Observable<Componente[]>;
 
   constructor(
@@ -57,12 +48,9 @@ export class AppComponent {
     .then((db) => {
       console.log(db);
       this.taskService.setDatabase(db);
-      this.taskService.dropTableCaptura();
-      this.taskService.dropTableDatosFijos();
       this.taskService.createTableLayout();
       this.taskService.createTableCaptura();
-      this.taskService.createTable();
-      return this.taskService.create(this.activo);
+      return this.taskService.createTable();
     })
     .catch(error =>{
       console.error(error);

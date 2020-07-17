@@ -29,7 +29,7 @@ export class GraficaDataComponent implements OnInit {
           this.conteo.encontrado = response[index].cantidad;
         } else if(response[index].estatus === 'nuevo'){
           this.conteo.nuevo = response[index].cantidad;
-        }else {
+        }else if(response[index].estatus === 'faltante'){
           this.conteo.faltante = response[index].cantidad;
         }
       }

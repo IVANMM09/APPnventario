@@ -89,10 +89,10 @@ export class TasksService {
 
       getIdDatosFijos(cc : any){
         console.log("cc " + JSON.stringify(cc));
-        var dato: any;
         let sql = 'Select id_datos_fijos FROM datosFijos where centro_costos = ?';
         return this.db.executeSql(sql,[cc]).
           then(response =>{
+            let dato = [];
            console.log(JSON.stringify(response));
             if(response!== null){
               cc = response; 
@@ -104,14 +104,17 @@ export class TasksService {
 
       getCC(idDatofijo : any){
         console.log("idDatoFijo " + JSON.stringify(idDatofijo));
-        var dato = [] ;
         let sql = 'Select centro_costos FROM datosFijos where id_datos_fijos = ?';
         return this.db.executeSql(sql,[Number(idDatofijo)]).
           then(response =>{
-           console.log("dato  " + JSON.stringify(response));
-            if(response!== null){
-              dato = response; 
-              console.log("dato2 " + JSON.stringify(dato));
+            let dato = [];
+            if(response.rows.length>0){
+              for (let index = 0; index < response.rows.length; index++) {
+                if (response.rows.item(index)!=null){
+                  dato.push( response.rows.item(index));
+                  console.log("1 "+ response.rows.item(index));
+                }        
+              }
             }
             return Promise.resolve(dato);
           }).catch(error => Promise.reject(error));
@@ -154,12 +157,12 @@ export class TasksService {
       }
     
       insertCaptura (concentrado: any){
-        console.log("entro al insert captura ");
+        console.log("entro al insert captura centro_costos " + concentrado.centroCostos);
         let sql = 'INSERT INTO captura(id_dato_fijo, num_inv, num_sap, descripcion, ubicacion_int, ubicacion_ant, edo_fisico, '+
-                 'desc_corta, marca, modelo, serie, color, dimensiones, estatus ) VALUES(?,?,?,?,?,?,?,?,?,?,?,?,?,?)';
+                 'desc_corta, marca, modelo, serie, color, dimensiones, estatus, centro_costos ) VALUES(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)';
         return this.db.executeSql(sql, [concentrado.idDatofijo, concentrado.numInv, concentrado.noSap, concentrado.descripcion,
            concentrado.ubicacionInt, concentrado.ubicacionAnt, concentrado.edoFisico, concentrado.descCorta, concentrado.marca,
-           concentrado.modelo, concentrado.serie, concentrado.color, concentrado.dimensiones, concentrado.estatus]).
+           concentrado.modelo, concentrado.serie, concentrado.color, concentrado.dimensiones, concentrado.estatus, concentrado.centroCostos]).
             catch(error=>console.log(error));
       }
 

@@ -23,7 +23,7 @@ export class ActivosInfoComponent implements OnInit {
   scanInfo: Concentrado[] = [];
   datosActivos: any [];
   datos :Data[];
-
+  centroCostos:any [];
   data: any [];
   concentrado = {
     idCaptura :'',
@@ -109,19 +109,31 @@ export class ActivosInfoComponent implements OnInit {
 
       }
     }else{
-      /*var cc;
+       
+      this.getCC(this.concentrado);
       
-      cc = this.taskService.getCC(this.concentrado.idDatofijo);
-      console.log("Centro costos " +JSON.stringify(cc));
-      this.concentrado.centroCostos = cc;*/
-      this.concentrado.estatus = 'nuevo';
-      this.taskService.insertCaptura(this.concentrado);
 
     }
     this.presentToastMsgResp('Datos guardados');
     this.limpiarForm();
   }
 
+    getCC(concentrado){
+      this.taskService.getCC(this.concentrado.idDatofijo)
+      .then(response => {
+        if(response!=null){
+          this.centroCostos = response;
+          concentrado.centroCostos = this.centroCostos[0].centro_costos;
+          concentrado.estatus = 'nuevo';
+          this.taskService.insertCaptura(concentrado);                         
+        }else{
+          console.log('No se encontro centro de costos ');
+          concentrado.estatus = 'nuevo';
+          this.taskService.insertCaptura(concentrado);
+        }
+      });
+      
+    }
  
 
   async presentToastMsgResp( message: string ) {
