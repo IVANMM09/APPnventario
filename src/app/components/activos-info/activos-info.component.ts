@@ -15,6 +15,12 @@ import { Data } from 'src/app/interfaces/interfaces';
   styleUrls: ['./activos-info.component.scss'],
 })
 export class ActivosInfoComponent implements OnInit {
+  conteocap = {
+    encontrado: 0,
+    nuevo: 0,
+    total: 0
+  };
+
   varDF = 'no hay dato fijo';
   contcapturas = 0;
   estadoCheck: boolean;
@@ -71,7 +77,7 @@ export class ActivosInfoComponent implements OnInit {
     })
    })
 
-  
+    this.conteoCapturas();
   }
 
 
@@ -119,6 +125,7 @@ export class ActivosInfoComponent implements OnInit {
       
 
     }
+    this.conteoCapturas();
     this.presentToastMsgResp('Datos guardados');
     this.limpiarForm();
   }
@@ -285,6 +292,23 @@ mostrarForm(){
 
 BuscarSAP(){
 
+}
+
+conteoCapturas(){
+
+  this.taskService.getStatus()
+  .then(response => {
+    for (let index = 0; index < response.length; index++) {
+      if(response[index].estatus === 'encontrado'){
+        this.conteocap.encontrado = response[index].cantidad;
+      } else if(response[index].estatus === 'nuevo'){
+        this.conteocap.nuevo = response[index].cantidad;
+      }
+    }
+    this.conteocap.total = this.conteocap.encontrado + this.conteocap.nuevo;
+
+
+  })
 }
 
 }

@@ -4,7 +4,7 @@
             <ion-back-button defaultHref="/"></ion-back-button>
         </ion-buttons>
         <ion-title text-capitalize> Captura </ion-title>
-        <ion-label slot="end" disabled>No capturas: {{ contcapturas }}</ion-label>
+        <ion-label slot="end" disabled>No capturas: {{ conteocap.total }}</ion-label>
 
     </ion-toolbar>
 </ion-header>
@@ -34,8 +34,7 @@
             </ion-col>
             <ion-col col-3>
                 <ion-item>
-                    <ion-label position="floating">Dato fijo:</ion-label>
-                    <ion-label position="floating">{{ varDF }}</ion-label>
+                    <ion-label disabled>Dato fijo: {{ varDF }}</ion-label>
                 </ion-item>
             </ion-col>
         </ion-row>
