@@ -38,31 +38,30 @@
                 </ion-item>
             </ion-col>
         </ion-row>
-        <ion-row>
-            <ion-col col-3>
-                <ion-item>
 
-                    <ion-label position="floating ">Codigo 1:</ion-label>
-                    <!-- <ion-input type="text " name="numInv " [(ngModel)]="activosInfo.numInv "></ion-input> -->
-                    <ion-input type="text " name="numInv" [(ngModel)]="concentrado.numInv " (ionChange)="getNumInv() " debounce="2000 "></ion-input>
-                    <!--<ion-button *ngIf="estadoCheckC===t rue " slot="end " expand="block " (click)="scanCel() ">Capturar</ion-button>-->
-                </ion-item>
-            </ion-col>
-            <!-- <ion-item>
+        <ion-item>
+
+            <ion-label position="floating ">Codigo 1:</ion-label>
+            <!-- <ion-input type="text " name="numInv " [(ngModel)]="activosInfo.numInv "></ion-input> -->
+            <ion-input type="text " name="numInv" [(ngModel)]="concentrado.numInv " (ionChange)="getNumInv() " debounce="2000 "></ion-input>
+            <!--<ion-button *ngIf="estadoCheckC===t rue " slot="end " expand="block " (click)="scanCel() ">Capturar</ion-button>-->
+        </ion-item>
+
+        <!-- <ion-item>
             <ion-label>Capturar desde camara:</ion-label>
             <ion-checkbox color="primary " (ionChange)="updateSelectCamara( $event ) "></ion-checkbox>
 
         </ion-item> -->
 
-            <!--<ion-item *ngIf="estadoCheck===true ">
+        <!--<ion-item *ngIf="estadoCheck===true ">
             <ion-label position="floating ">Numero de Capturas: </ion-label>
             <ion-input type="text " name="noCapturas " disabled="false " [(ngModel)]="concentrado.noCapturas "></ion-input>
         </ion-item>-->
-            <!-- <ion-item>
+        <!-- <ion-item>
             <ion-label position="floating ">Id Dato Fijo:</ion-label>
             <ion-input type="text " name="idDatoFijo " [(ngModel)]="concentrado.idDatofijo "></ion-input>
         </ion-item>-->
-            <!-- <ion-item>
+        <!-- <ion-item>
             <ion-label position="floating ">Dato fijo combo</ion-label>
             <ion-select placeholder="Selecciona un dato fijo " type="text " name="idDatoFijo " [(ngModel)]="concentrado.idDatofijo ">
                 <ion-select-option>Datofijo 1</ion-select-option>
@@ -72,7 +71,7 @@
                 <ion-select-option>DatoFijo 5</ion-select-option>
             </ion-select>
         </ion-item>-->
-            <!-- <ion-item>
+        <!-- <ion-item>
             <ion-label position="floating ">Dato fijo combo</ion-label>
             <ion-select placeholder="Selecciona un dato fijo " type="text " name="idDatofijo " [(ngModel)]="concentrado.idDatofijo" required>
                 <ion-select-option *ngFor="let item of datos ">
@@ -80,17 +79,13 @@
                 </ion-select-option>
             </ion-select>
         </ion-item>-->
-            <ion-col col-6>
-                <ion-item>
-                    <ion-label position="floating ">Codigo 2:</ion-label>
-                    <ion-input type="text " name="noSAP" [(ngModel)]="concentrado.noSap"></ion-input>
 
-                </ion-item>
-            </ion-col>
-            <ion-col col-3>
-                <ion-button (click)="BuscarSAP()">Buscar</ion-button>
-            </ion-col>
-        </ion-row>
+        <ion-item>
+            <ion-label position="floating ">Codigo 2:</ion-label>
+            <ion-input type="text " name="noSAP" [(ngModel)]="concentrado.noSap"></ion-input>
+            <ion-button (click)="BuscarSAP()" slot="end">Buscar</ion-button>
+
+        </ion-item>
         <ion-item>
             <ion-label position="floating ">Descripcion:</ion-label>
             <ion-input type="text " name="descripcion" [(ngModel)]="concentrado.descripcion "></ion-input>
@@ -102,27 +97,28 @@
             <ion-input type="text " name="ubicacionAnt" [(ngModel)]="concentrado.ubicacionAnt "></ion-input>
         </ion-item> -->
 
-
-        <ion-item>
-            <ion-label position="floating ">Marca:</ion-label>
-            <ion-input type="text " name="marca" [(ngModel)]="concentrado.marca "></ion-input>
-            <!-- <ion-input type="text " name="marca " [(ngModel)]="activosInfo.marca "></ion-input> -->
-        </ion-item>
-        <ion-item>
-            <ion-label position="floating ">Modelo:</ion-label>
-            <ion-input type="text " name="modelo" [(ngModel)]="concentrado.modelo "></ion-input>
-            <!-- <ion-input type="text " name="modelo " [(ngModel)]="activosInfo.modelo "></ion-input> -->
-        </ion-item>
+        <ion-row>
+            <ion-col col-6>
+                <ion-item>
+                    <ion-label position="floating ">Marca:</ion-label>
+                    <ion-input type="text " name="marca" [(ngModel)]="concentrado.marca "></ion-input>
+                    <!-- <ion-input type="text " name="marca " [(ngModel)]="activosInfo.marca "></ion-input> -->
+                </ion-item>
+            </ion-col>
+            <ion-col col-6>
+                <ion-item>
+                    <ion-label position="floating ">Modelo:</ion-label>
+                    <ion-input type="text " name="modelo" [(ngModel)]="concentrado.modelo "></ion-input>
+                    <!-- <ion-input type="text " name="modelo " [(ngModel)]="activosInfo.modelo "></ion-input> -->
+                </ion-item>
+            </ion-col>
+        </ion-row>
         <ion-item>
             <ion-label position="floating ">Serie:</ion-label>
             <ion-input type="text " name="serie" [(ngModel)]="concentrado.serie "></ion-input>
             <!-- <ion-input type="text " name="serie " [(ngModel)]="activosInfo.serie "></ion-input> -->
         </ion-item>
-        <ion-item>
-            <ion-label position="floating ">Color:</ion-label>
-            <ion-input type="text " name="color" [(ngModel)]="concentrado.color "></ion-input>
-            <!-- <ion-input type="text " name="color " [(ngModel)]="activosInfo.color "></ion-input> -->
-        </ion-item>
+
         <!-- <ion-item>
             <ion-label position="floating">Dimensiones:</ion-label>
             <ion-input type="text " name="altura " [(ngModel)]="concentrado.dimensiones "></ion-input>
@@ -148,10 +144,21 @@
                 </ion-item>
             </ion-col>
         </ion-row>
-        <ion-item>
-            <ion-label position="floating ">Condición Física: </ion-label>
-            <ion-input type="text " name="estadoFisico" [(ngModel)]="concentrado.edoFisico "></ion-input>
-        </ion-item>
+        <ion-row>
+            <ion-col col-6>
+                <ion-item>
+                    <ion-label position="floating ">Condición Física: </ion-label>
+                    <ion-input type="text " name="estadoFisico" [(ngModel)]="concentrado.edoFisico "></ion-input>
+                </ion-item>
+            </ion-col>
+            <ion-col col-6>
+                <ion-item>
+                    <ion-label position="floating ">Color:</ion-label>
+                    <ion-input type="text " name="color" [(ngModel)]="concentrado.color "></ion-input>
+                    <!-- <ion-input type="text " name="color " [(ngModel)]="activosInfo.color "></ion-input> -->
+                </ion-item>
+            </ion-col>
+        </ion-row>
         <ion-item>
             <ion-label position="floating ">Ubicación:</ion-label>
             <ion-input type="text " name="ubicacionInt" [(ngModel)]="concentrado.ubicacionInt "></ion-input>
