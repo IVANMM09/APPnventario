@@ -144,7 +144,8 @@ export class TasksService {
         let sql = 'CREATE TABLE IF NOT EXISTS captura('+
             ' id_captura INTEGER PRIMARY KEY AUTOINCREMENT, ' +
             ' id_dato_fijo INTEGER, num_inv TEXT, '+
-            ' num_sap TEXT, descripcion TEXT, ' +
+            ' num_sap TEXT, empresa TEXT, ' +
+            ' descripcion TEXT, ' +
             ' ubicacion_int TEXT, ubicacion_ant TEXT, edo_fisico TEXT, '+
             ' desc_corta TEXT, marca TEXT, modelo TEXT, serie TEXT, encontrados TEXT, ' +
             ' color TEXT, dimensiones TEXT, centro_costos TEXT, expediente TEXT,' +
@@ -152,17 +153,17 @@ export class TasksService {
             ' ancho TEXT, piso TEXT, observaciones TEXT, '+
             ' estatus TEXT, campo_add1 TEXT, campo_add2 TEXT, '+
             ' foreign key(id_dato_fijo) references datosFijos(id_datos_fijos))';
-            console.log("sql captura " +sql);
+            console.log('sql captura ' +sql);
         return this.db.executeSql(sql, []);
       }
     
       insertCaptura (concentrado: any){
         console.log("entro al insert captura centro_costos " + concentrado.centroCostos);
-        let sql = 'INSERT INTO captura(id_dato_fijo, num_inv, num_sap, descripcion, ubicacion_int, ubicacion_ant, edo_fisico, '+
-                 'desc_corta, marca, modelo, serie, color, dimensiones, estatus, centro_costos ) VALUES(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)';
-        return this.db.executeSql(sql, [concentrado.idDatofijo, concentrado.numInv, concentrado.noSap, concentrado.descripcion,
+        let sql = 'INSERT INTO captura(id_dato_fijo, num_inv, empresa, num_sap, descripcion, ubicacion_int, ubicacion_ant, edo_fisico, '+
+                 'desc_corta, marca, modelo, serie, color, largo, ancho, alto, estatus, centro_costos ) VALUES(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)';
+        return this.db.executeSql(sql, [concentrado.idDatofijo, concentrado.numInv, concentrado.empresa, concentrado.noSap, concentrado.descripcion,
            concentrado.ubicacionInt, concentrado.ubicacionAnt, concentrado.edoFisico, concentrado.descCorta, concentrado.marca,
-           concentrado.modelo, concentrado.serie, concentrado.color, concentrado.dimensiones, concentrado.estatus, concentrado.centroCostos]).
+           concentrado.modelo, concentrado.serie, concentrado.color, concentrado.largo, concentrado.alto, concentrado.ancho, concentrado.estatus, concentrado.centroCostos]).
             catch(error=>console.log(error));
       }
 
@@ -180,13 +181,13 @@ export class TasksService {
 
       updateCaptura(datosCaptura:any){
         console.log("datos Captura: "  + JSON.stringify(datosCaptura));
-        let sql = 'UPDATE captura SET id_dato_fijo = ?, num_inv =?, num_sap =?, descripcion = ?, ubicacion_int=?,'+
-                  'ubicacion_ant=?, edo_fisico=?, desc_corta =?,  marca =?, modelo =?, serie =?, color=?, dimensiones =? '+
+        let sql = 'UPDATE captura SET id_dato_fijo = ?, num_inv =?, num_sap =?, empresa =? descripcion = ?, ubicacion_int=?,'+
+                  'ubicacion_ant=?, edo_fisico=?, desc_corta =?,  marca =?, modelo =?, serie =?, color=?, largo =?, alto =?, ancho =? '+
                   ' where id_captura =?';
-        return this.db.executeSql(sql,[ datosCaptura.idDatofijo, datosCaptura.numInv, datosCaptura.noSap, datosCaptura.descripcion,
+        return this.db.executeSql(sql,[ datosCaptura.idDatofijo, datosCaptura.numInv, datosCaptura.noSap, datosCaptura.empresa, datosCaptura.descripcion,
                 datosCaptura.ubicacionInt, datosCaptura.ubicacionAnt, datosCaptura.edoFisico, datosCaptura.descCorta, datosCaptura.marca,
-                datosCaptura.modelo, datosCaptura.serie, datosCaptura.color, datosCaptura.dimensiones,Number(datosCaptura.idCaptura)]).
-                catch(error=>console.log(error)
+                datosCaptura.modelo, datosCaptura.serie, datosCaptura.color, datosCaptura.largo, datosCaptura.alto, datosCaptura.ancho, Number(datosCaptura.idCaptura)]).
+                catch(error => console.log(error)
                 );
       }
 

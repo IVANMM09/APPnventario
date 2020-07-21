@@ -15,6 +15,8 @@ import { Data } from 'src/app/interfaces/interfaces';
   styleUrls: ['./activos-info.component.scss'],
 })
 export class ActivosInfoComponent implements OnInit {
+  varDF = 'no hay dato fijo';
+  contcapturas = 0;
   estadoCheck: boolean;
   estadoCheckC: boolean;
   edoButtonEdit: boolean;
@@ -29,6 +31,7 @@ export class ActivosInfoComponent implements OnInit {
     idCaptura :'',
     idDatofijo: '',
     noCapturas: '',
+    empresa: '',
     numInv: '',
     noSap: '',
     descripcion: '',
@@ -40,7 +43,9 @@ export class ActivosInfoComponent implements OnInit {
     modelo: '',
     serie: '',
     color: '',
-    dimensiones: '',
+    largo: '',
+    ancho: '',
+    alto: '',
     estatus: '',
     centroCostos: ''
   };
@@ -167,6 +172,7 @@ export class ActivosInfoComponent implements OnInit {
 
             this.concentrado.idCaptura = response[0].id_captura;
             this.concentrado.idDatofijo = response[0].id_dato_fijo;
+            this.concentrado.empresa = response[0].empresa;
             this.concentrado.noSap = response[0].num_sap;
             this.concentrado.descripcion = response[0].descripcion;
             this.concentrado.ubicacionInt = response[0].ubicacion_int;
@@ -177,8 +183,9 @@ export class ActivosInfoComponent implements OnInit {
             this.concentrado.modelo = response[0].modelo;
             this.concentrado.serie = response[0].serie;
             this.concentrado.color = response[0].color;
-            this.concentrado.dimensiones = response[0].dimensiones;
-
+            this.concentrado.largo = response[0].largo;
+            this.concentrado.alto = response[0].alto;
+            this.concentrado.ancho = response[0].ancho;
            } 
           this.presentAlertConfirm();
 
@@ -199,7 +206,7 @@ export class ActivosInfoComponent implements OnInit {
 
   scanCel(){
     this.barcodeScanner.scan().then(barcodeData => {
-     
+
       this.presentToastMsgResp(barcodeData.text);
 
       if( !barcodeData.cancelled){
@@ -236,6 +243,7 @@ export class ActivosInfoComponent implements OnInit {
       idCaptura :'',
       idDatofijo: '',
       noCapturas: '',
+      empresa: '',
       numInv: '',
       noSap: '',
       descripcion: '',
@@ -247,7 +255,9 @@ export class ActivosInfoComponent implements OnInit {
       modelo: '',
       serie: '',
       color: '',
-      dimensiones: '',
+      largo: '',
+      ancho: '',
+      alto: '',
       estatus:'',
       centroCostos: ''
     };
@@ -263,13 +273,18 @@ export class ActivosInfoComponent implements OnInit {
   }
 
 mostrarForm(){
+  
   if(this.concentrado.idDatofijo !== undefined){
-    console.log( this.concentrado.idDatofijo );
+    this.varDF = this.concentrado.idDatofijo;
     this.dFormCheck = true;
     this.dFijoCheck = 2;
   } else {
     this.presentToastMsgResp('No hay datos fijos cargados');
   }
+}
+
+BuscarSAP(){
+
 }
 
 }

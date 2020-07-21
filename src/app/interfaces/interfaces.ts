@@ -19,6 +19,7 @@ export interface DatoF {
 export interface DatoCaptura {
         idCaptura: string;
             idDatoFijo: string;
+            empresa: string;
             numInv: string;
             numSap: string;
             descripcion: string;
