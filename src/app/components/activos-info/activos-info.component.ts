@@ -294,6 +294,10 @@ BuscarSAP(){
 
 }
 
+BuscarSerie(){
+  
+}
+
 conteoCapturas(){
 
   this.taskService.getStatus()

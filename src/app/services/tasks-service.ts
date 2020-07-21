@@ -181,7 +181,7 @@ export class TasksService {
 
       updateCaptura(datosCaptura:any){
         console.log("datos Captura: "  + JSON.stringify(datosCaptura));
-        let sql = 'UPDATE captura SET id_dato_fijo = ?, num_inv =?, num_sap =?, empresa =? descripcion = ?, ubicacion_int=?,'+
+        let sql = 'UPDATE captura SET id_dato_fijo = ?, num_inv =?, num_sap =?, empresa =?, descripcion = ?, ubicacion_int=?,'+
                   'ubicacion_ant=?, edo_fisico=?, desc_corta =?,  marca =?, modelo =?, serie =?, color=?, largo =?, alto =?, ancho =? '+
                   ' where id_captura =?';
         return this.db.executeSql(sql,[ datosCaptura.idDatofijo, datosCaptura.numInv, datosCaptura.noSap, datosCaptura.empresa, datosCaptura.descripcion,
