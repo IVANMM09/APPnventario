@@ -73,7 +73,7 @@ export class TasksService {
       }
 
       getAll(){
-        let sql = 'SELECT *  FROM datosFijos where name <> "generico" order by id_datos_fijos desc';
+        let sql = 'SELECT *  FROM datosFijos where name <> "generico" order by id_datos_fijos asc';
         return  this.db.executeSql(sql, [])
         .then(response => {
           let DatoF = [];
@@ -201,7 +201,7 @@ export class TasksService {
 
 
       getAllCaptura(){
-        let sql = 'SELECT * FROM captura';
+        let sql = 'SELECT * FROM captura order by id_captura asc';
         return  this.db.executeSql(sql, [])
         .then(response => {
           let datosCaptura = [];
@@ -233,6 +233,43 @@ export class TasksService {
         })
         .catch(error => Promise.reject(error));
       }
+
+      getCapturaByNumSap(numInv){
+        let sql = 'select * from captura where num_sap = ?';
+        return this.db.executeSql(sql, [numInv])
+        .then(response => {
+          let captura = [];    
+          if(response.rows.length > 0 ){
+            for (let index = 0; index < response.rows.length; index++) {
+              captura.push( response.rows.item(index) );
+            }
+          }else  if(response.rows.length === 0 ){
+            // captura.push( response.rows );
+            captura = [];
+          }
+          return Promise.resolve( captura );
+        })
+        .catch(error => Promise.reject(error));
+      }
+
+      getCapturaBySerie(numInv){
+        let sql = 'select * from captura where serie = ?';
+        return this.db.executeSql(sql, [numInv])
+        .then(response => {
+          let captura = [];    
+          if(response.rows.length > 0 ){
+            for (let index = 0; index < response.rows.length; index++) {
+              captura.push( response.rows.item(index) );
+            }
+          }else  if(response.rows.length === 0 ){
+            // captura.push( response.rows );
+            captura = [];
+          }
+          return Promise.resolve( captura );
+        })
+        .catch(error => Promise.reject(error));
+      }
+
     
      /* getEstatus(estado){
         let sql = 'select estatus from captura where estatus = ?';

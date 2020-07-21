@@ -137,16 +137,29 @@ export class ActivosInfoComponent implements OnInit {
           this.centroCostos = response;
           concentrado.centroCostos = this.centroCostos[0].centro_costos;
           concentrado.estatus = 'nuevo';
-          this.taskService.insertCaptura(concentrado);                         
+          this.taskService.insertCaptura(concentrado);
+          this.conteoCapturas();                         
         }else{
           console.log('No se encontro centro de costos ');
           concentrado.estatus = 'nuevo';
           this.taskService.insertCaptura(concentrado);
+          this.conteoCapturas();
         }
       });
       
     }
  
+
+    getCCUpdate(concentrado){
+      this.taskService.getCC(this.concentrado.idDatofijo)
+      .then(response => {
+        if(response!=null){
+          this.centroCostos = response;
+          concentrado.centroCostos = this.centroCostos[0].centro_costos;                        
+        }
+      });
+    }
+
 
   async presentToastMsgResp( message: string ) {
     const toast = await this.toastController.create({
@@ -171,7 +184,7 @@ export class ActivosInfoComponent implements OnInit {
           this.concentrado.estatus = 'encontrado';
           this.taskService.updateStatus(this.concentrado);
           this.presentToastMsgResp('registro duplicado');
-          
+          this.conteoCapturas();
 
           // tslint:disable-next-line:prefer-for-of
           for (let index = 0; index < response.length; index++) {
@@ -273,7 +286,9 @@ export class ActivosInfoComponent implements OnInit {
 
   guardarEdicion(){
     this.mostrarBotonEditar(false);
-    console.log("update " + JSON.stringify(this.concentrado));    
+    console.log("update " + JSON.stringify(this.concentrado));  
+    this.getCCUpdate(this.concentrado);  
+    console.log("centro costos update " + this.concentrado)
     this.taskService.updateCaptura(this.concentrado);
 
     this.presentToastMsgResp('Registro Actualizado');
@@ -291,11 +306,99 @@ mostrarForm(){
 }
 
 BuscarSAP(){
+  if(this.concentrado.noSap.trim() !== '' && this.concentrado.noSap.trim() !== '0' ){
+  this.taskService.getCapturaByNumSap(this.concentrado.noSap)
+  .then(response => {
+    this.datosActivos = response;
+    if(response.length===1 ){
+      this.concentrado.idCaptura = response[0].id_captura
+      this.concentrado.estatus = 'encontrado';
+      this.taskService.updateStatus(this.concentrado);
+      this.presentToastMsgResp('registro duplicado');
+      this.conteoCapturas();
 
+      // tslint:disable-next-line:prefer-for-of
+      for (let index = 0; index < response.length; index++) {
+        console.log('serie ' + JSON.stringify(response));
+
+        this.concentrado.idCaptura = response[0].id_captura;
+        this.concentrado.idDatofijo = response[0].id_dato_fijo;
+        this.concentrado.empresa = response[0].empresa;
+        this.concentrado.noSap = response[0].num_sap;
+        this.concentrado.descripcion = response[0].descripcion;
+        this.concentrado.ubicacionInt = response[0].ubicacion_int;
+        this.concentrado.ubicacionAnt = response[0].ubicacion_ant;
+        this.concentrado.edoFisico = response[0].edo_fisico;
+        this.concentrado.descCorta = response[0].desc_corta;
+        this.concentrado.marca = response[0].marca;
+        this.concentrado.modelo = response[0].modelo;
+        this.concentrado.serie = response[0].serie;
+        this.concentrado.color = response[0].color;
+        this.concentrado.largo = response[0].largo;
+        this.concentrado.alto = response[0].alto;
+        this.concentrado.ancho = response[0].ancho;
+       } 
+      this.presentAlertConfirm();
+
+    } else {
+
+      this.presentToastMsgResp('El registro se guarda por ser nuevo o estar mas de dos veces ');
+    }
+  })
+  .catch( error => {
+  console.error( error );
+  });
+} else {
+  this.presentToastMsgResp('se guarda por ser 0 o vacio ');
+}
 }
 
 BuscarSerie(){
+  if(this.concentrado.serie.trim() !== '' && this.concentrado.serie.trim() !== '0' ){
+    this.taskService.getCapturaBySerie(this.concentrado.serie)
+    .then(response => {
+      this.datosActivos = response;
+      if(response.length===1 ){
+        this.concentrado.idCaptura = response[0].id_captura
+        this.concentrado.estatus = 'encontrado';
+        this.taskService.updateStatus(this.concentrado);
+        this.presentToastMsgResp('registro duplicado');
+        this.conteoCapturas();
   
+        // tslint:disable-next-line:prefer-for-of
+        for (let index = 0; index < response.length; index++) {
+          console.log('serie ' + JSON.stringify(response));
+  
+          this.concentrado.idCaptura = response[0].id_captura;
+          this.concentrado.idDatofijo = response[0].id_dato_fijo;
+          this.concentrado.empresa = response[0].empresa;
+          this.concentrado.noSap = response[0].num_sap;
+          this.concentrado.descripcion = response[0].descripcion;
+          this.concentrado.ubicacionInt = response[0].ubicacion_int;
+          this.concentrado.ubicacionAnt = response[0].ubicacion_ant;
+          this.concentrado.edoFisico = response[0].edo_fisico;
+          this.concentrado.descCorta = response[0].desc_corta;
+          this.concentrado.marca = response[0].marca;
+          this.concentrado.modelo = response[0].modelo;
+          this.concentrado.serie = response[0].serie;
+          this.concentrado.color = response[0].color;
+          this.concentrado.largo = response[0].largo;
+          this.concentrado.alto = response[0].alto;
+          this.concentrado.ancho = response[0].ancho;
+         } 
+        this.presentAlertConfirm();
+  
+      } else {
+  
+        this.presentToastMsgResp('El registro se guarda por ser nuevo o estar mas de dos veces ');
+      }
+    })
+    .catch( error => {
+    console.error( error );
+    });
+  } else {
+    this.presentToastMsgResp('se guarda por ser 0 o vacio ');
+  }
 }
 
 conteoCapturas(){
