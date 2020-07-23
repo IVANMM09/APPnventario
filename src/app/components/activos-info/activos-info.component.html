@@ -29,7 +29,7 @@
             <ion-col col-9>
                 <ion-item>
                     <ion-label position="floating ">Empresa/Cia:</ion-label>
-                    <ion-input type="text " name="empresa" [(ngModel)]="concentrado.empresa"></ion-input>
+                    <ion-input type="text " name="empresa" [(ngModel)]="concentrado.empresa" required></ion-input>
                 </ion-item>
             </ion-col>
             <ion-col col-3>
@@ -43,7 +43,7 @@
 
             <ion-label position="floating ">Codigo 1:</ion-label>
             <!-- <ion-input type="text " name="numInv " [(ngModel)]="activosInfo.numInv "></ion-input> -->
-            <ion-input type="text " name="numInv" [(ngModel)]="concentrado.numInv " (ionChange)="getNumInv() " debounce="2000 "></ion-input>
+            <ion-input type="text " name="numInv" [(ngModel)]="concentrado.numInv " (ionChange)="getNumInv() " debounce="2000" required></ion-input>
             <!--<ion-button *ngIf="estadoCheckC===t rue " slot="end " expand="block " (click)="scanCel() ">Capturar</ion-button>-->
         </ion-item>
 
@@ -82,13 +82,13 @@
 
         <ion-item>
             <ion-label position="floating ">Codigo 2:</ion-label>
-            <ion-input type="text " name="noSAP" [(ngModel)]="concentrado.noSap"></ion-input>
+            <ion-input type="text " name="noSAP" [(ngModel)]="concentrado.noSap" required></ion-input>
             <ion-button (click)="BuscarSAP()" slot="end">Buscar</ion-button>
 
         </ion-item>
         <ion-item>
             <ion-label position="floating ">Descripcion:</ion-label>
-            <ion-input type="text " name="descripcion" [(ngModel)]="concentrado.descripcion "></ion-input>
+            <ion-input type="text " name="descripcion" [(ngModel)]="concentrado.descripcion" required></ion-input>
             <!-- <ion-input type="text " name="descripcion " [(ngModel)]="activosInfo.descripcion "></ion-input> -->
         </ion-item>
 
@@ -101,21 +101,21 @@
             <ion-col col-6>
                 <ion-item>
                     <ion-label position="floating ">Marca:</ion-label>
-                    <ion-input type="text " name="marca" [(ngModel)]="concentrado.marca "></ion-input>
+                    <ion-input type="text " name="marca" [(ngModel)]="concentrado.marca"></ion-input>
                     <!-- <ion-input type="text " name="marca " [(ngModel)]="activosInfo.marca "></ion-input> -->
                 </ion-item>
             </ion-col>
             <ion-col col-6>
                 <ion-item>
                     <ion-label position="floating ">Modelo:</ion-label>
-                    <ion-input type="text " name="modelo" [(ngModel)]="concentrado.modelo "></ion-input>
+                    <ion-input type="text " name="modelo" [(ngModel)]="concentrado.modelo"></ion-input>
                     <!-- <ion-input type="text " name="modelo " [(ngModel)]="activosInfo.modelo "></ion-input> -->
                 </ion-item>
             </ion-col>
         </ion-row>
         <ion-item>
             <ion-label position="floating ">Serie:</ion-label>
-            <ion-input type="text " name="serie" [(ngModel)]="concentrado.serie "></ion-input>
+            <ion-input type="text " name="serie" [(ngModel)]="concentrado.serie"></ion-input>
             <!-- <ion-input type="text " name="serie " [(ngModel)]="activosInfo.serie "></ion-input> -->
             <ion-button (click)="BuscarSerie()" slot="end">Buscar</ion-button>
         </ion-item>
@@ -149,25 +149,25 @@
             <ion-col col-6>
                 <ion-item>
                     <ion-label position="floating ">Condición Física: </ion-label>
-                    <ion-input type="text " name="estadoFisico" [(ngModel)]="concentrado.edoFisico "></ion-input>
+                    <ion-input type="text " name="estadoFisico" [(ngModel)]="concentrado.edoFisico" required></ion-input>
                 </ion-item>
             </ion-col>
             <ion-col col-6>
                 <ion-item>
                     <ion-label position="floating ">Color:</ion-label>
-                    <ion-input type="text " name="color" [(ngModel)]="concentrado.color "></ion-input>
+                    <ion-input type="text " name="color" [(ngModel)]="concentrado.color"></ion-input>
                     <!-- <ion-input type="text " name="color " [(ngModel)]="activosInfo.color "></ion-input> -->
                 </ion-item>
             </ion-col>
         </ion-row>
         <ion-item>
             <ion-label position="floating ">Ubicación:</ion-label>
-            <ion-input type="text " name="ubicacionInt" [(ngModel)]="concentrado.ubicacionInt "></ion-input>
+            <ion-input type="text " name="ubicacionInt" [(ngModel)]="concentrado.ubicacionInt" required></ion-input>
             <!-- <ion-input type="text " name="ubicacionInt " [(ngModel)]="activosInfo.ubicacionInt "></ion-input> -->
         </ion-item>
         <ion-item>
             <ion-label position="floating ">Comentarios:</ion-label>
-            <ion-input type="text " name="descCorta" [(ngModel)]="concentrado.descCorta "></ion-input>
+            <ion-input type="text " name="descCorta" [(ngModel)]="concentrado.descCorta"></ion-input>
             <!-- <ion-input type="text " name="descCorta " [(ngModel)]="activosInfo.descCorta "></ion-input> -->
         </ion-item>
     </ion-list>

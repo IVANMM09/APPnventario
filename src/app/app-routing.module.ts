@@ -27,6 +27,10 @@ const routes: Routes = [
     path: 'exportar-archivo',
     loadChildren: () => import('./pages/exportar-archivo/exportar-archivo.module').then( m => m.ExportarArchivoPageModule)
   },
+  {
+    path: 'salida',
+    loadChildren: () => import('./pages/salida/salida.module').then( m => m.SalidaPageModule)
+  },
 
 ];
 
