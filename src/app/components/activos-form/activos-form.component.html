@@ -1,49 +1,80 @@
-<ion-list>
-    <ion-list-header>
-        <ion-label>
-            <h2>Información de Activos</h2>
-        </ion-label>
+<ion-list-header>
 
-    </ion-list-header>
-</ion-list>
+    <h2>Información de Activos</h2>
+
+</ion-list-header>
+
 
 
 <form #formulario="ngForm" (ngSubmit)="onSubmitDatosFijos()">
     <ion-list>
         <ion-item>
-            <ion-label position="floating">Id Empleado:</ion-label>
-            <ion-input type="text" name="idEmpleado" [(ngModel)]="activo.idEmpleado" required></ion-input>
+            <ion-label position="floating">
+                <h2>
+                    Id Empleado
+                    <p class="Campo-obligatorio">*</p>
+                </h2>
+            </ion-label>
+            <ion-input type="text" name="idEmpleado" [(ngModel)]="activo.idEmpleado" placeholder="campo obligatorio" required></ion-input>
         </ion-item>
 
         <ion-item>
-            <ion-label position="floating">Nombre:</ion-label>
+            <ion-label position="floating">
+                <h3>Nombre</h3>
+            </ion-label>
             <ion-input type="text" name="nombre" [(ngModel)]="activo.nombre"></ion-input>
         </ion-item>
 
         <ion-item>
-            <ion-label position="floating">CC:</ion-label>
-            <ion-input type="text" name="centroCosto" [(ngModel)]="activo.centroCostos" required></ion-input>
+            <ion-label position="floating">
+                <h2>
+                    CC
+                    <p class="Campo-obligatorio">*</p>
+                </h2>
+            </ion-label>
+            <ion-input type="text" name="centroCosto" [(ngModel)]="activo.centroCostos" placeholder="campo obligatorio" required></ion-input>
         </ion-item>
 
         <ion-item>
-            <ion-label position="floating">Area:</ion-label>
+            <ion-label position="floating">
+                <h3>Area:</h3>
+            </ion-label>
             <ion-input type="text" name="area" [(ngModel)]="activo.area"></ion-input>
         </ion-item>
 
         <ion-item>
-            <ion-label position="floating">Codigo Inmueble:</ion-label>
+            <ion-label position="floating">
+                <h3>Inmueble:</h3>
+            </ion-label>
             <ion-input type="text" name="codInmueble" [(ngModel)]="activo.codInmueble"></ion-input>
         </ion-item>
 
         <ion-item>
-            <ion-label position="floating">Piso:</ion-label>
-            <ion-input type="text" name="piso" [(ngModel)]="activo.piso" required></ion-input>
+            <ion-label position="floating">
+                <h2>
+                    Piso
+                    <p class="Campo-obligatorio">*</p>
+                </h2>
+            </ion-label>
+            <ion-input type="text" name="piso" [(ngModel)]="activo.piso" placeholder="campo obligatorio" required></ion-input>
         </ion-item>
 
         <ion-item>
-            <ion-label position="floating">Usuario:</ion-label>
-            <ion-input type="text" name="usuario" [(ngModel)]="activo.usuario" required></ion-input>
+            <ion-label position="floating">
+                <h2>
+                    Usuario
+                    <p class="Campo-obligatorio">*</p>
+                </h2>
+            </ion-label>
+            <ion-input type="text" name="usuario" [(ngModel)]="activo.usuario" placeholder="campo obligatorio" required></ion-input>
         </ion-item>
     </ion-list>
+
     <ion-button expand="full" type="submit" [disabled]="formulario.invalid">Guardar Datos</ion-button>
+
+    <ion-label position="floating">
+        <h5 class="downrequired">
+            <p class="Campo-obligatorio">*</p>Campos Obligatorios</h5>
+    </ion-label>
+
 </form>

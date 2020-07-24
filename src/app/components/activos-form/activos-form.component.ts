@@ -37,6 +37,7 @@ export class ActivosFormComponent implements OnInit {
   async presentToast() {
     const toast = await this.toastController.create({
       message: 'Datos guardados existosamente',
+      position: 'middle',
       duration: 1500
     });
     toast.present();
@@ -54,7 +55,20 @@ export class ActivosFormComponent implements OnInit {
 
     this.taskService.create(this.activo);
     console.log(this.activo.nombre);
+    this.limpiarForm();
     this.presentToast();
   }
 
+  limpiarForm(){
+    this.activo = {
+      idEmpleado: '',
+      nombre: '',
+      centroCostos: '',
+      area: '',
+      codInmueble: '',
+      piso: '',
+      usuario: '',
+      fecha: String (this.fechaActualDf)
+    };
+  }
 }
