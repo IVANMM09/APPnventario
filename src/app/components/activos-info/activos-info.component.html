@@ -4,22 +4,45 @@
             <ion-back-button defaultHref="/"></ion-back-button>
         </ion-buttons>
         <ion-title text-capitalize> Captura </ion-title>
-        <ion-label slot="end" disabled>No capturas: {{ conteocap.total }}</ion-label>
+        <ion-label class="labelCaptura" slot="end" disabled>No capturas: {{ conteocap.total }}</ion-label>
 
     </ion-toolbar>
 </ion-header>
 
-<ion-item *ngIf="dFijoCheck === 1">
+<!--<ion-item *ngIf="dFijoCheck === 1">
     <ion-label position="floating ">Dato fijo combo</ion-label>
     <ion-select placeholder="Selecciona un dato fijo " type="text " name="idDatofijo " [(ngModel)]="concentrado.idDatofijo" (ionChange)="mostrarForm() " required>
         <ion-select-option *ngFor="let item of datos ">
-            {{item.id_datos_fijos}}
+            <ion-item>
+                <ion-label>
+                    <div>{{item.id_datos_fijos}}</div>
+
+                </ion-label>
+            </ion-item>
         </ion-select-option>
     </ion-select>
-</ion-item>
+
+</ion-item>-->
+<ion-list class="estilosform" radio-group *ngIf="dFijoCheck === 1">
+    <ion-radio-group [(ngModel)]="concentrado.idDatofijo" (ionChange)="mostrarForm()">
+        <ion-list-header>
+            Seleccione un dato fijo
+        </ion-list-header>
+        <ion-item *ngFor="let item of datos ">
+            <ion-label>
+                <div>Dato Fijo: {{item.id_datos_fijos}}</div>
+                <div>Piso: {{item.piso}}</div>
+                <div>Areá: {{item.area}}</div>
+            </ion-label>
+            <ion-radio value="{{item.id_datos_fijos}}"></ion-radio>
+        </ion-item>
+    </ion-radio-group>
+</ion-list>
 
 
-<form *ngIf="dFormCheck===true" #formulario="ngForm" (ngSubmit)="onSubmitScan() ">
+
+
+<form class="estilosform" *ngIf="dFormCheck===true" #formulario="ngForm" (ngSubmit)="onSubmitScan() ">
     <ion-list>
         <!-- <ion-item>
             <ion-label>Carga Masiva:</ion-label>

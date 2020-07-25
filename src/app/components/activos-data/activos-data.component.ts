@@ -14,6 +14,7 @@ export class ActivosDataComponent implements OnInit {
 
   @ViewChild('lista', {static: true}) Lista: IonList;
 
+  progress = 0;
  //datosFijos: any[] = [];
  datosFijos: DatoF[] = [];
  textoBuscar = '';
@@ -23,11 +24,13 @@ export class ActivosDataComponent implements OnInit {
     public tasksService: TasksService,
     
     ) { 
-    
+
+
 
   }
  
   ngOnInit() {
+    
     //this.datosFijos = this.dataLocalService.activos;
     this.datosFijos = this.tasksService.activos;
    // this.tasksService.create(this.datosFijos);
@@ -37,8 +40,20 @@ export class ActivosDataComponent implements OnInit {
       this.datosFijos = data.data;
 
     });*/
-  
+    
     this.getAllActivos();
+   
+  }
+
+  progressBar(){
+   for(let i = 0; i <= 10; i ++){
+        for(let j = .01; j <= 100; j += .01){
+            this.progress = i;
+            console.log('j' + j);
+        }
+        console.log('i' + this.progress)
+   }
+
   }
 
   async presentToast(message: string) {

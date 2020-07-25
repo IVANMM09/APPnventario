@@ -123,7 +123,7 @@ export class TasksService {
 
       getIdDatoFijo (){
         let idDatosFijos: any [];
-        let sql = 'Select id_datos_fijos FROM datosFijos where name <> "generico"';
+        let sql = 'Select  *FROM datosFijos where name <> "generico"';
         return  this.db.executeSql(sql, [])
         .then(response => {
           let DatoF = [];

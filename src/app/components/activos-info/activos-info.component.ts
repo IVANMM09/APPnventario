@@ -164,6 +164,7 @@ export class ActivosInfoComponent implements OnInit {
   async presentToastMsgResp( message: string ) {
     const toast = await this.toastController.create({
       message,
+      position: 'middle',
       duration: 2500
     });
     toast.present();
@@ -261,13 +262,13 @@ export class ActivosInfoComponent implements OnInit {
   limpiarForm(){
     this.  concentrado = {
       idCaptura :'',
-      idDatofijo: '',
+      idDatofijo: this.concentrado.idDatofijo,
       noCapturas: '',
-      empresa: '',
+      empresa: this.concentrado.empresa,
       numInv: '',
       noSap: '',
       descripcion: '',
-      ubicacionInt: '',
+      ubicacionInt: this.concentrado.ubicacionInt,
       ubicacionAnt: '',
       edoFisico: '',
       descCorta: '',
@@ -283,6 +284,7 @@ export class ActivosInfoComponent implements OnInit {
     };
     this.ngOnInit();
   }
+  
 
   guardarEdicion(){
     this.mostrarBotonEditar(false);
@@ -292,6 +294,7 @@ export class ActivosInfoComponent implements OnInit {
     this.taskService.updateCaptura(this.concentrado);
 
     this.presentToastMsgResp('Registro Actualizado');
+    this.limpiarForm();
   }
 
 mostrarForm(){
