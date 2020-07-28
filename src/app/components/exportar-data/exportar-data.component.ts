@@ -53,19 +53,19 @@ export class ExportarDataComponent implements OnInit {
       data: this.csvData
     });
  
-    this.file.writeFile(path, 'layout.csv', csv, { replace: true })
+    this.file.writeFile(path, 'rep_cap.csv', csv, { replace: true })
     .then(
     _ => {
-      alert('Archivo descargado en /Download');
+      alert('Archivo descargado en /Download/rep_cap.csv');
     }
     )
     .catch(
     err => {
 
-      this.file.writeExistingFile(path, 'layout.csv', csv)
+      this.file.writeExistingFile(path, 'rep_cap.csv', csv)
         .then(
         _ => {
-          alert('Archivo sobreescrito en /Download' + path);
+          alert('Archivo sobreescrito en /Download/rep_cap.csv' + path);
         }
         )
         .catch(

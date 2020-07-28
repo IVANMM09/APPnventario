@@ -1,9 +1,9 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Input, ViewChild, OnInit } from '@angular/core';
 import { Concentrado } from 'src/app/interfaces/interfaces';
 import { BarcodeScanner } from '@ionic-native/barcode-scanner/ngx';
 import { DataLocalService } from '../../services/data-local.service';
 import { TasksService } from '../../services/tasks-service';
-import { ToastController } from '@ionic/angular';
+import { ToastController, NavController, IonInput } from '@ionic/angular';
 import { AlertController } from '@ionic/angular';
 import { Platform } from '@ionic/angular';
 import { Data } from 'src/app/interfaces/interfaces';
@@ -15,6 +15,10 @@ import { Data } from 'src/app/interfaces/interfaces';
   styleUrls: ['./activos-info.component.scss'],
 })
 export class ActivosInfoComponent implements OnInit {
+
+  @ViewChild('input', {static: false}) input: { setFocus: () => void; };
+  
+
   conteocap = {
     encontrado: 0,
     nuevo: 0,
@@ -62,7 +66,8 @@ export class ActivosInfoComponent implements OnInit {
               public taskService: TasksService,
               public toastController: ToastController,
               public alertController: AlertController, 
-              private platform: Platform
+              private platform: Platform,
+              private navCtrl: NavController
               ) {
                 
               }
@@ -78,8 +83,12 @@ export class ActivosInfoComponent implements OnInit {
    })
 
     this.conteoCapturas();
+    
+    
   }
-
+  setFocusOnInput() {
+    this.input.setFocus();
+ }
 
   async presentAlertConfirm() {
     const alert = await this.alertController.create({
@@ -128,6 +137,8 @@ export class ActivosInfoComponent implements OnInit {
     this.conteoCapturas();
     this.presentToastMsgResp('Datos guardados');
     this.limpiarForm();
+    this.setFocusOnInput();
+    
   }
 
     getCC(concentrado){

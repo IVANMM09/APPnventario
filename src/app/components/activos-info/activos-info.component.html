@@ -30,9 +30,9 @@
         </ion-list-header>
         <ion-item *ngFor="let item of datos ">
             <ion-label>
-                <div>Dato Fijo: {{item.id_datos_fijos}}</div>
-                <div>Piso: {{item.piso}}</div>
-                <div>Areá: {{item.area}}</div>
+                <div><b>Dato Fijo:</b> {{item.id_datos_fijos}}</div>
+                <div><b>Piso:</b> {{item.piso}}</div>
+                <div><b>C.C:</b> {{item.centro_costos}}</div>
             </ion-label>
             <ion-radio value="{{item.id_datos_fijos}}"></ion-radio>
         </ion-item>
@@ -76,8 +76,9 @@
                     <p class="Campo-obligatorio">*</p>
                 </h2>
             </ion-label>
-            <!-- <ion-input type="text " name="numInv " [(ngModel)]="activosInfo.numInv "></ion-input> -->
-            <ion-input type="text " name="numInv" [(ngModel)]="concentrado.numInv " (ionChange)="getNumInv() " debounce="2000" placeholder="campo obligatorio" required></ion-input>
+            <!--<ion-input type="text " name="numInv" [(ngModel)]="concentrado.numInv " (ionChange)="getNumInv() " debounce="2000" placeholder="campo obligatorio" required></ion-input>-->
+            <ion-input #input type="text " name="numInv" [(ngModel)]="concentrado.numInv " placeholder="campo obligatorio" required></ion-input>
+            <ion-button (click)="getNumInv()" slot="end">Buscar</ion-button>
             <!--<ion-button *ngIf="estadoCheckC===t rue " slot="end " expand="block " (click)="scanCel() ">Capturar</ion-button>-->
         </ion-item>
 

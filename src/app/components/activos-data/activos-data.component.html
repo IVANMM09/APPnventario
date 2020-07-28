@@ -1,10 +1,10 @@
-<ion-progress-bar [value]="progress" color="primary"></ion-progress-bar>
-<ion-slides *ngIf="datosFijos.length === 0">
+<ion-progress-bar *ngIf="progressbar == 0" [value]="porcentaje" color="primary"></ion-progress-bar>
+<ion-slides *ngIf="datosFijos.length === 0 && porcentaje == 2">
     <ion-slide>
         <ion-label>No hay datos guardados</ion-label>
     </ion-slide>
 </ion-slides>
-<div *ngIf="datosFijos.length > 0 && progress > 10">
+<div *ngIf="datosFijos.length > 0 && porcentaje == 2">
     <ion-searchbar (ionChange)="buscar( $event )"></ion-searchbar>
     <ion-list #lista>
         <ion-item-sliding *ngFor="let dato of datosFijos | filtro: textoBuscar: 'name'">

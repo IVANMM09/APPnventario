@@ -11,11 +11,25 @@ import { DatoCaptura } from '../../interfaces/interfaces';
 export class ImportarQueryComponent implements OnInit {
 
   @ViewChild('lista', {static: true}) Lista: IonList;
+
+  porcentaje = 0;
+  progressbar = 0;
+
   datosCaptura: DatoCaptura[] = [];
   textoBuscar = '';
   constructor(  public toastController: ToastController,
                 public tasksService: TasksService,
-                ) { }
+                ) { 
+                  const timeValue = setInterval((interval) => {
+                    this.porcentaje = this.porcentaje + 1;
+                    console.log(this.porcentaje);
+                    if (this.porcentaje >= 2) {
+                      clearInterval(timeValue);
+                      this.progressbar = 1;
+                    }
+                    
+                  }, 1000);
+                }
 
   ngOnInit() {
     this.getCaptura();
