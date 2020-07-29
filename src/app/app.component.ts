@@ -29,13 +29,14 @@ export class AppComponent {
     public sqlite: SQLite
   ) {
     this.initializeApp();
-        this.createDatabase();
+        
   }
 
   initializeApp() {
     this.platform.ready().then(() => {
       this.statusBar.styleLightContent();
       this.splashScreen.hide();
+      this.createDatabase();
       this.componentes = this.dataService.getMenuOpts();
     });
   }
@@ -48,7 +49,6 @@ export class AppComponent {
     .then((db) => {
       console.log(db);
       this.taskService.setDatabase(db);
-      this.taskService.createTableLayout();
       this.taskService.createTableCaptura();
       return this.taskService.createTable();
     })

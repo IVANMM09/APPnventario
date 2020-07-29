@@ -5,7 +5,7 @@ import { TasksService } from '../../services/tasks-service';
 import { FilePath } from '@ionic-native/file-path/ngx';
 import { Platform } from '@ionic/angular';
 import { File } from '@ionic-native/file/ngx';
-
+import { AlertController } from '@ionic/angular';
 
 
 @Component({
@@ -14,6 +14,9 @@ import { File } from '@ionic-native/file/ngx';
   styleUrls: ['./exportar-data.component.scss'],
 })
 export class ExportarDataComponent implements OnInit {
+
+  porcentaje = 0;
+  progressbar = 0;
 
   csvData: any[];
   headerRow: any[];
@@ -26,7 +29,8 @@ export class ExportarDataComponent implements OnInit {
                private socialSharing: SocialSharing,
                private filePath: FilePath,
                private file: File,
-               private fileSystem: File) { }
+               private fileSystem: File,
+               public alertController: AlertController,) { }
 
   ngOnInit() {
     this.tasksService.getAllCaptura().then(response => {
@@ -43,6 +47,60 @@ export class ExportarDataComponent implements OnInit {
     console.error( error );
     });*/
   }
+
+  async presentAlertConfirm() {
+    const alert = await this.alertController.create({
+      cssClass: 'my-custom-class',
+      header: 'Descarga de Archivo',
+      message: 'Elija una Opción',
+      buttons: [
+        
+        {
+          text: 'Txt',
+         
+          handler: () => {
+            this.progressbar = 1;
+            const timeValue = setInterval((interval) => {
+              this.porcentaje = this.porcentaje + 1;
+              console.log(this.porcentaje);
+              if (this.porcentaje >= 2) {
+                clearInterval(timeValue);
+                this.progressbar = 0;
+                this.downloadTXT();
+              }
+              
+            }, 1000);
+            
+          }
+        }, {
+          text: 'Csv',
+          handler: () => {
+            this.progressbar = 1;
+            const timeValue = setInterval((interval) => {
+              this.porcentaje = this.porcentaje + 1;
+              console.log(this.porcentaje);
+              if (this.porcentaje >= 2) {
+                clearInterval(timeValue);
+                this.progressbar = 0;
+                this.downloadCSV();
+              }
+              
+            }, 1000);
+          
+          }
+        },
+        {
+          text: 'Cancelar',
+          role: 'cancel',
+          },
+      ],
+      backdropDismiss: false
+    });
+
+    await alert.present();
+  }
+
+
 
 
   downloadCSV() {
@@ -75,5 +133,37 @@ export class ExportarDataComponent implements OnInit {
         )
     }
     )
+}
+
+downloadTXT() {
+
+  let path = this.fileSystem.externalRootDirectory + '/Download/'; // for Android
+  let csv = this.papa.unparse({
+    /*fields: this.headerRow,*/
+    data: this.csvData
+  });
+
+  this.file.writeFile(path, 'rep_cap.txt', csv, { replace: true })
+  .then(
+  _ => {
+    alert('Archivo descargado en /Download/rep_cap.txt');
+  }
+  )
+  .catch(
+  err => {
+
+    this.file.writeExistingFile(path, 'rep_cap.txt', csv)
+      .then(
+      _ => {
+        alert('Archivo sobreescrito en /Download/rep_cap.txt' + path);
+      }
+      )
+      .catch(
+      err => {
+        alert(err + 'Error en Descarga' + path)
+      }
+      )
+  }
+  )
 }
 }

@@ -38,16 +38,6 @@ export class TasksService {
             console.log("sql " +sql);
         return this.db.executeSql(sql, []);
       }
-
-      createTableLayout(){
-        let sql = 'CREATE TABLE IF NOT EXISTS layout('+
-            ' id_layout INTEGER PRIMARY KEY AUTOINCREMENT, ' +
-            ' empresa TEXT, codigo1 TEXT, codigo2 TEXT, ' +
-            ' serie TEXT, modelo TEXT, marca TEXT,'+
-            ' descripcion TEXT )';
-            console.log("sql " +sql);
-        return this.db.executeSql(sql, []);
-      }
       
       create(datos_fijos: any){
       
@@ -62,14 +52,6 @@ export class TasksService {
         let sql = 'DELETE FROM datosFijos where id_datos_fijos=?';
         return this.db.executeSql(sql, [Number(dato.id_datos_fijos)]).
           catch(error=>console.log("error"+ error));
-      }
-
-      insertLayout (layout:any ){
-        let sql = 'INSERT INTO layout( empresa, codigo1, codigo2, serie, modelo, marca, descripcion) VALUES(?,?,?,?,?,?,?)';
-        console.log("create " + sql);
-        return this.db.executeSql(sql, [layout.empresa, layout.codigo1, layout.codigo2,
-                                        layout.serie, layout.modelo, layout.marca, layout.descripcion]).
-            catch(error=>console.log(error));
       }
 
       getAll(){
@@ -139,18 +121,16 @@ export class TasksService {
         .catch(error => Promise.reject(error));
       }
 
-
+      //num_inv = codido_1, num_sap = codigo_2, edo_fisico = condicion_fisica, largo = frente, fondo = ancho
       createTableCaptura(){
         let sql = 'CREATE TABLE IF NOT EXISTS captura('+
             ' id_captura INTEGER PRIMARY KEY AUTOINCREMENT, ' +
-            ' id_dato_fijo INTEGER, num_inv TEXT, '+
-            ' num_sap TEXT, empresa TEXT, ' +
-            ' descripcion TEXT, ' +
-            ' ubicacion_int TEXT, ubicacion_ant TEXT, edo_fisico TEXT, '+
-            ' desc_corta TEXT, marca TEXT, modelo TEXT, serie TEXT, encontrados TEXT, ' +
+            ' id_dato_fijo INTEGER, num_inv TEXT, '+ 
+            ' num_sap TEXT, empresa TEXT,  descripcion TEXT, edo_fisico TEXT, '+ 
+            ' desc_corta TEXT, marca TEXT, modelo TEXT, serie TEXT,' +
             ' color TEXT, dimensiones TEXT, centro_costos TEXT, expediente TEXT,' +
-            ' ubicacion_people TEXT, area TEXT, alto TEXT, largo TEXT,'+
-            ' ancho TEXT, piso TEXT, observaciones TEXT, '+
+            ' ubicacion TEXT, area TEXT, alto TEXT, largo TEXT,'+ 
+            ' ancho TEXT, piso TEXT, comentarios TEXT, fecha TEXT,'+
             ' estatus TEXT, campo_add1 TEXT, campo_add2 TEXT, '+
             ' foreign key(id_dato_fijo) references datosFijos(id_datos_fijos))';
             console.log('sql captura ' +sql);
@@ -159,34 +139,36 @@ export class TasksService {
     
       insertCaptura (concentrado: any){
         console.log("entro al insert captura centro_costos " + concentrado.centroCostos);
-        let sql = 'INSERT INTO captura(id_dato_fijo, num_inv, empresa, num_sap, descripcion, ubicacion_int, ubicacion_ant, edo_fisico, '+
-                 'desc_corta, marca, modelo, serie, color, largo, ancho, alto, estatus, centro_costos ) VALUES(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)';
-        return this.db.executeSql(sql, [concentrado.idDatofijo, concentrado.numInv, concentrado.empresa, concentrado.noSap, concentrado.descripcion,
-           concentrado.ubicacionInt, concentrado.ubicacionAnt, concentrado.edoFisico, concentrado.descCorta, concentrado.marca,
-           concentrado.modelo, concentrado.serie, concentrado.color, concentrado.largo, concentrado.alto, concentrado.ancho, concentrado.estatus, concentrado.centroCostos]).
+        let sql = 'INSERT INTO captura(id_dato_fijo, num_inv, empresa, num_sap, descripcion, edo_fisico, '+
+                 'desc_corta, marca, modelo, serie, color, largo, ancho, alto, estatus, centro_costos )'+
+                 ' VALUES(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)';
+        return this.db.executeSql(sql, [concentrado.idDatofijo, concentrado.numInv, concentrado.empresa, 
+          concentrado.noSap, concentrado.descripcion, concentrado.edoFisico, concentrado.descCorta, concentrado.marca,
+           concentrado.modelo, concentrado.serie, concentrado.color, concentrado.largo, concentrado.alto, concentrado.ancho, 
+           concentrado.estatus, concentrado.centroCostos]).
             catch(error=>console.log(error));
       }
 
       insertCapturaLayout(concentrado: any){
         console.log(" Guardado "+JSON.stringify(concentrado[3]));
-        let sql = 'INSERT INTO captura (encontrados, num_sap, centro_costos, expediente, ubicacion_people, area, num_inv,serie, marca, modelo, '+ 
-            ' color, descripcion, alto, ancho, largo, piso, observaciones, edo_fisico, ubicacion_int, ubicacion_ant,estatus,id_dato_fijo) '+
-            ' VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)';
+        let sql = 'INSERT INTO captura (empresa, num_inv, num_sap, descripcion, marca, modelo, serie, color,  largo, ancho, alto, edo_fisico, '+
+                  ' ubicacion, comentarios, estatus,id_dato_fijo, fecha) '+
+            ' VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)';
             return this.db.executeSql(sql,[concentrado[0],concentrado[1], concentrado[2], concentrado[3], concentrado[4],concentrado[5], 
               concentrado[6], concentrado[7], concentrado[8],concentrado[9], concentrado[10], concentrado[11], concentrado[12],concentrado[13], 
-              concentrado[14], concentrado[15], concentrado[16],concentrado[17], concentrado[18], concentrado[19], concentrado[20],
-              Number(concentrado[21])]).
+              concentrado[14], Number(concentrado[15]), concentrado[16]]).
             catch(error=>console.log(error));
       }
 
       updateCaptura(datosCaptura:any){
         console.log("datos Captura: "  + JSON.stringify(datosCaptura));
-        let sql = 'UPDATE captura SET id_dato_fijo = ?, num_inv =?, num_sap =?, empresa =?, descripcion = ?, ubicacion_int=?,'+
-                  'ubicacion_ant=?, edo_fisico=?, desc_corta =?,  marca =?, modelo =?, serie =?, color=?, largo =?, alto =?, ancho =? '+
+        let sql = 'UPDATE captura SET id_dato_fijo = ?, num_inv =?, num_sap =?, empresa =?, descripcion = ?, ubicacion=?,'+
+                  'edo_fisico=?, desc_corta =?,  marca =?, modelo =?, serie =?, color=?, largo =?, alto =?, ancho =? '+
                   ' where id_captura =?';
-        return this.db.executeSql(sql,[ datosCaptura.idDatofijo, datosCaptura.numInv, datosCaptura.noSap, datosCaptura.empresa, datosCaptura.descripcion,
-                datosCaptura.ubicacionInt, datosCaptura.ubicacionAnt, datosCaptura.edoFisico, datosCaptura.descCorta, datosCaptura.marca,
-                datosCaptura.modelo, datosCaptura.serie, datosCaptura.color, datosCaptura.largo, datosCaptura.alto, datosCaptura.ancho, Number(datosCaptura.idCaptura)]).
+        return this.db.executeSql(sql,[ datosCaptura.idDatofijo, datosCaptura.numInv, datosCaptura.noSap, datosCaptura.empresa, 
+          datosCaptura.descripcion, datosCaptura.ubicacion, datosCaptura.edoFisico, datosCaptura.descCorta, datosCaptura.marca,
+                datosCaptura.modelo, datosCaptura.serie, datosCaptura.color, datosCaptura.largo, datosCaptura.alto, datosCaptura.ancho, 
+                Number(datosCaptura.idCaptura)]).
                 catch(error => console.log(error)
                 );
       }
@@ -215,6 +197,32 @@ export class TasksService {
         })
         .catch(error => Promise.reject(error));
       }
+
+      getAllCapturaLayout(){
+        let sql = 'SELECT df.id_employee as ID_EMPLEADO, df.name as NOMBRE, df.centro_costos as CENTRO_COSTOS, df.area as AREA, '+
+                  ' df.cod_inmueble as CODIGO_INMUEBLE, df.piso as PISO, df.usuario as USUARIO, date() as FECHA, c.empresa as EMPRESA, '+
+                  ' c.num_inv as CODIGO_1, c.num_sap as CODIGO_2, c.descripcion as DESCRIPCION, c.marca as MARCA, c.modelo as MODELO,'+
+                  ' c.serie as SERIE, c.color as COLOR, c.largo as FRENTE, c.ancho as FONDO, c.alto as ALTO, '+
+                  ' c.edo_fisico as CONDICION_FISICA, ubicacion as UBICACION, comentarios as COMENTARIOS'+
+                  ' FROM captura c '+
+                  ' inner join datosFijos df ' +
+                  ' on c.id_dato_fijo = df. id_datos_fijos ' +
+                  ' order by id_captura asc ';
+        return  this.db.executeSql(sql, [])
+        .then(response => {
+          let datosCaptura = [];
+          if(response.rows.length>0){
+            for (let index = 0; index < response.rows.length; index++) {
+              datosCaptura.push( response.rows.item(index));
+            }
+          }
+          console.log('datosCapturaR' +JSON.stringify(datosCaptura));
+          return Promise.resolve( datosCaptura );
+        })
+        .catch(error => Promise.reject(error));
+      }
+
+
     
       getCapturaByNumInv(numInv){
         let sql = 'select * from captura where num_inv = ?';
@@ -269,26 +277,6 @@ export class TasksService {
         })
         .catch(error => Promise.reject(error));
       }
-
-    
-     /* getEstatus(estado){
-        let sql = 'select estatus from captura where estatus = ?';
-        return this.db.executeSql(sql, [estado])
-        .then(response => {
-          let graficaestado = [];    
-          if(response.rows.length > 0 ){
-            for (let index = 0; index < response.rows.length; index++) {
-              graficaestado.push( response.rows.item(index) );
-            }
-          } else  if(response.rows.length === 0 ){
-            // captura.push( response.rows );
-            graficaestado = [];
-          }
-          return Promise.resolve( graficaestado );
-
-        })
-        .catch(error => Promise.reject(error));
-      }*/
 
       getStatus(){
         let sql = 'select estatus, count(*) as cantidad from captura group by estatus';

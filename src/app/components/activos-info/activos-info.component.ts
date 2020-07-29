@@ -45,8 +45,7 @@ export class ActivosInfoComponent implements OnInit {
     numInv: '',
     noSap: '',
     descripcion: '',
-    ubicacionInt: '',
-    ubicacionAnt: '',
+    ubicacion: '',
     edoFisico: '',
     descCorta: '',
     marca: '',
@@ -207,8 +206,7 @@ export class ActivosInfoComponent implements OnInit {
             this.concentrado.empresa = response[0].empresa;
             this.concentrado.noSap = response[0].num_sap;
             this.concentrado.descripcion = response[0].descripcion;
-            this.concentrado.ubicacionInt = response[0].ubicacion_int;
-            this.concentrado.ubicacionAnt = response[0].ubicacion_ant;
+            this.concentrado.ubicacion = response[0].ubicacion;
             this.concentrado.edoFisico = response[0].edo_fisico;
             this.concentrado.descCorta = response[0].desc_corta;
             this.concentrado.marca = response[0].marca;
@@ -279,8 +277,7 @@ export class ActivosInfoComponent implements OnInit {
       numInv: '',
       noSap: '',
       descripcion: '',
-      ubicacionInt: this.concentrado.ubicacionInt,
-      ubicacionAnt: '',
+      ubicacion: this.concentrado.ubicacion,
       edoFisico: '',
       descCorta: '',
       marca: '',
@@ -340,8 +337,7 @@ BuscarSAP(){
         this.concentrado.empresa = response[0].empresa;
         this.concentrado.noSap = response[0].num_sap;
         this.concentrado.descripcion = response[0].descripcion;
-        this.concentrado.ubicacionInt = response[0].ubicacion_int;
-        this.concentrado.ubicacionAnt = response[0].ubicacion_ant;
+        this.concentrado.ubicacion = response[0].ubicacion;
         this.concentrado.edoFisico = response[0].edo_fisico;
         this.concentrado.descCorta = response[0].desc_corta;
         this.concentrado.marca = response[0].marca;
@@ -388,8 +384,7 @@ BuscarSerie(){
           this.concentrado.empresa = response[0].empresa;
           this.concentrado.noSap = response[0].num_sap;
           this.concentrado.descripcion = response[0].descripcion;
-          this.concentrado.ubicacionInt = response[0].ubicacion_int;
-          this.concentrado.ubicacionAnt = response[0].ubicacion_ant;
+          this.concentrado.ubicacion = response[0].ubicacion;
           this.concentrado.edoFisico = response[0].edo_fisico;
           this.concentrado.descCorta = response[0].desc_corta;
           this.concentrado.marca = response[0].marca;

@@ -17,6 +17,9 @@ import { stringify } from '@angular/compiler/src/util';
 })
 export class ImportarLoadComponent implements OnInit {
 
+  porcentaje = 0;
+  progressbar = 0;
+
 fechaActualDf: Date = new Date();
 
 activo = {
@@ -80,9 +83,11 @@ activo = {
       for (let index = 0; index <data.length; index++) {
         //let id_data = this.tasksService.getCC(data.CC);   
         if(data[index]!='' && data[index]!=null ){
-          data[index][20] = 'faltante'; 
-          data[index][21] = 1; 
-          this.tasksService.insertCapturaLayout(data[index]);
+          data[index][14] = 'faltante'; 
+          data[index][15] = 1; 
+          data[index][16] = this.fechaActualDf;
+          this.tasksService.insertCapturaLayout(data[index]).
+          catch(error=>this.presentToast("Error al Carga el archivo, favor de validar: " + error));
           console.log("Entro Save Data " +JSON.stringify(data[index]));
         }   
         
@@ -106,8 +111,16 @@ activo = {
       }
     });
   
-
-    this.presentToast('Carga completa, archivos cargados ' + this.csvData.length.toString());
+    this.progressbar = 1;
+    const timeValue = setInterval((interval) => {
+        this.porcentaje = this.porcentaje + 1;
+        console.log(this.porcentaje);
+        if (this.porcentaje >= 2) {
+                clearInterval(timeValue);
+                this.progressbar = 0;
+                this.presentToast('Carga completa, archivos cargados ' + this.csvData.length.toString());
+              }
+            }, 1000);
   }
 
   async presentToast(message: string) {
