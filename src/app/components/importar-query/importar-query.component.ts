@@ -20,7 +20,7 @@ export class ImportarQueryComponent implements OnInit {
   constructor(  public toastController: ToastController,
                 public tasksService: TasksService,
                 ) { 
-                  const timeValue = setInterval((interval) => {
+                  /*const timeValue = setInterval((interval) => {
                     this.porcentaje = this.porcentaje + 1;
                     console.log(this.porcentaje);
                     if (this.porcentaje >= 2) {
@@ -28,7 +28,7 @@ export class ImportarQueryComponent implements OnInit {
                       this.progressbar = 1;
                     }
                     
-                  }, 1000);
+                  }, 1000);*/
                 }
 
   ngOnInit() {

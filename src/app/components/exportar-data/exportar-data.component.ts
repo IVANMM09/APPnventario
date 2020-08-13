@@ -33,7 +33,7 @@ export class ExportarDataComponent implements OnInit {
                public alertController: AlertController,) { }
 
   ngOnInit() {
-    this.tasksService.getAllCaptura().then(response => {
+    this.tasksService.getAllCapturaLayout().then(response => {
       this.csvData = response;
     })
     .catch( error => {

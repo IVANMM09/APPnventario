@@ -58,7 +58,7 @@ export class TasksService {
         let sql = 'SELECT *  FROM datosFijos where name <> "generico" order by id_datos_fijos asc';
         return  this.db.executeSql(sql, [])
         .then(response => {
-          let DatoF = [];
+          var DatoF: any[] = [];
           if(response.rows.length>0){
             for (let index = 0; index < response.rows.length; index++) {
               DatoF.push( response.rows.item(index));
@@ -74,7 +74,7 @@ export class TasksService {
         let sql = 'Select id_datos_fijos FROM datosFijos where centro_costos = ?';
         return this.db.executeSql(sql,[cc]).
           then(response =>{
-            let dato = [];
+            var dato: any[] = [];
            console.log(JSON.stringify(response));
             if(response!== null){
               cc = response; 
@@ -89,7 +89,7 @@ export class TasksService {
         let sql = 'Select centro_costos FROM datosFijos where id_datos_fijos = ?';
         return this.db.executeSql(sql,[Number(idDatofijo)]).
           then(response =>{
-            let dato = [];
+            var dato: any[] = [];
             if(response.rows.length>0){
               for (let index = 0; index < response.rows.length; index++) {
                 if (response.rows.item(index)!=null){
@@ -108,7 +108,7 @@ export class TasksService {
         let sql = 'Select  *FROM datosFijos where name <> "generico"';
         return  this.db.executeSql(sql, [])
         .then(response => {
-          let DatoF = [];
+          var DatoF: any[] = [];
           if(response.rows.length>0){
             for (let index = 0; index < response.rows.length; index++) {
               DatoF.push( response.rows.item(index));
@@ -186,7 +186,7 @@ export class TasksService {
         let sql = 'SELECT * FROM captura order by id_captura asc';
         return  this.db.executeSql(sql, [])
         .then(response => {
-          let datosCaptura = [];
+          var datosCaptura: any[] = [];
           if(response.rows.length>0){
             for (let index = 0; index < response.rows.length; index++) {
               datosCaptura.push( response.rows.item(index));
@@ -210,7 +210,7 @@ export class TasksService {
                   ' order by id_captura asc ';
         return  this.db.executeSql(sql, [])
         .then(response => {
-          let datosCaptura = [];
+          var datosCaptura: any[] = [];
           if(response.rows.length>0){
             for (let index = 0; index < response.rows.length; index++) {
               datosCaptura.push( response.rows.item(index));
@@ -228,7 +228,7 @@ export class TasksService {
         let sql = 'select * from captura where num_inv = ?';
         return this.db.executeSql(sql, [numInv])
         .then(response => {
-          let captura = [];    
+          var captura: any[] = [];    
           if(response.rows.length > 0 ){
             for (let index = 0; index < response.rows.length; index++) {
               captura.push( response.rows.item(index) );
@@ -246,7 +246,7 @@ export class TasksService {
         let sql = 'select * from captura where num_sap = ?';
         return this.db.executeSql(sql, [numInv])
         .then(response => {
-          let captura = [];    
+          var captura: any[] = [];   
           if(response.rows.length > 0 ){
             for (let index = 0; index < response.rows.length; index++) {
               captura.push( response.rows.item(index) );
@@ -264,7 +264,7 @@ export class TasksService {
         let sql = 'select * from captura where serie = ?';
         return this.db.executeSql(sql, [numInv])
         .then(response => {
-          let captura = [];    
+          var captura: any[] = [];   
           if(response.rows.length > 0 ){
             for (let index = 0; index < response.rows.length; index++) {
               captura.push( response.rows.item(index) );
@@ -282,7 +282,7 @@ export class TasksService {
         let sql = 'select estatus, count(*) as cantidad from captura group by estatus';
         return this.db.executeSql(sql, [])
         .then(response => {
-          let estatus = [];    
+          var estatus: any[] = [];    
           if(response.rows.length > 0 ){
             for (let index = 0; index < response.rows.length; index++) {
               estatus.push( response.rows.item(index) );
@@ -302,7 +302,7 @@ export class TasksService {
         let sql = 'SELECT name FROM PRAGMA table_info(' + captura + ')';
         return  this.db.executeSql(sql, [])
         .then(response => {
-          let headerCaptura = [];
+          var headerCaptura: any[] = [];
           if(response.rows.length>0){
             for (let index = 0; index < response.rows.length; index++) {
               headerCaptura.push( response.rows.item(index));

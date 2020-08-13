@@ -110,8 +110,8 @@ activo = {
         this.saveData(parsedData.data);
       }
     });
-  
-    this.progressbar = 1;
+    this.presentToast('Carga completa, archivos cargados ' + this.csvData.length.toString());
+    /*this.progressbar = 1;
     const timeValue = setInterval((interval) => {
         this.porcentaje = this.porcentaje + 1;
         console.log(this.porcentaje);
@@ -120,7 +120,7 @@ activo = {
                 this.progressbar = 0;
                 this.presentToast('Carga completa, archivos cargados ' + this.csvData.length.toString());
               }
-            }, 1000);
+            }, 1000);*/
   }
 
   async presentToast(message: string) {

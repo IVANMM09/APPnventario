@@ -219,17 +219,17 @@ export class ActivosInfoComponent implements OnInit {
            } 
           this.presentAlertConfirm();
 
-        } else {
+        } /*else {
 
-          this.presentToastMsgResp('El registro se guarda por ser nuevo o estar mas de dos veces ');
-        }
+         // this.presentToastMsgResp('El registro se guarda por ser nuevo o estar mas de dos veces ');
+        }*/
       })
       .catch( error => {
       console.error( error );
       });
-    } else {
-      this.presentToastMsgResp('se guarda por ser 0 o vacio ');
-    }
+    } /*else {
+      //this.presentToastMsgResp('se guarda por ser 0 o vacio ');
+    }*/
 
  }
 
@@ -350,17 +350,17 @@ BuscarSAP(){
        } 
       this.presentAlertConfirm();
 
-    } else {
+    }/* else {
 
       this.presentToastMsgResp('El registro se guarda por ser nuevo o estar mas de dos veces ');
-    }
+    }*/
   })
   .catch( error => {
   console.error( error );
   });
-} else {
+}/* else {
   this.presentToastMsgResp('se guarda por ser 0 o vacio ');
-}
+}*/
 }
 
 BuscarSerie(){
@@ -397,17 +397,17 @@ BuscarSerie(){
          } 
         this.presentAlertConfirm();
   
-      } else {
+      } /*else {
   
         this.presentToastMsgResp('El registro se guarda por ser nuevo o estar mas de dos veces ');
-      }
+      }*/
     })
     .catch( error => {
     console.error( error );
     });
-  } else {
+  }/* else {
     this.presentToastMsgResp('se guarda por ser 0 o vacio ');
-  }
+  }*/
 }
 
 conteoCapturas(){
