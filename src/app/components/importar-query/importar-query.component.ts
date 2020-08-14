@@ -17,6 +17,30 @@ export class ImportarQueryComponent implements OnInit {
 
   datosCaptura: DatoCaptura[] = [];
   textoBuscar = '';
+  datosActivos: any [];
+  concentrado = {
+    numInvb: '',
+    idCaptura :'',
+    idDatofijo: '',
+    noCapturas: '',
+    empresa: '',
+    numInv: '',
+    noSap: '',
+    descripcion: '',
+    ubicacion: '',
+    edoFisico: '',
+    descCorta: '',
+    marca: '',
+    modelo: '',
+    serie: '',
+    color: '',
+    largo: '',
+    ancho: '',
+    alto: '',
+    estatus: '',
+    centroCostos: ''
+  };
+
   constructor(  public toastController: ToastController,
                 public tasksService: TasksService,
                 ) { 
@@ -32,7 +56,7 @@ export class ImportarQueryComponent implements OnInit {
                 }
 
   ngOnInit() {
-    this.getCaptura();
+    //this.getCaptura();
   }
 
   buscar(event){
@@ -48,4 +72,68 @@ export class ImportarQueryComponent implements OnInit {
       console.error( error );
     });
   }
+
+  getNumInv(){
+    if(this.textoBuscar.trim() !== '' && this.textoBuscar.trim() !== '0' ){
+      console.log('NUMINV' + this.textoBuscar);
+      this.tasksService.getCapturaByNumInv(this.textoBuscar)
+      .then(response => {
+        this.datosActivos = response;
+        if(this.datosActivos.length >= 1 ){
+
+ 
+          this.presentToastMsgResp('registro encontrado');
+
+        } else
+        {
+          
+          this.presentToastMsgResp('registro NO encontrado');
+          this.limpiarForm();
+        }
+      })
+      .catch( error => {
+      console.error( error );
+      });
+    } else {
+      this.presentToastMsgResp('registro en blanco o 0');
+      this.limpiarForm();
+
+    }
+
+ }
+
+ async presentToastMsgResp( message: string ) {
+  const toast = await this.toastController.create({
+    message,
+    position: 'middle',
+    duration: 2500
+  });
+  toast.present();
+}
+
+limpiarForm(){
+  this.concentrado = {
+    numInvb: '',
+    idCaptura :'',
+    idDatofijo: '',
+    noCapturas: '',
+    empresa: '',
+    numInv: '',
+    noSap: '',
+    descripcion: '',
+    ubicacion: '',
+    edoFisico: '',
+    descCorta: '',
+    marca: '',
+    modelo: '',
+    serie: '',
+    color: '',
+    largo: '',
+    ancho: '',
+    alto: '',
+    estatus:'',
+    centroCostos: ''
+  };
+  this.ngOnInit();
+}
 }

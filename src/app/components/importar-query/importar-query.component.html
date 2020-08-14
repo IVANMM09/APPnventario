@@ -1,31 +1,29 @@
 <!--<ion-progress-bar *ngIf="progressbar == 0" [value]="porcentaje" color="primary"></ion-progress-bar>
 <ion-slides *ngIf="datosCaptura.length === 0 && porcentaje === 2">-->
-<ion-slides *ngIf="datosCaptura.length === 0">
-    <ion-slide>
-        <ion-label>No hay datos guardados</ion-label>
-    </ion-slide>
-</ion-slides>
-<!--<div *ngIf="datosCaptura.length > 0 && porcentaje == 2">-->
-<div *ngIf="datosCaptura.length">
-    <ion-searchbar (ionChange)="buscar( $event )"></ion-searchbar>
-    <ion-input #input type="text " name="numInv" placeholder="Busqueda por NumInv"></ion-input>
-    <ion-button slot="end">Buscar</ion-button>
-    <ion-list #lista>
-        <ion-item-sliding *ngFor="let dato of datosCaptura | filtro: textoBuscar: 'num_inv'">
 
-            <ion-item>
-                <ion-label>
-                    <h3><strong>ID Capturas:</strong>{{dato.id_captura}}</h3>
-                    <p><strong>ID Dato Fijo:</strong>{{dato.id_dato_fijo}}</p>
-                    <p><strong>Num Inv:</strong>{{dato.num_inv}}</p>
-                    <p><strong>Num Sap</strong>{{ dato.num_sap }}</p>
-                    <p><strong>descripcion:</strong>{{dato.descripcion}}</p>
-                    <p><strong>Ubicacion:</strong> {{dato.ubicacion}}</p>
-                    <p><strong>Estatus:</strong>{{dato.estatus}}</p>
-                </ion-label>
+<div class="estilosbarra">
+    <ion-item>
+        <ion-label position="floating ">
+            <h2>Busqueda</h2>
+        </ion-label>
+        <ion-input #input type="text " name="numInv" [(ngModel)]="textoBuscar" placeholder="busqueda" required></ion-input>
+        <ion-button (click)="getNumInv()" slot="end">Buscar</ion-button>
+    </ion-item>
+</div>
 
-            </ion-item>
+<div *ngIf="datosActivos.length > 0">
+    <ion-item-sliding *ngFor="let dato of datosActivos">
+        <ion-item>
+            <ion-label>
+                <h3><strong>ID Capturas:</strong>{{dato.id_captura}}</h3>
+                <p><strong>ID Dato Fijo:</strong>{{dato.id_dato_fijo}}</p>
+                <p><strong>Num Inv:</strong>{{dato.num_inv}}</p>
+                <p><strong>Num Sap</strong>{{ dato.num_sap }}</p>
+                <p><strong>descripcion:</strong>{{dato.descripcion}}</p>
+                <p><strong>Ubicacion:</strong> {{dato.ubicacion}}</p>
+                <p><strong>Estatus:</strong>{{dato.estatus}}</p>
+            </ion-label>
 
-        </ion-item-sliding>
-    </ion-list>
+        </ion-item>
+    </ion-item-sliding>
 </div>
