@@ -9,6 +9,9 @@ import { ToastController } from '@ionic/angular';
 import { SocialSharing } from '@ionic-native/social-sharing/ngx';
 import { TasksService } from '../../services/tasks-service';
 import { stringify } from '@angular/compiler/src/util';
+import { SQLite } from '@ionic-native/sqlite/ngx';
+import { MsgService } from '../../services/msg.service';
+
 
 @Component({
   selector: 'app-importar-load',
@@ -30,6 +33,7 @@ activo = {
   usuario: 'generico',
   fecha: String(this.fechaActualDf)
 }
+  
   csvData: any[] = [];
   headerRow: any[] = [];
   datos: any[] = [];
@@ -41,7 +45,11 @@ activo = {
               private filePath: FilePath, private fileChooser: FileChooser,  
               private papa: Papa, private plt: Platform, private file: File, 
               private http: HttpClient,
-              public tasksService: TasksService ) { 
+              public tasksService: TasksService,
+              public sqlite: SQLite,
+              public msgService: MsgService
+              
+    ) { 
 
     }
 
@@ -50,14 +58,35 @@ activo = {
      console.log(JSON.stringify(this.tasksService.getAllCaptura()));
   }
 
+  
+
+
+  private createDatabase(){
+    this.sqlite.create({
+      name: 'data.db',
+      location: 'default' // the location field is required
+    })
+    .then((db) => {
+      this.tasksService.setDatabase(db);
+    })
+    .catch(error =>{
+      console.error(error);
+    });
+    }
+
   pickFile() {
-    
+    this.msgService.presentLoad('Cargando archivo...');
     this.fileChooser.open().then((fileuri) => {
-      this.tasksService.dropTableCaptura();
-      this.tasksService.dropTableDatosFijos();
-      this.tasksService.createTableCaptura();
-      this.tasksService.createTable();
+      this.tasksService.deleteTableCaptura();
+      this.tasksService.selectChange();
+      this.tasksService.deleteTableDatosFijos();
+      this.tasksService.selectChange();
+      this.tasksService.InitializeSeqCaptura();
+      this.tasksService.selectChange();
+      this.tasksService.InitializeSeqDatosFijos();
+      this.tasksService.selectChange();
       this.tasksService.create(this.activo);
+      this.tasksService.selectChange();
       this.filePath.resolveNativePath(fileuri).then((resolvednativepath) => {
         this.returnpath = resolvednativepath;
         this.http
@@ -88,9 +117,10 @@ activo = {
           data[index][16] = this.fechaActualDf;
           this.tasksService.insertCapturaLayout(data[index]).
           catch(error=>this.presentToast("Error al Carga el archivo, favor de validar: " + error));
-          console.log("Entro Save Data " +JSON.stringify(data[index]));
+          this.tasksService.selectChange();
+         // console.log("Entro Save Data " +JSON.stringify(data[index]));
         }   
-        
+       
     }
   }
   
@@ -106,21 +136,15 @@ activo = {
         this.headerRow = parsedData.data.splice(0, 1)[0]; 
         this.csvData = parsedData.data;
       
-        console.log("extract data " + parsedData.data)
+        console.log("extract data " + parsedData.data);
         this.saveData(parsedData.data);
+        this.msgService.dismissLoad();
       }
+      
+      
     });
     this.presentToast('Carga completa, archivos cargados ' + this.csvData.length.toString());
-    /*this.progressbar = 1;
-    const timeValue = setInterval((interval) => {
-        this.porcentaje = this.porcentaje + 1;
-        console.log(this.porcentaje);
-        if (this.porcentaje >= 2) {
-                clearInterval(timeValue);
-                this.progressbar = 0;
-                this.presentToast('Carga completa, archivos cargados ' + this.csvData.length.toString());
-              }
-            }, 1000);*/
+  
   }
 
   async presentToast(message: string) {

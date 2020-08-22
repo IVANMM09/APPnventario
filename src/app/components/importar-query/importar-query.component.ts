@@ -2,6 +2,7 @@ import { Component, OnInit, Input, ViewChild  } from '@angular/core';
 import { IonList, ToastController } from '@ionic/angular';
 import { TasksService } from '../../services/tasks-service';
 import { DatoCaptura } from '../../interfaces/interfaces';
+import { MsgService } from '../../services/msg.service';
 
 @Component({
   selector: 'app-importar-query',
@@ -43,6 +44,7 @@ export class ImportarQueryComponent implements OnInit {
 
   constructor(  public toastController: ToastController,
                 public tasksService: TasksService,
+                public msgService: MsgService
                 ) { 
                   /*const timeValue = setInterval((interval) => {
                     this.porcentaje = this.porcentaje + 1;
@@ -74,6 +76,7 @@ export class ImportarQueryComponent implements OnInit {
   }
 
   getNumInv(){
+    this.msgService.presentLoad('Buscando registro...');
     if(this.textoBuscar.trim() !== '' && this.textoBuscar.trim() !== '0' ){
       console.log('NUMINV' + this.textoBuscar);
       this.tasksService.getCapturaByNumInv(this.textoBuscar)
@@ -81,20 +84,20 @@ export class ImportarQueryComponent implements OnInit {
         this.datosActivos = response;
         if(this.datosActivos.length >= 1 ){
 
- 
+          this.msgService.dismissLoad();
           this.presentToastMsgResp('registro encontrado');
 
         } else
         {
-          
+          this.msgService.dismissLoad();
           this.presentToastMsgResp('registro NO encontrado');
           this.limpiarForm();
         }
       })
-      .catch( error => {
-      console.error( error );
-      });
+      .catch( error => 
+      console.error( error ));
     } else {
+      this.msgService.dismissLoad();
       this.presentToastMsgResp('registro en blanco o 0');
       this.limpiarForm();
 
@@ -105,7 +108,6 @@ export class ImportarQueryComponent implements OnInit {
  async presentToastMsgResp( message: string ) {
   const toast = await this.toastController.create({
     message,
-    position: 'middle',
     duration: 2500
   });
   toast.present();

@@ -43,14 +43,21 @@ export class AppComponent {
 
   private createDatabase(){
     this.sqlite.create({
-      name: 'data.db',
+      name: 'grincData.db',
       location: 'default' // the location field is required
     })
     .then((db) => {
       console.log(db);
       this.taskService.setDatabase(db);
       this.taskService.createTableCaptura();
-      return this.taskService.createTable();
+      this.taskService.createTable();
+      this.taskService.createIndexIdCap();
+      this.taskService.createIndexIdCapDatoFijo();
+      this.taskService.createIndexNumInv();
+      this.taskService.createIndexNumSap();
+      this.taskService.createIndexSerie();
+      this.taskService.createIndexStatus();
+      return this.taskService.createIndexIdDatoFijo();
     })
     .catch(error =>{
       console.error(error);

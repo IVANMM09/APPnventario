@@ -22,8 +22,15 @@ export class GraficaDataComponent implements OnInit {
   constructor(public taskService: TasksService) { }
 
   ngOnInit() {
+    this.getDatosGrafica();
+  }
+
+getDatosGrafica(){
+  console.log("Entro a Grafica ");
     this.taskService.getStatus()
     .then(response => {
+      console.log("resultado " + JSON.stringify(response));
+      
       for (let index = 0; index < response.length; index++) {
         if(response[index].estatus === 'encontrado'){
           this.conteo.encontrado = response[index].cantidad;
@@ -36,7 +43,8 @@ export class GraficaDataComponent implements OnInit {
       this.conteo.total = this.conteo.encontrado + this.conteo.faltante + this.conteo.nuevo;
 
 
-    })
-  }
+    }).catch(error=>console.error()
+    );
+}
 
 }

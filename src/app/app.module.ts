@@ -20,6 +20,7 @@ import { File } from '@ionic-native/file/ngx';
 import { SocialSharing } from '@ionic-native/social-sharing/ngx';
 import { SQLite } from '@ionic-native/sqlite/ngx';
 import { TasksService } from './services/tasks-service';
+import { MsgService } from './services/msg.service';
 
 @NgModule({
   declarations: [AppComponent],
@@ -44,7 +45,8 @@ import { TasksService } from './services/tasks-service';
     FileChooser,
     BarcodeScanner,
     SQLite,
-    TasksService
+    TasksService,
+    MsgService
   ],
   bootstrap: [AppComponent]
 })

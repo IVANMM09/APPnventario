@@ -1,15 +1,16 @@
 import { SQLiteObject } from '@ionic-native/sqlite/ngx';
 import { DatoF } from '../interfaces/interfaces';
 import { JsonPipe } from '@angular/common';
+import { promise } from 'protractor';
 
 export class TasksService {
     db: SQLiteObject = null;
     activos: DatoF[] = [];
     cc: any;
+    row_data: any[] = [];
     constructor() {
       
      }
-
 
     setDatabase(db: SQLiteObject){
         if(this.db === null){
@@ -17,14 +18,82 @@ export class TasksService {
         }
       }
 
-      dropTableCaptura(){
-        let sql = 'DROP TABLE captura';
+
+      deleteTableCaptura(){
+        let sql = 'DELETE FROM captura; ';
+        console.log("sql " +sql);
+        return this.db.executeSql(sql, []).
+        catch(error=>console.log(error));
+        
+      }
+
+      InitializeSeqCaptura(){
+        let sql = '  UPDATE SQLITE_SEQUENCE SET SEQ=0 WHERE NAME="captura" ';
+        console.log("sql " +sql);
+        return this.db.executeSql(sql, []).
+        catch(error=>console.log(error)); 
+      }
+
+      deleteTableDatosFijos(){
+        let sql = 'DELETE FROM datosFijos;';
+        console.log("sql " +sql);
+        return this.db.executeSql(sql, []).
+        catch(error=>console.log(error));
+        
+      }
+
+      InitializeSeqDatosFijos(){
+        let sql =  ' UPDATE SQLITE_SEQUENCE SET SEQ=0 WHERE NAME= "datosFijos"';
+        console.log("sql " +sql);
+        return this.db.executeSql(sql, []).
+        catch(error=>console.log(error));
+        
+      }
+
+      selectChange(){
+        let sql = ' select changes();' ;    
         return this.db.executeSql(sql, []);
       }
 
-      dropTableDatosFijos(){
-        let sql = 'DROP TABLE datosFijos';
-        return this.db.executeSql(sql, []);
+      createIndexIdCap(){
+        let sql = 'CREATE UNIQUE INDEX IF NOT EXISTS idx_id_captura '+
+              'ON captura (id_captura)';
+          return this.db.executeSql(sql, []);
+      }
+    
+      createIndexIdCapDatoFijo(){
+        let sql = 'CREATE UNIQUE INDEX IF NOT EXISTS idx_id_captura_dato_fijo '+
+              'ON captura (id_captura, id_dato_fijo)';
+          return this.db.executeSql(sql, []);
+      }
+
+      createIndexNumInv(){
+        let sql = 'CREATE UNIQUE INDEX IF NOT EXISTS idx_num_inv '+
+              'ON captura (id_captura,num_inv)';
+          return this.db.executeSql(sql, []);
+      }
+      createIndexNumSap(){
+        let sql = 'CREATE UNIQUE INDEX IF NOT EXISTS idx_num_sap '+
+              'ON captura (id_captura,num_sap)';
+          return this.db.executeSql(sql, []);
+      }
+
+      createIndexSerie(){
+        let sql = 'CREATE UNIQUE INDEX IF NOT EXISTS idx_serie '+
+              'ON captura (id_captura,serie)';
+          return this.db.executeSql(sql, []);
+      }
+      
+      createIndexIdDatoFijo(){
+        let sql = 'CREATE UNIQUE INDEX IF NOT EXISTS idx_id_datos_fijos '+
+              'ON datosFijos (id_datos_fijos)';
+          return this.db.executeSql(sql, []);
+      }
+
+      createIndexStatus(){
+        let sql = 'CREATE UNIQUE INDEX IF NOT EXISTS idx_status '+
+              'ON captura (id_captura, estatus)';
+          return this.db.executeSql(sql, []);
       }
 
 
@@ -136,27 +205,31 @@ export class TasksService {
             console.log('sql captura ' +sql);
         return this.db.executeSql(sql, []);
       }
-    
+
       insertCaptura (concentrado: any){
         console.log("entro al insert captura centro_costos " + concentrado.centroCostos);
         let sql = 'INSERT INTO captura(id_dato_fijo, num_inv, empresa, num_sap, descripcion, edo_fisico, '+
                  'desc_corta, marca, modelo, serie, color, largo, ancho, alto, estatus, centro_costos )'+
                  ' VALUES(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)';
-        return this.db.executeSql(sql, [concentrado.idDatofijo, concentrado.numInv, concentrado.empresa, 
+        this.db.executeSql(sql, [concentrado.idDatofijo, concentrado.numInv, concentrado.empresa, 
           concentrado.noSap, concentrado.descripcion, concentrado.edoFisico, concentrado.descCorta, concentrado.marca,
            concentrado.modelo, concentrado.serie, concentrado.color, concentrado.largo, concentrado.alto, concentrado.ancho, 
-           concentrado.estatus, concentrado.centroCostos]).
+           concentrado.estatus, concentrado.centroCostos]).then(()=>{
+              console.log("datos insertados captura ");
+           }
+           ).
             catch(error=>console.log(error));
       }
 
       insertCapturaLayout(concentrado: any){
-        console.log(" Guardado "+JSON.stringify(concentrado[3]));
         let sql = 'INSERT INTO captura (empresa, num_inv, num_sap, descripcion, marca, modelo, serie, color,  largo, ancho, alto, edo_fisico, '+
                   ' ubicacion, comentarios, estatus,id_dato_fijo, fecha) '+
             ' VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)';
             return this.db.executeSql(sql,[concentrado[0],concentrado[1], concentrado[2], concentrado[3], concentrado[4],concentrado[5], 
               concentrado[6], concentrado[7], concentrado[8],concentrado[9], concentrado[10], concentrado[11], concentrado[12],concentrado[13], 
-              concentrado[14], Number(concentrado[15]), concentrado[16]]).
+              concentrado[14], Number(concentrado[15]), concentrado[16]]).then(()=>{
+                console.log("datos insertados Layout");
+              }).
             catch(error=>console.log(error));
       }
 
@@ -168,7 +241,9 @@ export class TasksService {
         return this.db.executeSql(sql,[ datosCaptura.idDatofijo, datosCaptura.numInv, datosCaptura.noSap, datosCaptura.empresa, 
           datosCaptura.descripcion, datosCaptura.ubicacion, datosCaptura.edoFisico, datosCaptura.descCorta, datosCaptura.marca,
                 datosCaptura.modelo, datosCaptura.serie, datosCaptura.color, datosCaptura.largo, datosCaptura.alto, datosCaptura.ancho, 
-                Number(datosCaptura.idCaptura)]).
+                Number(datosCaptura.idCaptura)]).then(()=>{
+                  console.log("datos actualizados Captura");
+                }).
                 catch(error => console.log(error)
                 );
       }
@@ -279,24 +354,26 @@ export class TasksService {
       }
 
       getStatus(){
-        let sql = 'select estatus, count(*) as cantidad from captura group by estatus';
+        var estatus: any[] = [];    
+        console.log("Entro a recuperar estatus ");
+        let sql = 'select estatus, count(*) as cantidad from captura group by estatus';      
         return this.db.executeSql(sql, [])
-        .then(response => {
-          var estatus: any[] = [];    
-          if(response.rows.length > 0 ){
-            for (let index = 0; index < response.rows.length; index++) {
-              estatus.push( response.rows.item(index) );
+        .then((resultSet) => {
+          console.log("resultado " +JSON.stringify(resultSet));
+          
+          if(resultSet.rows.length > 0 ){
+            for (let index = 0; index < resultSet.rows.length; index++) {
+              estatus.push( resultSet.rows.item(index) );
             }
-          }else  if(response.rows.length === 0 ){
+          }else  if(resultSet.rows.length === 0 ){
             // captura.push( response.rows );
             estatus = [];
           }
-          console.log('estatus' +JSON.stringify(estatus));
-          return Promise.resolve( estatus );
+          console.log('estatus ' +JSON.stringify(estatus));
+          return Promise.resolve( estatus )
         })
         .catch(error => Promise.reject(error));
       }
-
       getHeaderCaptura(){
         const captura = 'captura';
         let sql = 'SELECT name FROM PRAGMA table_info(' + captura + ')';
