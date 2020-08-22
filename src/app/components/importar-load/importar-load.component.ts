@@ -75,8 +75,9 @@ activo = {
     }
 
   pickFile() {
-    this.msgService.presentLoad('Cargando archivo...');
+    
     this.fileChooser.open().then((fileuri) => {
+      this.msgService.presentLoad('Cargando archivo...');
       this.tasksService.deleteTableCaptura();
       this.tasksService.selectChange();
       this.tasksService.deleteTableDatosFijos();
