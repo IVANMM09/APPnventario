@@ -109,7 +109,7 @@ activo = {
 
   private saveData(data: any){
       
-
+    
       for (let index = 0; index <data.length; index++) {
         //let id_data = this.tasksService.getCC(data.CC);   
         if(data[index]!='' && data[index]!=null ){
@@ -124,6 +124,36 @@ activo = {
        
     }
   }
+  private saveData2(data: any){
+      
+    let cont = 0;
+    for (let index = 0; index <= data.length; index++) {
+    
+      //let id_data = this.tasksService.getCC(data.CC);   
+      if(data[index]!='' && data[index]!=null ){
+        data[index][14] = 'faltante'; 
+        data[index][15] = 1; 
+        data[index][16] = this.fechaActualDf;
+        this.tasksService.insertCapturaLayout2(data[index]).then(response => {
+          console.log('este es el response ' +  response);
+          cont ++;
+          console.log('cont ' +  cont);
+          console.log('length' +  data.length);
+          //console.log('length -1 ' +  (data.length - 1));
+          if(cont === (data.length - 1)) 
+          {
+            this.msgService.dismissLoad();
+            this.presentToast('Carga completa, archivos cargados ' + this.csvData.length.toString());
+          }
+          
+        });
+        //this.presentToast("Error al Carga el archivo, favor de validar: " + error);
+        //this.tasksService.selectChange();
+       // console.log("Entro Save Data " +JSON.stringify(data[index]));
+      }   
+     
+  }
+}
   
 
 
@@ -138,13 +168,13 @@ activo = {
         this.csvData = parsedData.data;
       
         console.log("extract data " + parsedData.data);
-        this.saveData(parsedData.data);
-        this.msgService.dismissLoad();
+        this.saveData2(parsedData.data);
+        
       }
       
       
     });
-    this.presentToast('Carga completa, archivos cargados ' + this.csvData.length.toString());
+    
   
   }
 

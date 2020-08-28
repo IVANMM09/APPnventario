@@ -36,8 +36,8 @@ export class AppComponent {
     this.platform.ready().then(() => {
       this.statusBar.styleLightContent();
       this.splashScreen.hide();
-      this.createDatabase();
       this.componentes = this.dataService.getMenuOpts();
+      this.createDatabase();
     });
   }
 
@@ -57,7 +57,7 @@ export class AppComponent {
       this.taskService.createIndexNumSap();
       this.taskService.createIndexSerie();
       this.taskService.createIndexStatus();
-      return this.taskService.createIndexIdDatoFijo();
+      this.taskService.createIndexIdDatoFijo();
     })
     .catch(error =>{
       console.error(error);

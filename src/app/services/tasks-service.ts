@@ -22,7 +22,9 @@ export class TasksService {
       deleteTableCaptura(){
         let sql = 'DELETE FROM captura; ';
         console.log("sql " +sql);
-        return this.db.executeSql(sql, []).
+        this.db.executeSql(sql, []).then(()=>{
+          console.log("Borrado exitoso de Captura")
+        }).
         catch(error=>console.log(error));
         
       }
@@ -30,14 +32,18 @@ export class TasksService {
       InitializeSeqCaptura(){
         let sql = '  UPDATE SQLITE_SEQUENCE SET SEQ=0 WHERE NAME="captura" ';
         console.log("sql " +sql);
-        return this.db.executeSql(sql, []).
+        this.db.executeSql(sql, []).then(()=>{
+          console.log("Inicializacion de Seq Captura");
+        }).
         catch(error=>console.log(error)); 
       }
 
       deleteTableDatosFijos(){
         let sql = 'DELETE FROM datosFijos;';
         console.log("sql " +sql);
-        return this.db.executeSql(sql, []).
+        this.db.executeSql(sql, []).then(()=>{
+          console.log("Borrado exitoso de datosFijos")
+        }).
         catch(error=>console.log(error));
         
       }
@@ -45,7 +51,9 @@ export class TasksService {
       InitializeSeqDatosFijos(){
         let sql =  ' UPDATE SQLITE_SEQUENCE SET SEQ=0 WHERE NAME= "datosFijos"';
         console.log("sql " +sql);
-        return this.db.executeSql(sql, []).
+        this.db.executeSql(sql, []).then(()=>{
+          console.log("Inicializacion de Seq datosFijos");
+        }).
         catch(error=>console.log(error));
         
       }
@@ -58,42 +66,56 @@ export class TasksService {
       createIndexIdCap(){
         let sql = 'CREATE UNIQUE INDEX IF NOT EXISTS idx_id_captura '+
               'ON captura (id_captura)';
-          return this.db.executeSql(sql, []);
+        this.db.executeSql(sql, []).then(()=>{
+          console.log("Se creo el indice idx_id_captura ");
+        }).catch(error=>console.log(error));
       }
     
       createIndexIdCapDatoFijo(){
         let sql = 'CREATE UNIQUE INDEX IF NOT EXISTS idx_id_captura_dato_fijo '+
               'ON captura (id_captura, id_dato_fijo)';
-          return this.db.executeSql(sql, []);
+          return this.db.executeSql(sql, []).then(()=>{
+            console.log("Se creo el indice idx_id_captura_dato_fijo ");
+          }).catch(error=>console.log(error));
       }
 
       createIndexNumInv(){
         let sql = 'CREATE UNIQUE INDEX IF NOT EXISTS idx_num_inv '+
               'ON captura (id_captura,num_inv)';
-          return this.db.executeSql(sql, []);
+          return this.db.executeSql(sql, []).then(()=>{
+            console.log("Se creo el indice idx_num_inv ");
+          }).catch(error=>console.log(error));
       }
       createIndexNumSap(){
         let sql = 'CREATE UNIQUE INDEX IF NOT EXISTS idx_num_sap '+
               'ON captura (id_captura,num_sap)';
-          return this.db.executeSql(sql, []);
+          return this.db.executeSql(sql, []).then(()=>{
+            console.log("Se creo el indice idx_num_sap ");
+          }).catch(error=>console.log(error));
       }
 
       createIndexSerie(){
         let sql = 'CREATE UNIQUE INDEX IF NOT EXISTS idx_serie '+
               'ON captura (id_captura,serie)';
-          return this.db.executeSql(sql, []);
+          return this.db.executeSql(sql, []).then(()=>{
+            console.log("Se creo el indice idx_serie ");
+          }).catch(error=>console.log(error));
       }
       
       createIndexIdDatoFijo(){
         let sql = 'CREATE UNIQUE INDEX IF NOT EXISTS idx_id_datos_fijos '+
               'ON datosFijos (id_datos_fijos)';
-          return this.db.executeSql(sql, []);
+          return this.db.executeSql(sql, []).then(()=>{
+            console.log("Se creo el indice idx_id_datos_fijos ");
+          }).catch(error=>console.log(error));
       }
 
       createIndexStatus(){
         let sql = 'CREATE UNIQUE INDEX IF NOT EXISTS idx_status '+
               'ON captura (id_captura, estatus)';
-          return this.db.executeSql(sql, []);
+          return this.db.executeSql(sql, []).then(()=>{
+            console.log("Se creo el indice idx_status ");
+          }).catch(error=>console.log(error));
       }
 
 
@@ -104,22 +126,29 @@ export class TasksService {
             ' centro_costos INTEGER, area TEXT, ' +
             ' cod_inmueble INTEGER, piso INTEGER, usuario TEXT,'+
             ' fecha TEXT )';
-            console.log("sql " +sql);
-        return this.db.executeSql(sql, []);
+        this.db.executeSql(sql, []).then(()=>{
+          console.log("Se creo la tabla datosFijos");
+        }).catch(error=>console.log(error));
       }
       
       create(datos_fijos: any){
       
         let sql = 'INSERT INTO datosFijos(id_employee, name, centro_costos, area, cod_inmueble, piso, usuario, fecha) VALUES(?,?,?,?,?,?,?,?)';
-        return this.db.executeSql(sql, [datos_fijos.idEmpleado, datos_fijos.nombre, datos_fijos.centroCostos, datos_fijos.area,
+        this.db.executeSql(sql, [datos_fijos.idEmpleado, datos_fijos.nombre, datos_fijos.centroCostos, datos_fijos.area,
                                         datos_fijos.codInmueble, datos_fijos.piso, datos_fijos.usuario, datos_fijos.fecha]).
+                                        then(()=>{
+                                        console.log("Se creo la tabla datosFijos");
+                                        }).
             catch(error=>console.log(error));
       }
 
       deleteIdDatosFijos(dato:any){
         console.log("Objeto " +JSON.stringify(dato));
         let sql = 'DELETE FROM datosFijos where id_datos_fijos=?';
-        return this.db.executeSql(sql, [Number(dato.id_datos_fijos)]).
+         this.db.executeSql(sql, [Number(dato.id_datos_fijos)]).
+         then(()=>{
+          console.log("Se borraron los datos");
+          }).
           catch(error=>console.log("error"+ error));
       }
 
@@ -203,7 +232,9 @@ export class TasksService {
             ' estatus TEXT, campo_add1 TEXT, campo_add2 TEXT, '+
             ' foreign key(id_dato_fijo) references datosFijos(id_datos_fijos))';
             console.log('sql captura ' +sql);
-        return this.db.executeSql(sql, []);
+        this.db.executeSql(sql, []).then(()=>{
+          console.log("Se creo la tabla Captura");
+        }).catch(error => Promise.reject(error));
       }
 
       insertCaptura (concentrado: any){
@@ -216,8 +247,7 @@ export class TasksService {
            concentrado.modelo, concentrado.serie, concentrado.color, concentrado.largo, concentrado.alto, concentrado.ancho, 
            concentrado.estatus, concentrado.centroCostos]).then(()=>{
               console.log("datos insertados captura ");
-           }
-           ).
+           }).
             catch(error=>console.log(error));
       }
 
@@ -225,7 +255,7 @@ export class TasksService {
         let sql = 'INSERT INTO captura (empresa, num_inv, num_sap, descripcion, marca, modelo, serie, color,  largo, ancho, alto, edo_fisico, '+
                   ' ubicacion, comentarios, estatus,id_dato_fijo, fecha) '+
             ' VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)';
-            return this.db.executeSql(sql,[concentrado[0],concentrado[1], concentrado[2], concentrado[3], concentrado[4],concentrado[5], 
+             return this.db.executeSql(sql,[concentrado[0],concentrado[1], concentrado[2], concentrado[3], concentrado[4],concentrado[5], 
               concentrado[6], concentrado[7], concentrado[8],concentrado[9], concentrado[10], concentrado[11], concentrado[12],concentrado[13], 
               concentrado[14], Number(concentrado[15]), concentrado[16]]).then(()=>{
                 console.log("datos insertados Layout");
@@ -233,15 +263,28 @@ export class TasksService {
             catch(error=>console.log(error));
       }
 
+      insertCapturaLayout2(concentrado: any){
+        let sql = 'INSERT INTO captura (empresa, num_inv, num_sap, descripcion, marca, modelo, serie, color,  largo, ancho, alto, edo_fisico, '+
+                  ' ubicacion, comentarios, estatus,id_dato_fijo, fecha) '+
+            ' VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)';
+             return this.db.executeSql(sql,[concentrado[0],concentrado[1], concentrado[2], concentrado[3], concentrado[4],concentrado[5], 
+              concentrado[6], concentrado[7], concentrado[8],concentrado[9], concentrado[10], concentrado[11], concentrado[12],concentrado[13], 
+              concentrado[14], Number(concentrado[15]), concentrado[16]]).then(response=>{
+                console.log('datos insertados Layout' + JSON.stringify(response));
+                return (response);
+              }).
+            catch(error=>console.log(error));
+      }
+
       updateCaptura(datosCaptura:any){
         console.log("datos Captura: "  + JSON.stringify(datosCaptura));
         let sql = 'UPDATE captura SET id_dato_fijo = ?, num_inv =?, num_sap =?, empresa =?, descripcion = ?, ubicacion=?,'+
-                  'edo_fisico=?, desc_corta =?,  marca =?, modelo =?, serie =?, color=?, largo =?, alto =?, ancho =? '+
+                  'edo_fisico=?, desc_corta =?,  marca =?, modelo =?, serie =?, color=?, largo =?, alto =?, ancho =?, estatus =? '+
                   ' where id_captura =?';
-        return this.db.executeSql(sql,[ datosCaptura.idDatofijo, datosCaptura.numInv, datosCaptura.noSap, datosCaptura.empresa, 
+          this.db.executeSql(sql,[ datosCaptura.idDatofijo, datosCaptura.numInv, datosCaptura.noSap, datosCaptura.empresa, 
           datosCaptura.descripcion, datosCaptura.ubicacion, datosCaptura.edoFisico, datosCaptura.descCorta, datosCaptura.marca,
                 datosCaptura.modelo, datosCaptura.serie, datosCaptura.color, datosCaptura.largo, datosCaptura.alto, datosCaptura.ancho, 
-                Number(datosCaptura.idCaptura)]).then(()=>{
+                datosCaptura.estatus, Number(datosCaptura.idCaptura)]).then(()=>{
                   console.log("datos actualizados Captura");
                 }).
                 catch(error => console.log(error)
@@ -252,8 +295,10 @@ export class TasksService {
         console.log("estatus " +JSON.stringify(datosCap.estatus));
         console.log("id " + JSON.stringify(datosCap.idCaptura));
         let sql = 'UPDATE captura SET estatus = ? where id_captura = ?'
-        return this.db.executeSql(sql, [datosCap.estatus, Number(datosCap.idCaptura)]).
-          catch(error=>console.log(error));
+        this.db.executeSql(sql, [datosCap.estatus, Number(datosCap.idCaptura)]).
+        then(()=>{
+          console.log("datos actualizados Captura");
+        }).catch(error=>console.log(error));
       }
 
 

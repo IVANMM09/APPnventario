@@ -192,7 +192,7 @@ export class ActivosInfoComponent implements OnInit {
         } */
         if(response.length===1 ){
           this.concentrado.idCaptura = response[0].id_captura
-          this.concentrado.estatus = 'encontrado';
+         // this.concentrado.estatus = 'encontrado';
           this.taskService.updateStatus(this.concentrado);
           this.presentToastMsgResp('registro duplicado');
           this.conteoCapturas();
@@ -299,6 +299,7 @@ export class ActivosInfoComponent implements OnInit {
     console.log("update " + JSON.stringify(this.concentrado));  
     this.getCCUpdate(this.concentrado);  
     console.log("centro costos update " + this.concentrado)
+    this.concentrado.estatus = 'encontrado';
     this.taskService.updateCaptura(this.concentrado);
 
     this.presentToastMsgResp('Registro Actualizado');
@@ -323,7 +324,7 @@ BuscarSAP(){
     this.datosActivos = response;
     if(response.length===1 ){
       this.concentrado.idCaptura = response[0].id_captura
-      this.concentrado.estatus = 'encontrado';
+      //this.concentrado.estatus = 'encontrado';
       this.taskService.updateStatus(this.concentrado);
       this.presentToastMsgResp('registro duplicado');
       this.conteoCapturas();
@@ -370,7 +371,7 @@ BuscarSerie(){
       this.datosActivos = response;
       if(response.length===1 ){
         this.concentrado.idCaptura = response[0].id_captura
-        this.concentrado.estatus = 'encontrado';
+        //this.concentrado.estatus = 'encontrado';
         this.taskService.updateStatus(this.concentrado);
         this.presentToastMsgResp('registro duplicado');
         this.conteoCapturas();
