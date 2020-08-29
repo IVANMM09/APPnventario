@@ -135,10 +135,10 @@ activo = {
         data[index][15] = 1; 
         data[index][16] = this.fechaActualDf;
         this.tasksService.insertCapturaLayout2(data[index]).then(response => {
-          console.log('este es el response ' +  response);
+          //console.log('este es el response ' +  response);
           cont ++;
-          console.log('cont ' +  cont);
-          console.log('length' +  data.length);
+          //console.log('cont ' +  cont);
+          //console.log('length' +  data.length);
           //console.log('length -1 ' +  (data.length - 1));
           if(cont === (data.length - 1)) 
           {

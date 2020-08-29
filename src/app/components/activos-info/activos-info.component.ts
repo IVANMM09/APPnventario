@@ -174,7 +174,6 @@ export class ActivosInfoComponent implements OnInit {
   async presentToastMsgResp( message: string ) {
     const toast = await this.toastController.create({
       message,
-      position: 'middle',
       duration: 2500
     });
     toast.present();
@@ -194,7 +193,7 @@ export class ActivosInfoComponent implements OnInit {
           this.concentrado.idCaptura = response[0].id_captura
          // this.concentrado.estatus = 'encontrado';
           this.taskService.updateStatus(this.concentrado);
-          this.presentToastMsgResp('registro duplicado');
+          //this.presentToastMsgResp('registro duplicado');
           this.conteoCapturas();
 
           // tslint:disable-next-line:prefer-for-of
@@ -326,7 +325,7 @@ BuscarSAP(){
       this.concentrado.idCaptura = response[0].id_captura
       //this.concentrado.estatus = 'encontrado';
       this.taskService.updateStatus(this.concentrado);
-      this.presentToastMsgResp('registro duplicado');
+      //this.presentToastMsgResp('registro duplicado');
       this.conteoCapturas();
 
       // tslint:disable-next-line:prefer-for-of
@@ -373,7 +372,7 @@ BuscarSerie(){
         this.concentrado.idCaptura = response[0].id_captura
         //this.concentrado.estatus = 'encontrado';
         this.taskService.updateStatus(this.concentrado);
-        this.presentToastMsgResp('registro duplicado');
+        //this.presentToastMsgResp('registro duplicado');
         this.conteoCapturas();
   
         // tslint:disable-next-line:prefer-for-of

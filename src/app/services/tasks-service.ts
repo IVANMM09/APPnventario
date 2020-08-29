@@ -258,7 +258,7 @@ export class TasksService {
              return this.db.executeSql(sql,[concentrado[0],concentrado[1], concentrado[2], concentrado[3], concentrado[4],concentrado[5], 
               concentrado[6], concentrado[7], concentrado[8],concentrado[9], concentrado[10], concentrado[11], concentrado[12],concentrado[13], 
               concentrado[14], Number(concentrado[15]), concentrado[16]]).then(()=>{
-                console.log("datos insertados Layout");
+                //console.log("datos insertados Layout");
               }).
             catch(error=>console.log(error));
       }
