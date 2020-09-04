@@ -6,7 +6,7 @@ import { FilePath } from '@ionic-native/file-path/ngx';
 import { Platform } from '@ionic/angular';
 import { File } from '@ionic-native/file/ngx';
 import { AlertController } from '@ionic/angular';
-
+import { MsgService } from '../../services/msg.service';
 
 @Component({
   selector: 'app-exportar-data',
@@ -15,8 +15,6 @@ import { AlertController } from '@ionic/angular';
 })
 export class ExportarDataComponent implements OnInit {
 
-  porcentaje = 0;
-  progressbar = 0;
 
   csvData: any[];
   headerRow: any[];
@@ -30,7 +28,9 @@ export class ExportarDataComponent implements OnInit {
                private filePath: FilePath,
                private file: File,
                private fileSystem: File,
-               public alertController: AlertController,) { }
+               public alertController: AlertController,
+               public msgService: MsgService
+               ) { }
 
   ngOnInit() {
     this.tasksService.getAllCapturaLayout().then(response => {
@@ -59,33 +59,17 @@ export class ExportarDataComponent implements OnInit {
           text: 'Txt',
          
           handler: () => {
-            this.progressbar = 1;
-            const timeValue = setInterval((interval) => {
-              this.porcentaje = this.porcentaje + 1;
-              console.log(this.porcentaje);
-              if (this.porcentaje >= 2) {
-                clearInterval(timeValue);
-                this.progressbar = 0;
-                this.downloadTXT();
-              }
-              
-            }, 1000);
+            this.msgService.presentLoad('Descargando archivo...');
+            this.downloadTXT();
             
           }
         }, {
           text: 'Csv',
           handler: () => {
-            this.progressbar = 1;
-            const timeValue = setInterval((interval) => {
-              this.porcentaje = this.porcentaje + 1;
-              console.log(this.porcentaje);
-              if (this.porcentaje >= 2) {
-                clearInterval(timeValue);
-                this.progressbar = 0;
-                this.downloadCSV();
-              }
-              
-            }, 1000);
+            
+            this.msgService.presentLoad('Descargando archivo...');
+            this.downloadCSV();
+            
           
           }
         },
@@ -114,6 +98,7 @@ export class ExportarDataComponent implements OnInit {
     this.file.writeFile(path, 'rep_cap.csv', csv, { replace: true })
     .then(
     _ => {
+      this.msgService.dismissLoad();
       alert('Archivo descargado en /Download/rep_cap.csv');
     }
     )
@@ -123,6 +108,7 @@ export class ExportarDataComponent implements OnInit {
       this.file.writeExistingFile(path, 'rep_cap.csv', csv)
         .then(
         _ => {
+          this.msgService.dismissLoad();
           alert('Archivo sobreescrito en /Download/rep_cap.csv' + path);
         }
         )
@@ -146,6 +132,7 @@ downloadTXT() {
   this.file.writeFile(path, 'rep_cap.txt', csv, { replace: true })
   .then(
   _ => {
+    this.msgService.dismissLoad();
     alert('Archivo descargado en /Download/rep_cap.txt');
   }
   )
@@ -155,6 +142,7 @@ downloadTXT() {
     this.file.writeExistingFile(path, 'rep_cap.txt', csv)
       .then(
       _ => {
+        this.msgService.dismissLoad();
         alert('Archivo sobreescrito en /Download/rep_cap.txt' + path);
       }
       )

@@ -3,8 +3,12 @@
         <ion-buttons slot="start">
             <ion-back-button defaultHref="/"></ion-back-button>
         </ion-buttons>
-        <ion-title text-capitalize> {{ titulo }} </ion-title>
-        <!--<ion-datetime slot="end" value="{{ fechaActual | date: 'yyy-MM-dd' }}" disabled></ion-datetime>-->
+        <ion-item slot="end">
+            <ion-title slot="start" text-capitalize> {{ titulo }} </ion-title>
+            <!--<ion-datetime slot="end" value="{{ fechaActual | date: 'yyy-MM-dd' }}" disabled></ion-datetime>-->
+            <ion-badge slot="end" color="primary">1.2.2</ion-badge>
+
+        </ion-item>
 
     </ion-toolbar>
 </ion-header>

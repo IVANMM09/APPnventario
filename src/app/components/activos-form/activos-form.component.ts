@@ -37,8 +37,7 @@ export class ActivosFormComponent implements OnInit {
   async presentToast() {
     const toast = await this.toastController.create({
       message: 'Datos guardados existosamente',
-      position: 'middle',
-      duration: 1500
+      duration: 2500
     });
     toast.present();
   }

@@ -182,6 +182,24 @@ export class TasksService {
              
       }
 
+      getIdEmploye(idEmpleado){
+       console.log("Empleado" + idEmpleado );
+        let sql = 'Select * FROM datosFijos where id_employee = ?';
+        return this.db.executeSql(sql,[idEmpleado])
+          .then(response =>{
+            var dato: any[] = [];
+            if(response.rows.length>0){
+              for (let index = 0; index < response.rows.length; index++) {
+                  dato.push( response.rows.item(index));
+                } 
+              }else if(response.rows.length === 0 ){
+            dato = [];
+            }
+            return Promise.resolve(dato);
+          })
+		  .catch(error => Promise.reject(error));   
+      }
+
       getCC(idDatofijo : any){
         console.log("idDatoFijo " + JSON.stringify(idDatofijo));
         let sql = 'Select centro_costos FROM datosFijos where id_datos_fijos = ?';

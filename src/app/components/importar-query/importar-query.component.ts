@@ -13,8 +13,7 @@ export class ImportarQueryComponent implements OnInit {
 
   @ViewChild('lista', {static: true}) Lista: IonList;
 
-  porcentaje = 0;
-  progressbar = 0;
+ radioSelect = '';
 
   datosCaptura: DatoCaptura[] = [];
   textoBuscar = '';
@@ -46,36 +45,21 @@ export class ImportarQueryComponent implements OnInit {
                 public tasksService: TasksService,
                 public msgService: MsgService
                 ) { 
-                  /*const timeValue = setInterval((interval) => {
-                    this.porcentaje = this.porcentaje + 1;
-                    console.log(this.porcentaje);
-                    if (this.porcentaje >= 2) {
-                      clearInterval(timeValue);
-                      this.progressbar = 1;
-                    }
-                    
-                  }, 1000);*/
+
                 }
 
   ngOnInit() {
-    //this.getCaptura();
+
   }
 
-  buscar(event){
-    this.textoBuscar = event.detail.value;
-  }
-  getCaptura(){
-    this.tasksService.getAllCaptura()
-    .then(resp => {
-      this.datosCaptura = resp;
-      console.log("longitud" + this.datosCaptura.length);
-    })
-    .catch( error => {
-      console.error( error );
-    });
-  }
+ RadioChangeEvent(event){
+this.radioSelect = event.detail.value;
+console.log(this.radioSelect);
+ }
 
-  getNumInv(){
+  busquedaRadio(){
+    if (this.radioSelect == '1'){
+      console.log("busqueda por uno");
     this.msgService.presentLoad('Buscando registro...');
     if(this.textoBuscar.trim() !== '' && this.textoBuscar.trim() !== '0' ){
       console.log('NUMINV' + this.textoBuscar);
@@ -102,7 +86,67 @@ export class ImportarQueryComponent implements OnInit {
       this.limpiarForm();
 
     }
+  } else if (this.radioSelect == '2'){
+    console.log("busqueda por dos");
+    this.msgService.presentLoad('Buscando registro...');
+    if(this.textoBuscar.trim() !== '' && this.textoBuscar.trim() !== '0' ){
+      console.log('SAP' + this.textoBuscar);
+      this.tasksService.getCapturaByNumSap(this.textoBuscar)
+      .then(response => {
+        this.datosActivos = response;
+        if(this.datosActivos.length >= 1 ){
 
+          this.msgService.dismissLoad();
+          this.presentToastMsgResp('Registro encontrado');
+
+        } else
+        {
+          this.msgService.dismissLoad();
+          this.presentToastMsgResp('Registro NO encontrado');
+          this.limpiarForm();
+        }
+      })
+      .catch( error => 
+      console.error( error ));
+    } else {
+      this.msgService.dismissLoad();
+      this.presentToastMsgResp('Registro en blanco o 0');
+      this.limpiarForm();
+
+    }
+  } else if (this.radioSelect == '3'){
+    console.log("busqueda por tres");
+    
+    this.msgService.presentLoad('Buscando registro...');
+    if(this.textoBuscar.trim() !== '' && this.textoBuscar.trim() !== '0' ){
+      console.log('Serie' + this.textoBuscar);
+      this.tasksService.getCapturaBySerie(this.textoBuscar)
+      .then(response => {
+        this.datosActivos = response;
+        if(this.datosActivos.length >= 1 ){
+
+          this.msgService.dismissLoad();
+          this.presentToastMsgResp('Registro encontrado');
+
+        } else
+        {
+          this.msgService.dismissLoad();
+          this.presentToastMsgResp('Registro NO encontrado');
+          this.limpiarForm();
+        }
+      })
+      .catch( error => 
+      console.error( error ));
+    } else {
+      this.msgService.dismissLoad();
+      this.presentToastMsgResp('Registro en blanco o 0');
+      this.limpiarForm();
+
+    }
+  }else{
+  
+    this.presentToastMsgResp('Busqueda no valida, elija una opción');
+  }
  }
 
  async presentToastMsgResp( message: string ) {

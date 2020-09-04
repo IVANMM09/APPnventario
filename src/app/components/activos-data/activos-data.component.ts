@@ -1,9 +1,9 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
-
 import { IonList, ToastController } from '@ionic/angular';
 // import { DataLocalService } from '../../services/data-local.service';
 import { TasksService } from '../../services/tasks-service';
 import { DatoF } from '../../interfaces/interfaces';
+import { MsgService } from '../../services/msg.service';
 
 @Component({
   selector: 'app-activos-data',
@@ -14,83 +14,89 @@ export class ActivosDataComponent implements OnInit {
 
   @ViewChild('lista', {static: true}) Lista: IonList;
 
-  porcentaje = 0;
-  progressbar = 0;
- //datosFijos: any[] = [];
- datosFijos: DatoF[] = [];
+
+ 
+ //datosFijos: DatoF[] = [];
+ 
+ datosFijos: any [];
  textoBuscar = '';
+ concentradoDF = {
+  idDatoFijos: '',
+  idEmploye :'',
+  centroCostos: '',
+  codInmueble: '',
+  piso: '',
+  usuario: '',
+  fecha: ''
+};
+
+
   constructor(
     public toastController: ToastController, 
    // public dataLocalService: DataLocalService,
     public tasksService: TasksService,
+    public msgService: MsgService
     
     ) { 
 
-     
-     
-      const timeValue = setInterval((interval) => {
-      this.porcentaje = this.porcentaje + 1;
-      console.log(this.porcentaje);
-      if (this.porcentaje >= 2) {
-        clearInterval(timeValue);
-        this.progressbar = 1;
-      }
-      
-    }, 1000);
-   
-  
   }
- 
+
   ngOnInit() {
-    
 
 
-    //this.datosFijos = this.dataLocalService.activos;
-    this.datosFijos = this.tasksService.activos;
-   // this.tasksService.create(this.datosFijos);
-    // this.datosFijos = this.dataService.getDatosfijos();
 
-    /*  this.dataService.getDatosfijos().subscribe((data: any) => {
-      this.datosFijos = data.data;
 
-    });*/
-    
-    this.getAllActivos();
-    
   }
 
+  getIdEmpleado(){
+    this.msgService.presentLoad('Buscando registro...');
+    if(this.textoBuscar.trim() !== '' && this.textoBuscar.trim() !== '0' ){
+      console.log('name' + this.textoBuscar);
+      this.tasksService.getIdEmploye(this.textoBuscar)
+      .then(response => {
+        this.datosFijos = response;
+        if(this.datosFijos.length >= 1 ){
 
+          this.msgService.dismissLoad();
+          this.presentToast('registro encontrado');
+
+        } else
+        {
+          this.msgService.dismissLoad();
+          this.presentToast('registro NO encontrado');
+          this.limpiarForm();
+        }
+      })
+      .catch( error => 
+      console.error( error ));
+    } else {
+      this.msgService.dismissLoad();
+      this.presentToast('registro en blanco o 0');
+      this.limpiarForm();
+
+    }
+  }
 
   async presentToast(message: string) {
     const toast = await this.toastController.create({
       message,
-      duration: 1500
+      duration: 2500
     });
     toast.present();
   }
-
-  borrar(dato){
-
-    this.presentToast('Datos Borrados');
-    console.log(dato);
-    this.Lista.closeSlidingItems();
-
+  limpiarForm(){
+    this.concentradoDF = {
+      idDatoFijos: '',
+      idEmploye :'',
+      centroCostos: '',
+      codInmueble: '',
+      piso: '',
+      usuario: '',
+      fecha: ''
+    };
+    this.ngOnInit();
   }
 
-  buscar(event){
-    this.textoBuscar = event.detail.value;
-  }
 
-  getAllActivos(){
-     
-     this.tasksService.getAll()
-    .then(datosFijos => {
-      this.datosFijos = datosFijos;
-      console.log("longitud" + this.datosFijos.length);
-    })
-    .catch( error => {
-      console.error( error );
-    });
-  }
-  
+
 }

@@ -1,15 +1,43 @@
 <!--<ion-progress-bar *ngIf="progressbar == 0" [value]="porcentaje" color="primary"></ion-progress-bar>
 <ion-slides *ngIf="datosCaptura.length === 0 && porcentaje === 2">-->
+<ion-list class="estilosform">
+    <ion-radio-group (ionChange)="RadioChangeEvent($event)">
+        <ion-list-header>
+            <ion-label>
+                Seleccione Tipo de Busqueda:
+            </ion-label>
+        </ion-list-header>
 
+        <ion-item>
+            <ion-label>Codigo 1</ion-label>
+            <ion-radio value="1" checked></ion-radio>
+        </ion-item>
+
+        <ion-item>
+            <ion-label>Codigo 2</ion-label>
+            <ion-radio value="2"></ion-radio>
+        </ion-item>
+
+        <ion-item>
+            <ion-label>No. Serie</ion-label>
+            <ion-radio value="3"></ion-radio>
+        </ion-item>
+    </ion-radio-group>
+</ion-list>
 <div class="estilosbarra">
     <ion-item>
         <ion-label position="floating ">
             <h2>Busqueda</h2>
         </ion-label>
-        <ion-input #input type="text " name="numInv" [(ngModel)]="textoBuscar" placeholder="busqueda" required></ion-input>
-        <ion-button (click)="getNumInv()" slot="end">Buscar</ion-button>
+        <ion-input #input type="text " name="busqueda" [(ngModel)]="textoBuscar" placeholder="busqueda" required></ion-input>
+        <ion-button (click)=" busquedaRadio()" slot="end">Buscar</ion-button>
     </ion-item>
 </div>
+<ion-slides *ngIf="datosActivos.length === 0">
+    <ion-slide>
+        <ion-label>Introduzca un Codigo Valido</ion-label>
+    </ion-slide>
+</ion-slides>
 <div *ngIf="datosActivos.length > 0">
     <ion-item-sliding *ngFor="let dato of datosActivos">
         <ion-item>
