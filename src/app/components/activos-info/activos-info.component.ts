@@ -55,6 +55,7 @@ export class ActivosInfoComponent implements OnInit {
     largo: '',
     ancho: '',
     alto: '',
+    comentarios: '',
     estatus: '',
     centroCostos: ''
   };
@@ -92,8 +93,8 @@ export class ActivosInfoComponent implements OnInit {
   async presentAlertConfirm() {
     const alert = await this.alertController.create({
       cssClass: 'my-custom-class',
-      header: 'Registro Duplicado',
-      message: 'Elija una Opción',
+      header: 'Registro Encontrado',
+      message: 'Elija una Opción:',
       buttons: [
         {
           text: 'Cancelar',
@@ -141,7 +142,10 @@ export class ActivosInfoComponent implements OnInit {
   }
 
     getCC(concentrado){
-      this.taskService.getCC(this.concentrado.idDatofijo)
+      concentrado.estatus = 'nuevo';
+      this.taskService.insertCaptura(concentrado);
+      this.conteoCapturas();
+      /*this.taskService.getCC(this.concentrado.idDatofijo)
       .then(response => {
         if(response!=null){
           this.centroCostos = response;
@@ -155,7 +159,7 @@ export class ActivosInfoComponent implements OnInit {
           this.taskService.insertCaptura(concentrado);
           this.conteoCapturas();
         }
-      });
+      });*/
       
     }
  
@@ -192,9 +196,9 @@ export class ActivosInfoComponent implements OnInit {
         if(response.length===1 ){
           this.concentrado.idCaptura = response[0].id_captura
          // this.concentrado.estatus = 'encontrado';
-          this.taskService.updateStatus(this.concentrado);
+         // this.taskService.updateStatus(this.concentrado);
           //this.presentToastMsgResp('registro duplicado');
-          this.conteoCapturas();
+         // this.conteoCapturas();
 
           // tslint:disable-next-line:prefer-for-of
           for (let index = 0; index < response.length; index++) {
@@ -215,6 +219,8 @@ export class ActivosInfoComponent implements OnInit {
             this.concentrado.largo = response[0].largo;
             this.concentrado.alto = response[0].alto;
             this.concentrado.ancho = response[0].ancho;
+            this.concentrado.ubicacion = response[0].ubicacion;
+            this.concentrado.comentarios = response[0].comentarios;
            } 
           this.presentAlertConfirm();
 
@@ -287,6 +293,7 @@ export class ActivosInfoComponent implements OnInit {
       ancho: '',
       alto: '',
       estatus:'',
+      comentarios:'',
       centroCostos: ''
     };
     this.ngOnInit();
@@ -295,12 +302,11 @@ export class ActivosInfoComponent implements OnInit {
 
   guardarEdicion(){
     this.mostrarBotonEditar(false);
-    console.log("update " + JSON.stringify(this.concentrado));  
-    this.getCCUpdate(this.concentrado);  
-    console.log("centro costos update " + this.concentrado)
-    this.concentrado.estatus = 'encontrado';
-    this.taskService.updateCaptura(this.concentrado);
 
+    this.concentrado.estatus = 'encontrado';     
+    this.concentrado.idDatofijo = this.varDF;  
+    this.taskService.updateCaptura(this.concentrado);   
+    //this.getCCUpdate(); 
     this.presentToastMsgResp('Registro Actualizado');
     this.limpiarForm();
   }
@@ -324,9 +330,9 @@ BuscarSAP(){
     if(response.length===1 ){
       this.concentrado.idCaptura = response[0].id_captura
       //this.concentrado.estatus = 'encontrado';
-      this.taskService.updateStatus(this.concentrado);
+      //this.taskService.updateStatus(this.concentrado);
       //this.presentToastMsgResp('registro duplicado');
-      this.conteoCapturas();
+     // this.conteoCapturas();
 
       // tslint:disable-next-line:prefer-for-of
       for (let index = 0; index < response.length; index++) {
@@ -371,9 +377,9 @@ BuscarSerie(){
       if(response.length===1 ){
         this.concentrado.idCaptura = response[0].id_captura
         //this.concentrado.estatus = 'encontrado';
-        this.taskService.updateStatus(this.concentrado);
+        //this.taskService.updateStatus(this.concentrado);
         //this.presentToastMsgResp('registro duplicado');
-        this.conteoCapturas();
+       // this.conteoCapturas();
   
         // tslint:disable-next-line:prefer-for-of
         for (let index = 0; index < response.length; index++) {
@@ -414,6 +420,8 @@ conteoCapturas(){
 
   this.taskService.getStatus()
   .then(response => {
+    this.conteocap.nuevo=0;
+    this.conteocap.encontrado = 0;
     for (let index = 0; index < response.length; index++) {
       if(response[index].estatus === 'encontrado'){
         this.conteocap.encontrado = response[index].cantidad;
@@ -422,8 +430,6 @@ conteoCapturas(){
       }
     }
     this.conteocap.total = this.conteocap.encontrado + this.conteocap.nuevo;
-
-
   })
 }
 

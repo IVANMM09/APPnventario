@@ -30,7 +30,7 @@
         </ion-list-header>
         <ion-item *ngFor="let item of datos ">
             <ion-label>
-                <div><b>Nombre:</b> {{item.name}}</div>
+                <div><b>Nombre:</b> {{item.nombre}}</div>
                 <div><b>Piso:</b> {{item.piso}}</div>
                 <div><b>C.C:</b> {{item.centro_costos}}</div>
             </ion-label>
@@ -234,7 +234,7 @@
             <ion-label position="floating ">
                 <h2>Comentarios</h2>
             </ion-label>
-            <ion-input type="text " name="descCorta" [(ngModel)]="concentrado.descCorta"></ion-input>
+            <ion-input type="text " name="comentarios" [(ngModel)]="concentrado.comentarios"></ion-input>
             <!-- <ion-input type="text " name="descCorta " [(ngModel)]="activosInfo.descCorta "></ion-input> -->
         </ion-item>
     </ion-list>
@@ -242,7 +242,7 @@
 
 
     <ion-button expand="full" type="submit" [disabled]="formulario.invalid">Guardar</ion-button>
-    <ion-button *ngIf="edoButtonEdit===true " (click)="guardarEdicion()">Guardar Edición</ion-button>
+    <ion-button expand="full" *ngIf="edoButtonEdit===true " (click)="guardarEdicion()">Guardar Edición</ion-button>
     <ion-label position="floating">
         <h5 class="downrequired">
             <p class="Campo-obligatorio">*</p>Campos Obligatorios</h5>
