@@ -17,10 +17,10 @@ export class SalidaPage implements OnInit {
     
 
   }
-
+/*
   ionViewWillEnter(){
     this.presentAlertSalir();
-  }
+  }*/
 
   // tslint:disable-next-line:use-lifecycle-interface
 

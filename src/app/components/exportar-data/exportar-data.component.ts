@@ -36,9 +36,9 @@ export class ExportarDataComponent implements OnInit {
     this.tasksService.getAllCapturaLayout().then(response => {
       this.csvData = response;
     })
-    .catch( error => {
-    console.error( error );
-    });
+    .catch( error => 
+
+      this.msgService.presentMsgResp('surgio un error al consultar la tabla captura y datos fijos' + error ));
 
    /* this.tasksService.getHeaderCaptura().then(response => {
       this.headerRow = response;

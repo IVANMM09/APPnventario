@@ -7,6 +7,7 @@ import { DataLocalService } from '../../services/data-local.service';
 import { TasksService } from 'src/app/services/tasks-service';
 import { DatoF } from '../../interfaces/interfaces';
 import { from } from 'rxjs';
+import { MsgService } from '../../services/msg.service';
 
 @Component({
   selector: 'app-activos-form',
@@ -30,17 +31,18 @@ export class ActivosFormComponent implements OnInit {
   };
 
   constructor(public toastController: ToastController,
-              private taskService: TasksService) { }
+              private taskService: TasksService,
+              public msgService: MsgService) { }
 
   ngOnInit() {}
 
-  async presentToast() {
+  /*async presentToast() {
     const toast = await this.toastController.create({
       message: 'Datos guardados existosamente',
       duration: 2500
     });
     toast.present();
-  }
+  }*/
 
 
   async onSubmitDatosFijos(){
@@ -52,10 +54,16 @@ export class ActivosFormComponent implements OnInit {
     this.dataService.postDatosfijos(this.activo, headers); */
     // this.dataLocalService.guardarActivo(this.activo);
 
-    this.taskService.create(this.activo);
-    console.log(this.activo.nombre);
-    this.limpiarForm();
-    this.presentToast();
+    this.taskService.create(this.activo).then(response => {
+      this.msgService.presentMsgResp( response  );
+      console.log(this.activo.nombre);
+      this.limpiarForm();
+    })
+    .catch( error => 
+
+      this.msgService.presentMsgError('surgio un error al guardar' + error ));
+    
+    
   }
 
   limpiarForm(){

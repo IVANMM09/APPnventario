@@ -54,14 +54,19 @@ activo = {
     }
 
   ngOnInit() {
-     this.tasksService.getAllCaptura();
-     console.log(JSON.stringify(this.tasksService.getAllCaptura()));
+     this.tasksService.getAllCaptura().then(response => {
+      console.log(JSON.stringify(response));
+    })
+    .catch( error => 
+
+      this.msgService.presentMsgError('surgio un error al consultar captura' + error ));
+     
   }
 
   
 
 
-  private createDatabase(){
+ /* private createDatabase(){
     this.sqlite.create({
       name: 'data.db',
       location: 'default' // the location field is required
@@ -72,7 +77,7 @@ activo = {
     .catch(error =>{
       console.error(error);
     });
-    }
+    }*/
 
   pickFile() {
     
@@ -97,7 +102,7 @@ activo = {
       })
       .subscribe(
         data => this.extractData(data),
-        err => console.log('something went wrong: ', err)
+        err => this.msgService.presentMsgError('surgio un error en la seleccion de archivo' + err )
       );
 
       });
@@ -107,7 +112,7 @@ activo = {
 
   }
 
-  private saveData(data: any){
+  /*private saveData(data: any){
       
     
       for (let index = 0; index <data.length; index++) {
@@ -123,7 +128,8 @@ activo = {
         }   
        
     }
-  }
+  }*/
+
   private saveData2(data: any){
       
     let cont = 0;
@@ -143,10 +149,12 @@ activo = {
           if(cont === (data.length - 1)) 
           {
             this.msgService.dismissLoad();
-            this.presentToast('Carga completa, archivos cargados ' + this.csvData.length.toString());
+            this.msgService.presentMsgResp('carga completa, archivos cargados ' + this.csvData.length.toString());
           }
           
-        });
+        }).catch( error => 
+
+          this.msgService.presentMsgError('surgio un error durante la inserción de datos' + error ));
         //this.presentToast("Error al Carga el archivo, favor de validar: " + error);
         //this.tasksService.selectChange();
        // console.log("Entro Save Data " +JSON.stringify(data[index]));
@@ -178,13 +186,13 @@ activo = {
   
   }
 
-  async presentToast(message: string) {
+  /*async presentToast(message: string) {
     const toast = await this.toastController.create({
       message,
       duration: 2500
     });
     toast.present();
-  }
+  }*/
  
   /* exportCSV() {
     this.tasksService.getAllCaptura()

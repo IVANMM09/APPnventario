@@ -69,20 +69,20 @@ console.log(this.radioSelect);
         if(this.datosActivos.length >= 1 ){
 
           this.msgService.dismissLoad();
-          this.presentToastMsgResp('registro encontrado');
+          this.msgService.presentMsgResp('registro encontrado');
 
         } else
         {
           this.msgService.dismissLoad();
-          this.presentToastMsgResp('registro NO encontrado');
+          this.msgService.presentMsgResp('registro NO encontrado');
           this.limpiarForm();
         }
-      })
-      .catch( error => 
-      console.error( error ));
+      }).catch( error => 
+
+        this.msgService.presentMsgError('surgio un error durante la busqueda' + error ));
     } else {
       this.msgService.dismissLoad();
-      this.presentToastMsgResp('registro en blanco o 0');
+      this.msgService.presentMsgResp('registro en blanco o 0');
       this.limpiarForm();
 
     }
@@ -97,20 +97,21 @@ console.log(this.radioSelect);
         if(this.datosActivos.length >= 1 ){
 
           this.msgService.dismissLoad();
-          this.presentToastMsgResp('Registro encontrado');
+          this.msgService.presentMsgResp('Registro encontrado');
 
         } else
         {
           this.msgService.dismissLoad();
-          this.presentToastMsgResp('Registro NO encontrado');
+          this.msgService.presentMsgResp('Registro NO encontrado');
           this.limpiarForm();
         }
       })
       .catch( error => 
-      console.error( error ));
+
+        this.msgService.presentMsgError('surgio un error durante la busqueda' + error ));
     } else {
       this.msgService.dismissLoad();
-      this.presentToastMsgResp('Registro en blanco o 0');
+      this.msgService.presentMsgResp('Registro en blanco o 0');
       this.limpiarForm();
 
     }
@@ -126,36 +127,37 @@ console.log(this.radioSelect);
         if(this.datosActivos.length >= 1 ){
 
           this.msgService.dismissLoad();
-          this.presentToastMsgResp('Registro encontrado');
+          this.msgService.presentMsgResp('Registro encontrado');
 
         } else
         {
           this.msgService.dismissLoad();
-          this.presentToastMsgResp('Registro NO encontrado');
+          this.msgService.presentMsgResp('Registro NO encontrado');
           this.limpiarForm();
         }
       })
       .catch( error => 
-      console.error( error ));
+
+        this.msgService.presentMsgError('surgio un error durante la busqueda' + error ));
     } else {
       this.msgService.dismissLoad();
-      this.presentToastMsgResp('Registro en blanco o 0');
+      this.msgService.presentMsgResp('Registro en blanco o 0');
       this.limpiarForm();
 
     }
   }else{
   
-    this.presentToastMsgResp('Busqueda no valida, elija una opción');
+    this.msgService.presentMsgResp('Busqueda no valida, elija una opción');
   }
  }
 
- async presentToastMsgResp( message: string ) {
+ /*async presentToastMsgResp( message: string ) {
   const toast = await this.toastController.create({
     message,
     duration: 2500
   });
   toast.present();
-}
+}*/
 
 limpiarForm(){
   this.concentrado = {

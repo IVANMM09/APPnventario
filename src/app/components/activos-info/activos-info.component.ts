@@ -7,7 +7,7 @@ import { ToastController, NavController, IonInput } from '@ionic/angular';
 import { AlertController } from '@ionic/angular';
 import { Platform } from '@ionic/angular';
 import { Data } from 'src/app/interfaces/interfaces';
-
+import { MsgService } from '../../services/msg.service';
 
 @Component({
   selector: 'app-activos-info',
@@ -67,7 +67,8 @@ export class ActivosInfoComponent implements OnInit {
               public toastController: ToastController,
               public alertController: AlertController, 
               private platform: Platform,
-              private navCtrl: NavController
+              private navCtrl: NavController,
+              public msgService: MsgService
               ) {
                 
               }
@@ -79,7 +80,9 @@ export class ActivosInfoComponent implements OnInit {
       then(datosFijos => {
         console.log('datos combo '+ JSON.stringify(datosFijos));
         this.datos = datosFijos;
-    })
+    }).catch( error => 
+
+      this.msgService.presentMsgError('surgio un error al consultar la tabla datos fijos' + error ));
    })
 
     this.conteoCapturas();
@@ -123,10 +126,14 @@ export class ActivosInfoComponent implements OnInit {
     if(this.concentrado.noCapturas!==null && this.concentrado.noCapturas!==""){
       for (let index = 0; index < Number(this.concentrado.noCapturas); index++) {
         console.log("NumInv " + this.concentrado.numInv);
-        this.taskService.insertCaptura(this.concentrado);
-
-        this.concentrado.numInv = String(Number(this.concentrado.numInv)+1);
-
+        this.taskService.insertCaptura(this.concentrado).then(response => {
+          this.msgService.presentMsgResp( response  );
+          this.concentrado.numInv = String(Number(this.concentrado.numInv)+1);
+          
+        })
+        .catch( error => 
+    
+          this.msgService.presentMsgError('surgio un error al guardar' + error ));
       }
     }else{
        
@@ -135,7 +142,6 @@ export class ActivosInfoComponent implements OnInit {
 
     }
     this.conteoCapturas();
-    this.presentToastMsgResp('Datos guardados');
     this.limpiarForm();
     this.setFocusOnInput();
     
@@ -143,7 +149,12 @@ export class ActivosInfoComponent implements OnInit {
 
     getCC(concentrado){
       concentrado.estatus = 'nuevo';
-      this.taskService.insertCaptura(concentrado);
+      this.taskService.insertCaptura(concentrado).then(response => {
+        this.msgService.presentMsgResp( response  );
+      })
+      .catch( error =>
+  
+        this.msgService.presentMsgError('surgio un error al guardar' + error ));
       this.conteoCapturas();
       /*this.taskService.getCC(this.concentrado.idDatofijo)
       .then(response => {
@@ -171,17 +182,19 @@ export class ActivosInfoComponent implements OnInit {
           this.centroCostos = response;
           concentrado.centroCostos = this.centroCostos[0].centro_costos;                        
         }
-      });
+      }).catch( error => 
+
+        this.msgService.presentMsgError('surgio un error al consultar centro de costos en datos fijos por id' + error ));
     }
 
 
-  async presentToastMsgResp( message: string ) {
+ /* async presentToastMsgResp( message: string ) {
     const toast = await this.toastController.create({
       message,
       duration: 2500
     });
     toast.present();
-  }
+  }*/
 
   getNumInv(){
     if(this.concentrado.numInv.trim() !== '' && this.concentrado.numInv.trim() !== '0' ){
@@ -229,9 +242,9 @@ export class ActivosInfoComponent implements OnInit {
          // this.presentToastMsgResp('El registro se guarda por ser nuevo o estar mas de dos veces ');
         }*/
       })
-      .catch( error => {
-      console.error( error );
-      });
+      .catch( error => 
+
+        this.msgService.presentMsgError('surgio un error en la consulta de la tabla captura por num_inv' + error ));
     } /*else {
       //this.presentToastMsgResp('se guarda por ser 0 o vacio ');
     }*/
@@ -239,7 +252,7 @@ export class ActivosInfoComponent implements OnInit {
  }
 
 
-  scanCel(){
+ /* scanCel(){
     this.barcodeScanner.scan().then(barcodeData => {
 
       this.presentToastMsgResp(barcodeData.text);
@@ -255,7 +268,7 @@ export class ActivosInfoComponent implements OnInit {
      });
 
     // this.getNumInv();
-  }
+  }*/
 
   updateSelectCargaMasiva(event) {
     this.estadoCheck = event.detail.checked;
@@ -305,10 +318,15 @@ export class ActivosInfoComponent implements OnInit {
 
     this.concentrado.estatus = 'encontrado';     
     this.concentrado.idDatofijo = this.varDF;  
-    this.taskService.updateCaptura(this.concentrado);   
+    this.taskService.updateCaptura(this.concentrado).then(response => {
+      this.msgService.presentMsgResp( response  );
+      this.limpiarForm();
+    })
+    .catch( error => 
+
+   this.msgService.presentMsgResp('surgio un error al actualizar en tabla captura' + error ));   
     //this.getCCUpdate(); 
-    this.presentToastMsgResp('Registro Actualizado');
-    this.limpiarForm();
+    
   }
 
 mostrarForm(){
@@ -318,7 +336,7 @@ mostrarForm(){
     this.dFormCheck = true;
     this.dFijoCheck = 2;
   } else {
-    this.presentToastMsgResp('No hay datos fijos cargados');
+    this.msgService.presentMsgResp('No hay datos fijos cargados');
   }
 }
 
@@ -361,9 +379,9 @@ BuscarSAP(){
       this.presentToastMsgResp('El registro se guarda por ser nuevo o estar mas de dos veces ');
     }*/
   })
-  .catch( error => {
-  console.error( error );
-  });
+  .catch( error => 
+    this.msgService.presentMsgError('surgio un error en la consulta de la tabla captura por num_sap' + error ));
+  
 }/* else {
   this.presentToastMsgResp('se guarda por ser 0 o vacio ');
 }*/
@@ -408,9 +426,10 @@ BuscarSerie(){
         this.presentToastMsgResp('El registro se guarda por ser nuevo o estar mas de dos veces ');
       }*/
     })
-    .catch( error => {
-    console.error( error );
-    });
+    
+      .catch( error => 
+        this.msgService.presentMsgError('surgio un error en la consulta de la tabla captura por serie' + error ));
+      
   }/* else {
     this.presentToastMsgResp('se guarda por ser 0 o vacio ');
   }*/
@@ -430,7 +449,9 @@ conteoCapturas(){
       }
     }
     this.conteocap.total = this.conteocap.encontrado + this.conteocap.nuevo;
-  })
+  }).catch( error => 
+
+    this.msgService.presentMsgError('surgio un error al consultar status en tabla captura' + error ));
 }
 
 }

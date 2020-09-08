@@ -134,12 +134,13 @@ export class TasksService {
       create(datos_fijos: any){
       
         let sql = 'INSERT INTO datosFijos(id_employee, nombre, centro_costos, area, cod_inmueble, piso, usuario, fecha) VALUES(?,?,?,?,?,?,?,?)';
-        this.db.executeSql(sql, [datos_fijos.idEmpleado, datos_fijos.nombre, datos_fijos.centroCostos, datos_fijos.area,
+       return this.db.executeSql(sql, [datos_fijos.idEmpleado, datos_fijos.nombre, datos_fijos.centroCostos, datos_fijos.area,
                                         datos_fijos.codInmueble, datos_fijos.piso, datos_fijos.usuario, datos_fijos.fecha]).
-                                        then(()=>{
-                                        console.log("Se inserto en la tabla datosFijos");
-                                        }).
-            catch(error=>console.log(error));
+                                        then(response =>{
+                                          var Resp = "registro guardado en datosFijos";
+                                          return Promise.resolve(Resp);
+                                        })
+                                        .catch(error => Promise.reject(error));
       }
 
       deleteIdDatosFijos(dato:any){
@@ -260,13 +261,14 @@ export class TasksService {
         let sql = 'INSERT INTO captura(id_dato_fijo, num_inv, empresa, num_sap, descripcion, edo_fisico, '+
                  'desc_corta, marca, modelo, serie, color, largo, alto, ancho, ubicacion, comentarios, estatus, centro_costos )'+
                  ' VALUES(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)';
-        this.db.executeSql(sql, [concentrado.idDatofijo, concentrado.numInv, concentrado.empresa, 
+        return this.db.executeSql(sql, [concentrado.idDatofijo, concentrado.numInv, concentrado.empresa, 
           concentrado.noSap, concentrado.descripcion, concentrado.edoFisico, concentrado.descCorta, concentrado.marca,
            concentrado.modelo, concentrado.serie, concentrado.color, concentrado.largo, concentrado.alto, concentrado.ancho, 
-           concentrado.ubicacion, concentrado.comentarios, concentrado.estatus, concentrado.centroCostos]).then(()=>{
-              console.log("datos insertados captura ");
-           }).
-            catch(error=>console.log(error));
+           concentrado.ubicacion, concentrado.comentarios, concentrado.estatus, concentrado.centroCostos]).then(response =>{
+            var Resp = "datos guardados";
+            return Promise.resolve(Resp);
+          })
+          .catch(error => Promise.reject(error));
       }
 
       insertCapturaLayout(concentrado: any){
@@ -299,14 +301,14 @@ export class TasksService {
         let sql = 'UPDATE captura SET id_dato_fijo = ?, num_inv =?, num_sap =?, empresa =?, descripcion = ?, ubicacion=?,'+
                   'edo_fisico=?, desc_corta =?,  marca =?, modelo =?, serie =?, color=?, largo =?, alto =?, ancho =?, comentarios =?,' +
                   'estatus =? where id_captura =?';
-          this.db.executeSql(sql,[ datosCaptura.idDatofijo, datosCaptura.numInv, datosCaptura.noSap, datosCaptura.empresa, 
+          return this.db.executeSql(sql,[ datosCaptura.idDatofijo, datosCaptura.numInv, datosCaptura.noSap, datosCaptura.empresa, 
           datosCaptura.descripcion, datosCaptura.ubicacion, datosCaptura.edoFisico, datosCaptura.descCorta, datosCaptura.marca,
                 datosCaptura.modelo, datosCaptura.serie, datosCaptura.color, datosCaptura.largo, datosCaptura.alto, datosCaptura.ancho, 
-                datosCaptura.comentarios, datosCaptura.estatus, Number(datosCaptura.idCaptura)]).then(()=>{
-                  console.log("datos actualizados Captura");
-                }).
-                catch(error => console.log(error)
-                );
+                datosCaptura.comentarios, datosCaptura.estatus, Number(datosCaptura.idCaptura)]).then(response =>{
+                  var Resp = "registro actualizado";
+                  return Promise.resolve(Resp);
+                })
+                .catch(error => Promise.reject(error));
       }
 
       updateStatus(datosCap: any){

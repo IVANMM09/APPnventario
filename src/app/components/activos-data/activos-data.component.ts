@@ -19,6 +19,7 @@ export class ActivosDataComponent implements OnInit {
  //datosFijos: DatoF[] = [];
  
  datosFijos: any [];
+ msgerror: any [];
  textoBuscar = '';
  concentradoDF = {
   idDatoFijos: '',
@@ -49,7 +50,7 @@ export class ActivosDataComponent implements OnInit {
   }
 
   getIdEmpleado(){
-    this.msgService.presentLoad('Buscando registro...');
+    this.msgService.presentLoad('buscando registro...');
     if(this.textoBuscar.trim() !== '' && this.textoBuscar.trim() !== '0' ){
       console.log('name' + this.textoBuscar);
       this.tasksService.getIdEmploye(this.textoBuscar)
@@ -58,32 +59,33 @@ export class ActivosDataComponent implements OnInit {
         if(this.datosFijos.length >= 1 ){
 
           this.msgService.dismissLoad();
-          this.presentToast('registro encontrado');
+          this.msgService.presentMsgResp('registro encontrado');
 
         } else
         {
           this.msgService.dismissLoad();
-          this.presentToast('registro NO encontrado');
+          this.msgService.presentMsgResp('registro NO encontrado');
           this.limpiarForm();
         }
       })
       .catch( error => 
-      console.error( error ));
+
+        this.msgService.presentMsgError('surgio un error durante la busqueda' + error ));
     } else {
       this.msgService.dismissLoad();
-      this.presentToast('registro en blanco o 0');
+      this.msgService.presentMsgResp('registro en blanco o 0');
       this.limpiarForm();
 
     }
   }
 
-  async presentToast(message: string) {
+ /* async presentToast(message: string) {
     const toast = await this.toastController.create({
       message,
       duration: 2500
     });
     toast.present();
-  }
+  }*/
   limpiarForm(){
     this.concentradoDF = {
       idDatoFijos: '',

@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { TasksService } from '../../services/tasks-service';
 import { Conteo } from '../../interfaces/interfaces';
+import { MsgService } from '../../services/msg.service';
 
 @Component({
   selector: 'app-grafica-data',
@@ -19,7 +20,7 @@ export class GraficaDataComponent implements OnInit {
   
   //conteo: Conteo[] = [];
 
-  constructor(public taskService: TasksService) { }
+  constructor(public taskService: TasksService, public msgService: MsgService) { }
 
   ngOnInit() {
     this.getDatosGrafica();
@@ -43,8 +44,9 @@ getDatosGrafica(){
       this.conteo.total = this.conteo.encontrado + this.conteo.faltante + this.conteo.nuevo;
 
 
-    }).catch(error=>console.error()
-    );
+    }).catch( error => 
+
+      this.msgService.presentMsgError('surgio un error al consultar captura' + error ));
 }
 
 }
