@@ -241,15 +241,13 @@
     <!--<ion-buttons slot="end " expand="block "></ion-buttons>-->
 
 
-    <ion-button expand="full" type="submit" [disabled]="formulario.invalid">Guardar</ion-button>
-    <ion-button expand="full" *ngIf="edoButtonEdit===true " (click)="guardarEdicion()">Guardar Edición</ion-button>
+    <ion-button class="capturabuttons" expand="full" *ngIf="edoButtonGuardar===true " type="submit" [disabled]="formulario.invalid">Guardar</ion-button>
+    <ion-button class="capturabuttons" expand="full" *ngIf="edoButtonEdit===true " (click)="guardarEdicion()">Actualizar</ion-button>
+    <ion-button class="capturabuttons" expand="full" (click)="limpiarForm()">Limpiar</ion-button>
     <ion-label position="floating">
         <h5 class="downrequired">
             <p class="Campo-obligatorio">*</p>Campos Obligatorios</h5>
     </ion-label>
-    <ion-buttons slot="end " expand="block ">
-        <ion-button (click)="getNumInv() ">Consultar</ion-button>
-        <ion-button (click)="limpiarForm() ">Limpiar</ion-button>
-    </ion-buttons>
+
 
 </form>

@@ -30,6 +30,7 @@ export class ActivosInfoComponent implements OnInit {
   estadoCheck: boolean;
   estadoCheckC: boolean;
   edoButtonEdit: boolean;
+  edoButtonGuardar = true;
   dFijoCheck = 1;
   dFormCheck: boolean;
   scanInfo: Concentrado[] = [];
@@ -110,6 +111,7 @@ export class ActivosInfoComponent implements OnInit {
           text: 'Editar',
           handler: () => {
           this.mostrarBotonEditar(true);
+          this.edoButtonGuardar = true;
           }
         }
       ],
@@ -196,30 +198,24 @@ export class ActivosInfoComponent implements OnInit {
     toast.present();
   }*/
 
+  /*BUSQUEDA POR CODIGO 1*/
   getNumInv(){
     if(this.concentrado.numInv.trim() !== '' && this.concentrado.numInv.trim() !== '0' ){
       this.taskService.getCapturaByNumInv(this.concentrado.numInv)
       .then(response => {
         this.datosActivos = response;
-       /* if (this.datosActivos.length === 2){
-          this.presentToastMsgResp('registro duplicado');
-        } else {
-          this.presentToastMsgResp('numero de veces registrado: ' + this.datosActivos.length  );
-        } */
-        if(response.length===1 ){
-          this.concentrado.idCaptura = response[0].id_captura
-         // this.concentrado.estatus = 'encontrado';
-         // this.taskService.updateStatus(this.concentrado);
-          //this.presentToastMsgResp('registro duplicado');
-         // this.conteoCapturas();
-
-          // tslint:disable-next-line:prefer-for-of
+  
+        if(response.length===1 && response[0].estatus !== 'encontrado' ){
+          console.log('estatus ' + JSON.stringify(response[0].estatus));
+          this.concentrado.idCaptura = response[0].id_captura;
+        
           for (let index = 0; index < response.length; index++) {
             console.log('serie ' + JSON.stringify(response));
 
             this.concentrado.idCaptura = response[0].id_captura;
             this.concentrado.idDatofijo = response[0].id_dato_fijo;
             this.concentrado.empresa = response[0].empresa;
+            this.concentrado.numInv  = response[0].num_inv;
             this.concentrado.noSap = response[0].num_sap;
             this.concentrado.descripcion = response[0].descripcion;
             this.concentrado.ubicacion = response[0].ubicacion;
@@ -235,12 +231,47 @@ export class ActivosInfoComponent implements OnInit {
             this.concentrado.ubicacion = response[0].ubicacion;
             this.concentrado.comentarios = response[0].comentarios;
            } 
-          this.presentAlertConfirm();
+          /*this.presentAlertConfirm();*/
+          this.mostrarBotonEditar(true);
+          this.edoButtonGuardar = false;
 
-        } /*else {
+      } else if(response.length===1 && response[0].estatus==='encontrado' ){
+        this.concentrado.idCaptura = response[0].id_captura;
+       
+        // tslint:disable-next-line:prefer-for-of
+        for (let index = 0; index < response.length; index++) {
+           console.log('serie ' + JSON.stringify(response));
 
+           this.concentrado.idCaptura = response[0].id_captura;
+           this.concentrado.idDatofijo = response[0].id_dato_fijo;
+           this.concentrado.empresa = response[0].empresa;
+           this.concentrado.numInv  = response[0].num_inv;
+           this.concentrado.noSap = response[0].num_sap;
+           this.concentrado.descripcion = response[0].descripcion;
+           this.concentrado.ubicacion = response[0].ubicacion;
+           this.concentrado.edoFisico = response[0].edo_fisico;
+           this.concentrado.descCorta = response[0].desc_corta;
+           this.concentrado.marca = response[0].marca;
+           this.concentrado.modelo = response[0].modelo;
+           this.concentrado.serie = response[0].serie;
+           this.concentrado.color = response[0].color;
+           this.concentrado.largo = response[0].largo;
+           this.concentrado.alto = response[0].alto;
+           this.concentrado.ancho = response[0].ancho;
+           this.concentrado.ubicacion = response[0].ubicacion;
+           this.concentrado.comentarios = response[0].comentarios;
+          } 
+        this.presentAlertConfirm();
+        
+        }else if(response.length>=2){
+          this.msgService.presentMsgResp( 'registro duplicado '  );
+          this.mostrarBotonEditar(false);
+          this.edoButtonGuardar = true;
+
+        } else {
+                this.msgService.presentMsgResp( 'registro NO encontrado'  );
          // this.presentToastMsgResp('El registro se guarda por ser nuevo o estar mas de dos veces ');
-        }*/
+        }
       })
       .catch( error => 
 
@@ -287,6 +318,8 @@ export class ActivosInfoComponent implements OnInit {
 
 
   limpiarForm(){
+    this.mostrarBotonEditar(false);
+    this.edoButtonGuardar = true;
     this.  concentrado = {
       idCaptura :'',
       idDatofijo: this.concentrado.idDatofijo,
@@ -309,6 +342,7 @@ export class ActivosInfoComponent implements OnInit {
       comentarios:'',
       centroCostos: ''
     };
+    
     this.ngOnInit();
   }
   
@@ -339,26 +373,24 @@ mostrarForm(){
     this.msgService.presentMsgResp('No hay datos fijos cargados');
   }
 }
-
+/*BUSQUEDA CODIGO 2*/
 BuscarSAP(){
   if(this.concentrado.noSap.trim() !== '' && this.concentrado.noSap.trim() !== '0' ){
   this.taskService.getCapturaByNumSap(this.concentrado.noSap)
   .then(response => {
     this.datosActivos = response;
-    if(response.length===1 ){
-      this.concentrado.idCaptura = response[0].id_captura
-      //this.concentrado.estatus = 'encontrado';
-      //this.taskService.updateStatus(this.concentrado);
-      //this.presentToastMsgResp('registro duplicado');
-     // this.conteoCapturas();
 
-      // tslint:disable-next-line:prefer-for-of
+    if(response.length===1 && response[0].estatus !== 'encontrado' ){
+      console.log('estatus ' + JSON.stringify(response[0].estatus));
+      this.concentrado.idCaptura = response[0].id_captura;
+    
       for (let index = 0; index < response.length; index++) {
         console.log('serie ' + JSON.stringify(response));
 
         this.concentrado.idCaptura = response[0].id_captura;
         this.concentrado.idDatofijo = response[0].id_dato_fijo;
         this.concentrado.empresa = response[0].empresa;
+        this.concentrado.numInv  = response[0].num_inv;
         this.concentrado.noSap = response[0].num_sap;
         this.concentrado.descripcion = response[0].descripcion;
         this.concentrado.ubicacion = response[0].ubicacion;
@@ -371,13 +403,50 @@ BuscarSAP(){
         this.concentrado.largo = response[0].largo;
         this.concentrado.alto = response[0].alto;
         this.concentrado.ancho = response[0].ancho;
+        this.concentrado.ubicacion = response[0].ubicacion;
+        this.concentrado.comentarios = response[0].comentarios;
        } 
-      this.presentAlertConfirm();
+      /*this.presentAlertConfirm();*/
+      this.mostrarBotonEditar(true);
+      this.edoButtonGuardar = false;
 
-    }/* else {
+  } else if(response.length===1 && response[0].estatus==='encontrado' ){
+    this.concentrado.idCaptura = response[0].id_captura;
+   
+    // tslint:disable-next-line:prefer-for-of
+    for (let index = 0; index < response.length; index++) {
+       console.log('serie ' + JSON.stringify(response));
 
-      this.presentToastMsgResp('El registro se guarda por ser nuevo o estar mas de dos veces ');
-    }*/
+       this.concentrado.idCaptura = response[0].id_captura;
+       this.concentrado.idDatofijo = response[0].id_dato_fijo;
+       this.concentrado.empresa = response[0].empresa;
+       this.concentrado.numInv  = response[0].num_inv;
+       this.concentrado.noSap = response[0].num_sap;
+       this.concentrado.descripcion = response[0].descripcion;
+       this.concentrado.ubicacion = response[0].ubicacion;
+       this.concentrado.edoFisico = response[0].edo_fisico;
+       this.concentrado.descCorta = response[0].desc_corta;
+       this.concentrado.marca = response[0].marca;
+       this.concentrado.modelo = response[0].modelo;
+       this.concentrado.serie = response[0].serie;
+       this.concentrado.color = response[0].color;
+       this.concentrado.largo = response[0].largo;
+       this.concentrado.alto = response[0].alto;
+       this.concentrado.ancho = response[0].ancho;
+       this.concentrado.ubicacion = response[0].ubicacion;
+       this.concentrado.comentarios = response[0].comentarios;
+      } 
+    this.presentAlertConfirm();
+    
+    }else if(response.length>=2){
+      this.msgService.presentMsgResp( 'registro duplicado '  );
+      this.mostrarBotonEditar(false);
+      this.edoButtonGuardar = true;
+
+    } else {
+            this.msgService.presentMsgResp( 'registro NO encontrado'  );
+     // this.presentToastMsgResp('El registro se guarda por ser nuevo o estar mas de dos veces ');
+    }
   })
   .catch( error => 
     this.msgService.presentMsgError('surgio un error en la consulta de la tabla captura por num_sap' + error ));
@@ -386,26 +455,24 @@ BuscarSAP(){
   this.presentToastMsgResp('se guarda por ser 0 o vacio ');
 }*/
 }
-
+/*BUSQUEDA SERIE*/
 BuscarSerie(){
   if(this.concentrado.serie.trim() !== '' && this.concentrado.serie.trim() !== '0' ){
     this.taskService.getCapturaBySerie(this.concentrado.serie)
     .then(response => {
       this.datosActivos = response;
-      if(response.length===1 ){
-        this.concentrado.idCaptura = response[0].id_captura
-        //this.concentrado.estatus = 'encontrado';
-        //this.taskService.updateStatus(this.concentrado);
-        //this.presentToastMsgResp('registro duplicado');
-       // this.conteoCapturas();
   
-        // tslint:disable-next-line:prefer-for-of
+      if(response.length===1 && response[0].estatus !== 'encontrado' ){
+        console.log('estatus ' + JSON.stringify(response[0].estatus));
+        this.concentrado.idCaptura = response[0].id_captura;
+      
         for (let index = 0; index < response.length; index++) {
           console.log('serie ' + JSON.stringify(response));
   
           this.concentrado.idCaptura = response[0].id_captura;
           this.concentrado.idDatofijo = response[0].id_dato_fijo;
           this.concentrado.empresa = response[0].empresa;
+          this.concentrado.numInv  = response[0].num_inv;
           this.concentrado.noSap = response[0].num_sap;
           this.concentrado.descripcion = response[0].descripcion;
           this.concentrado.ubicacion = response[0].ubicacion;
@@ -418,16 +485,52 @@ BuscarSerie(){
           this.concentrado.largo = response[0].largo;
           this.concentrado.alto = response[0].alto;
           this.concentrado.ancho = response[0].ancho;
+          this.concentrado.ubicacion = response[0].ubicacion;
+          this.concentrado.comentarios = response[0].comentarios;
          } 
-        this.presentAlertConfirm();
+        /*this.presentAlertConfirm();*/
+        this.mostrarBotonEditar(true);
+        this.edoButtonGuardar = false;
   
-      } /*else {
+    } else if(response.length===1 && response[0].estatus==='encontrado' ){
+      this.concentrado.idCaptura = response[0].id_captura;
+     
+      // tslint:disable-next-line:prefer-for-of
+      for (let index = 0; index < response.length; index++) {
+         console.log('serie ' + JSON.stringify(response));
   
-        this.presentToastMsgResp('El registro se guarda por ser nuevo o estar mas de dos veces ');
-      }*/
+         this.concentrado.idCaptura = response[0].id_captura;
+         this.concentrado.idDatofijo = response[0].id_dato_fijo;
+         this.concentrado.empresa = response[0].empresa;
+         this.concentrado.numInv  = response[0].num_inv;
+         this.concentrado.noSap = response[0].num_sap;
+         this.concentrado.descripcion = response[0].descripcion;
+         this.concentrado.ubicacion = response[0].ubicacion;
+         this.concentrado.edoFisico = response[0].edo_fisico;
+         this.concentrado.descCorta = response[0].desc_corta;
+         this.concentrado.marca = response[0].marca;
+         this.concentrado.modelo = response[0].modelo;
+         this.concentrado.serie = response[0].serie;
+         this.concentrado.color = response[0].color;
+         this.concentrado.largo = response[0].largo;
+         this.concentrado.alto = response[0].alto;
+         this.concentrado.ancho = response[0].ancho;
+         this.concentrado.ubicacion = response[0].ubicacion;
+         this.concentrado.comentarios = response[0].comentarios;
+        } 
+      this.presentAlertConfirm();
+      
+      }else if(response.length>=2){
+        this.msgService.presentMsgResp( 'registro duplicado '  );
+        this.mostrarBotonEditar(false);
+        this.edoButtonGuardar = true;
+  
+      } else {
+              this.msgService.presentMsgResp( 'registro NO encontrado'  );
+       // this.presentToastMsgResp('El registro se guarda por ser nuevo o estar mas de dos veces ');
+      }
     })
-    
-      .catch( error => 
+    .catch( error => 
         this.msgService.presentMsgError('surgio un error en la consulta de la tabla captura por serie' + error ));
       
   }/* else {

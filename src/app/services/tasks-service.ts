@@ -222,7 +222,7 @@ export class TasksService {
 
       getIdDatoFijo (){
         let idDatosFijos: any [];
-        let sql = 'Select  *FROM datosFijos where nombre <> "generico"';
+        let sql = 'Select  *FROM datosFijos where id_employee <> ""';
         return  this.db.executeSql(sql, [])
         .then(response => {
           var DatoF: any[] = [];
@@ -340,8 +340,9 @@ export class TasksService {
 
       getAllCapturaLayout(){
         let sql = 'SELECT df.id_employee as ID_EMPLEADO, df.nombre as NOMBRE, df.centro_costos as CENTRO_COSTOS, df.area as AREA, '+
-                  ' df.cod_inmueble as CODIGO_INMUEBLE, df.piso as PISO, df.usuario as USUARIO, date() as FECHA, c.empresa as EMPRESA, '+
-                  ' c.num_inv as CODIGO_1, c.num_sap as CODIGO_2, c.descripcion as DESCRIPCION, c.marca as MARCA, c.modelo as MODELO,'+
+                  ' df.cod_inmueble as CODIGO_INMUEBLE, df.piso as PISO, df.usuario as USUARIO, date() as FECHA, '+
+                  ' c.id_captura as ID_CAPTURA, c.empresa as EMPRESA, c.num_inv as CODIGO_1, c.num_sap as CODIGO_2,'+
+                  ' c.descripcion as DESCRIPCION, c.marca as MARCA, c.modelo as MODELO,'+
                   ' c.serie as SERIE, c.color as COLOR, c.largo as FRENTE, c.ancho as FONDO, c.alto as ALTO, '+
                   ' c.edo_fisico as CONDICION_FISICA, c.ubicacion as UBICACION, c.comentarios as COMENTARIOS, c.estatus as ESTATUS'+
                   ' FROM captura c '+

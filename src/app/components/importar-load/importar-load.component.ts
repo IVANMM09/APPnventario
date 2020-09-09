@@ -26,11 +26,11 @@ export class ImportarLoadComponent implements OnInit {
 fechaActualDf: Date = new Date();
 
 activo = {
-  idEmpleado: 'generico',
-  nombre: 'generico',
-  centroCostos: 'generico',
-  piso: 'generico',
-  usuario: 'generico',
+  idEmpleado: '',
+  nombre: '',
+  centroCostos: '',
+  piso: '',
+  usuario: '',
   fecha: String(this.fechaActualDf)
 }
   
