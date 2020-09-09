@@ -61,7 +61,7 @@ export class ActivosFormComponent implements OnInit {
     })
     .catch( error => 
 
-      this.msgService.presentMsgError('surgio un error al guardar' + error ));
+      this.msgService.presentMsgError('surgio un error al guardar' + JSON.stringify(error) ));
     
     
   }

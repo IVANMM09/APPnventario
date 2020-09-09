@@ -79,7 +79,7 @@ console.log(this.radioSelect);
         }
       }).catch( error => 
 
-        this.msgService.presentMsgError('surgio un error durante la busqueda' + error ));
+        this.msgService.presentMsgError('surgio un error durante la busqueda' + JSON.stringify(error) ));
     } else {
       this.msgService.dismissLoad();
       this.msgService.presentMsgResp('registro en blanco o 0');
@@ -108,7 +108,7 @@ console.log(this.radioSelect);
       })
       .catch( error => 
 
-        this.msgService.presentMsgError('surgio un error durante la busqueda' + error ));
+        this.msgService.presentMsgError('surgio un error durante la busqueda' + JSON.stringify(error) ));
     } else {
       this.msgService.dismissLoad();
       this.msgService.presentMsgResp('Registro en blanco o 0');
@@ -138,7 +138,7 @@ console.log(this.radioSelect);
       })
       .catch( error => 
 
-        this.msgService.presentMsgError('surgio un error durante la busqueda' + error ));
+        this.msgService.presentMsgError('surgio un error durante la busqueda' + JSON.stringify(error) ));
     } else {
       this.msgService.dismissLoad();
       this.msgService.presentMsgResp('Registro en blanco o 0');

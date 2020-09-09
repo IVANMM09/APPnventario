@@ -135,7 +135,7 @@ export class ActivosInfoComponent implements OnInit {
         })
         .catch( error => 
     
-          this.msgService.presentMsgError('surgio un error al guardar' + error ));
+          this.msgService.presentMsgError('surgio un error al guardar' + JSON.stringify(error) ));
       }
     }else{
        
@@ -156,7 +156,7 @@ export class ActivosInfoComponent implements OnInit {
       })
       .catch( error =>
   
-        this.msgService.presentMsgError('surgio un error al guardar' + error ));
+        this.msgService.presentMsgError('surgio un error al guardar' + JSON.stringify(error) ));
       this.conteoCapturas();
       /*this.taskService.getCC(this.concentrado.idDatofijo)
       .then(response => {
@@ -186,7 +186,7 @@ export class ActivosInfoComponent implements OnInit {
         }
       }).catch( error => 
 
-        this.msgService.presentMsgError('surgio un error al consultar centro de costos en datos fijos por id' + error ));
+        this.msgService.presentMsgError('surgio un error al consultar centro de costos en datos fijos por id' + JSON.stringify(error) ));
     }
 
 
@@ -275,7 +275,7 @@ export class ActivosInfoComponent implements OnInit {
       })
       .catch( error => 
 
-        this.msgService.presentMsgError('surgio un error en la consulta de la tabla captura por num_inv' + error ));
+        this.msgService.presentMsgError('surgio un error en la consulta de la tabla captura por num_inv' + JSON.stringify(error) ));
     } /*else {
       //this.presentToastMsgResp('se guarda por ser 0 o vacio ');
     }*/
@@ -358,7 +358,7 @@ export class ActivosInfoComponent implements OnInit {
     })
     .catch( error => 
 
-   this.msgService.presentMsgResp('surgio un error al actualizar en tabla captura' + error ));   
+   this.msgService.presentMsgError('surgio un error al actualizar en tabla captura' + JSON.stringify(error) ));   
     //this.getCCUpdate(); 
     
   }
@@ -449,7 +449,7 @@ BuscarSAP(){
     }
   })
   .catch( error => 
-    this.msgService.presentMsgError('surgio un error en la consulta de la tabla captura por num_sap' + error ));
+    this.msgService.presentMsgError('surgio un error en la consulta de la tabla captura por num_sap' + JSON.stringify(error) ));
   
 }/* else {
   this.presentToastMsgResp('se guarda por ser 0 o vacio ');
@@ -531,7 +531,7 @@ BuscarSerie(){
       }
     })
     .catch( error => 
-        this.msgService.presentMsgError('surgio un error en la consulta de la tabla captura por serie' + error ));
+        this.msgService.presentMsgError('surgio un error en la consulta de la tabla captura por serie' + JSON.stringify(error) ));
       
   }/* else {
     this.presentToastMsgResp('se guarda por ser 0 o vacio ');
@@ -554,7 +554,7 @@ conteoCapturas(){
     this.conteocap.total = this.conteocap.encontrado + this.conteocap.nuevo;
   }).catch( error => 
 
-    this.msgService.presentMsgError('surgio un error al consultar status en tabla captura' + error ));
+    this.msgService.presentMsgError('surgio un error al consultar status en tabla captura' + JSON.stringify(error) ));
 }
 
 }

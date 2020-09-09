@@ -38,7 +38,7 @@ export class ExportarDataComponent implements OnInit {
     })
     .catch( error => 
 
-      this.msgService.presentMsgResp('surgio un error al consultar la tabla captura y datos fijos' + error ));
+      this.msgService.presentMsgError('surgio un error al consultar la tabla captura y datos fijos' + JSON.stringify(error) ));
 
    /* this.tasksService.getHeaderCaptura().then(response => {
       this.headerRow = response;
@@ -95,21 +95,21 @@ export class ExportarDataComponent implements OnInit {
       data: this.csvData
     });
  
-    this.file.writeFile(path, 'rep_cap.csv', csv, { replace: true })
+    this.file.writeFile(path, 'rep_caps.csv', csv, { replace: true })
     .then(
     _ => {
       this.msgService.dismissLoad();
-      alert('Archivo descargado en /Download/rep_cap.csv');
+      alert('Archivo descargado en /Download/rep_caps.csv');
     }
     )
     .catch(
     err => {
 
-      this.file.writeExistingFile(path, 'rep_cap.csv', csv)
+      this.file.writeExistingFile(path, 'rep_caps.csv', csv)
         .then(
         _ => {
           this.msgService.dismissLoad();
-          alert('Archivo sobreescrito en /Download/rep_cap.csv' + path);
+          alert('Archivo sobreescrito en /Download/rep_caps.csv' + path);
         }
         )
         .catch(
@@ -129,21 +129,21 @@ downloadTXT() {
     data: this.csvData
   });
 
-  this.file.writeFile(path, 'rep_cap.txt', csv, { replace: true })
+  this.file.writeFile(path, 'rep_caps.txt', csv, { replace: true })
   .then(
   _ => {
     this.msgService.dismissLoad();
-    alert('Archivo descargado en /Download/rep_cap.txt');
+    alert('Archivo descargado en /Download/rep_caps.txt');
   }
   )
   .catch(
   err => {
 
-    this.file.writeExistingFile(path, 'rep_cap.txt', csv)
+    this.file.writeExistingFile(path, 'rep_caps.txt', csv)
       .then(
       _ => {
         this.msgService.dismissLoad();
-        alert('Archivo sobreescrito en /Download/rep_cap.txt' + path);
+        alert('Archivo sobreescrito en /Download/rep_caps.txt' + path);
       }
       )
       .catch(

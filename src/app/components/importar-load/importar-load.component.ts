@@ -59,7 +59,7 @@ activo = {
     })
     .catch( error => 
 
-      this.msgService.presentMsgError('surgio un error al consultar captura' + error ));
+      this.msgService.presentMsgError('surgio un error al consultar captura' + JSON.stringify(error) ));
      
   }
 
@@ -102,7 +102,7 @@ activo = {
       })
       .subscribe(
         data => this.extractData(data),
-        err => this.msgService.presentMsgError('surgio un error en la seleccion de archivo' + err )
+        err => this.msgService.presentMsgError('surgio un error en la seleccion de archivo' + JSON.stringify(err) )
       );
 
       });
@@ -154,7 +154,7 @@ activo = {
           
         }).catch( error => 
 
-          this.msgService.presentMsgError('surgio un error durante la inserción de datos' + error ));
+          this.msgService.presentMsgError('surgio un error durante la inserción de datos' + JSON.stringify(error) ));
         //this.presentToast("Error al Carga el archivo, favor de validar: " + error);
         //this.tasksService.selectChange();
        // console.log("Entro Save Data " +JSON.stringify(data[index]));

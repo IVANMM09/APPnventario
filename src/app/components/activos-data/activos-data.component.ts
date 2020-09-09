@@ -70,7 +70,7 @@ export class ActivosDataComponent implements OnInit {
       })
       .catch( error => 
 
-        this.msgService.presentMsgError('surgio un error durante la busqueda' + error ));
+        this.msgService.presentMsgError('surgio un error durante la busqueda' + JSON.stringify(error) ));
     } else {
       this.msgService.dismissLoad();
       this.msgService.presentMsgResp('registro en blanco o 0');
