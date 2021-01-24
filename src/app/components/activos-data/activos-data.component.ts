@@ -48,10 +48,11 @@ export class ActivosDataComponent implements OnInit {
 
 
   }
-
+/*2021*/
   getIdEmpleado(){
+    
     this.msgService.presentLoad('buscando registro...');
-    if(this.textoBuscar.trim() !== '' && this.textoBuscar.trim() !== '0' ){
+    if(this.textoBuscar.trim() !== '' && this.textoBuscar.trim() !== '0' && this.textoBuscar.trim() !== '*' ){
       console.log('name' + this.textoBuscar);
       this.tasksService.getIdEmploye(this.textoBuscar)
       .then(response => {
@@ -71,12 +72,37 @@ export class ActivosDataComponent implements OnInit {
       .catch( error => 
 
         this.msgService.presentMsgError('surgio un error durante la busqueda' + JSON.stringify(error) ));
-    } else {
+    }else if (this.textoBuscar.trim() == '*'){
+      console.log('name' + this.textoBuscar);
+      this.tasksService.getAllDf()
+      .then(response => {
+        this.datosFijos = response;
+        if(this.datosFijos.length >= 1 ){
+
+          this.msgService.dismissLoad();
+          this.msgService.presentMsgResp('busqueda finalizada');
+
+        }else
+        {
+				  this.msgService.dismissLoad();
+          this.msgService.presentMsgResp('NO hay registros en la base de datos');
+          this.limpiarForm();
+		
+		}
+		
+      })
+      .catch( error => 
+
+        this.msgService.presentMsgError('surgio un error durante la busqueda' + JSON.stringify(error) ));
+
+    }  else {
       this.msgService.dismissLoad();
       this.msgService.presentMsgResp('registro en blanco o 0');
       this.limpiarForm();
 
     }
+	
+	
   }
 
  /* async presentToast(message: string) {
@@ -87,7 +113,8 @@ export class ActivosDataComponent implements OnInit {
     toast.present();
   }*/
   limpiarForm(){
-    this.concentradoDF = {
+   this.datosFijos = [];
+   /* this.concentradoDF = {
       idDatoFijos: '',
       idEmploye :'',
       centroCostos: '',
@@ -95,7 +122,7 @@ export class ActivosDataComponent implements OnInit {
       piso: '',
       usuario: '',
       fecha: ''
-    };
+    };*/
     this.ngOnInit();
   }
 

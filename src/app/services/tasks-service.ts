@@ -200,6 +200,21 @@ export class TasksService {
           })
 		  .catch(error => Promise.reject(error));   
       }
+     /*2021*/
+      getAllDf(){
+        let sql = 'SELECT *  FROM datosFijos';
+        return  this.db.executeSql(sql, [])
+        .then(response => {
+          var DatoF: any[] = [];
+          if(response.rows.length>0){
+            for (let index = 0; index < response.rows.length; index++) {
+              DatoF.push( response.rows.item(index));
+            }
+          }
+          return Promise.resolve( DatoF );
+        })
+        .catch(error => Promise.reject(error));
+      }
 
       getCC(idDatofijo : any){
         console.log("idDatoFijo " + JSON.stringify(idDatofijo));
