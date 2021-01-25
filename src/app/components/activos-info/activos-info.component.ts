@@ -150,7 +150,7 @@ export class ActivosInfoComponent implements OnInit {
   }
 
     getCC(concentrado){
-      concentrado.estatus = 'nuevo';
+      concentrado.estatus = 'NUEVO';
       this.taskService.insertCaptura(concentrado).then(response => {
         this.msgService.presentMsgResp( response  );
       })
@@ -205,7 +205,7 @@ export class ActivosInfoComponent implements OnInit {
       .then(response => {
         this.datosActivos = response;
   
-        if(response.length===1 && response[0].estatus !== 'encontrado' ){
+        if(response.length===1 && response[0].estatus !== 'ENCONTRADO' ){
           console.log('estatus ' + JSON.stringify(response[0].estatus));
           this.concentrado.idCaptura = response[0].id_captura;
         
@@ -235,7 +235,7 @@ export class ActivosInfoComponent implements OnInit {
           this.mostrarBotonEditar(true);
           this.edoButtonGuardar = false;
 
-      } else if(response.length===1 && response[0].estatus==='encontrado' ){
+      } else if(response.length===1 && response[0].estatus==='ENCONTRADO' ){
         this.concentrado.idCaptura = response[0].id_captura;
        
         // tslint:disable-next-line:prefer-for-of
@@ -350,7 +350,7 @@ export class ActivosInfoComponent implements OnInit {
   guardarEdicion(){
     this.mostrarBotonEditar(false);
 
-    this.concentrado.estatus = 'encontrado';     
+    this.concentrado.estatus = 'ENCONTRADO';     
     this.concentrado.idDatofijo = this.varDF;  
     this.taskService.updateCaptura(this.concentrado).then(response => {
       this.msgService.presentMsgResp( response  );
@@ -380,7 +380,7 @@ BuscarSAP(){
   .then(response => {
     this.datosActivos = response;
 
-    if(response.length===1 && response[0].estatus !== 'encontrado' ){
+    if(response.length===1 && response[0].estatus !== 'ENCONTRADO' ){
       console.log('estatus ' + JSON.stringify(response[0].estatus));
       this.concentrado.idCaptura = response[0].id_captura;
     
@@ -410,7 +410,7 @@ BuscarSAP(){
       this.mostrarBotonEditar(true);
       this.edoButtonGuardar = false;
 
-  } else if(response.length===1 && response[0].estatus==='encontrado' ){
+  } else if(response.length===1 && response[0].estatus==='ENCONTRADO' ){
     this.concentrado.idCaptura = response[0].id_captura;
    
     // tslint:disable-next-line:prefer-for-of
@@ -462,7 +462,7 @@ BuscarSerie(){
     .then(response => {
       this.datosActivos = response;
   
-      if(response.length===1 && response[0].estatus !== 'encontrado' ){
+      if(response.length===1 && response[0].estatus !== 'ENCONTRADO' ){
         console.log('estatus ' + JSON.stringify(response[0].estatus));
         this.concentrado.idCaptura = response[0].id_captura;
       
@@ -492,7 +492,7 @@ BuscarSerie(){
         this.mostrarBotonEditar(true);
         this.edoButtonGuardar = false;
   
-    } else if(response.length===1 && response[0].estatus==='encontrado' ){
+    } else if(response.length===1 && response[0].estatus==='ENCONTRADO' ){
       this.concentrado.idCaptura = response[0].id_captura;
      
       // tslint:disable-next-line:prefer-for-of
@@ -545,9 +545,9 @@ conteoCapturas(){
     this.conteocap.nuevo=0;
     this.conteocap.encontrado = 0;
     for (let index = 0; index < response.length; index++) {
-      if(response[index].estatus === 'encontrado'){
+      if(response[index].estatus === 'ENCONTRADO'){
         this.conteocap.encontrado = response[index].cantidad;
-      } else if(response[index].estatus === 'nuevo'){
+      } else if(response[index].estatus === 'NUEVO'){
         this.conteocap.nuevo = response[index].cantidad;
       }
     }

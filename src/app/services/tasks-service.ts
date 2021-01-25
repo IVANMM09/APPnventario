@@ -272,14 +272,17 @@ export class TasksService {
       }
 
       insertCaptura (concentrado: any){
-        console.log("entro al insert captura estatus " + concentrado.estatus);
+        console.log("entro al insert captura estatus " + concentrado.estatus.toUpperCase());
         let sql = 'INSERT INTO captura(id_dato_fijo, num_inv, empresa, num_sap, descripcion, edo_fisico, '+
                  'desc_corta, marca, modelo, serie, color, largo, alto, ancho, ubicacion, comentarios, estatus, centro_costos )'+
                  ' VALUES(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)';
-        return this.db.executeSql(sql, [concentrado.idDatofijo, concentrado.numInv, concentrado.empresa, 
-          concentrado.noSap, concentrado.descripcion, concentrado.edoFisico, concentrado.descCorta, concentrado.marca,
-           concentrado.modelo, concentrado.serie, concentrado.color, concentrado.largo, concentrado.alto, concentrado.ancho, 
-           concentrado.ubicacion, concentrado.comentarios, concentrado.estatus, concentrado.centroCostos]).then(response =>{
+        return this.db.executeSql(sql, [concentrado.idDatofijo, concentrado.numInv.toUpperCase(), 
+          concentrado.empresa.toUpperCase(), concentrado.noSap.toUpperCase(), concentrado.descripcion.toUpperCase(), 
+          concentrado.edoFisico.toUpperCase(), concentrado.descCorta.toUpperCase(), concentrado.marca.toUpperCase(),
+           concentrado.modelo.toUpperCase(), concentrado.serie.toUpperCase(), concentrado.color.toUpperCase(), 
+           concentrado.largo.toUpperCase(), concentrado.alto.toUpperCase(), concentrado.ancho.toUpperCase(), 
+           concentrado.ubicacion.toUpperCase(), concentrado.comentarios.toUpperCase(), concentrado.estatus.toUpperCase(), 
+           concentrado.centroCostos.toUpperCase()]).then(response =>{
             var Resp = "datos guardados";
             return Promise.resolve(Resp);
           })
@@ -290,9 +293,11 @@ export class TasksService {
         let sql = 'INSERT INTO captura (empresa, num_inv, num_sap, descripcion, marca, modelo, serie, color,  largo, ancho, alto,'+
            ' edo_fisico, ubicacion, comentarios, estatus,id_dato_fijo, fecha) '+
             ' VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)';
-             return this.db.executeSql(sql,[concentrado[0],concentrado[1], concentrado[2], concentrado[3], concentrado[4],concentrado[5], 
-              concentrado[6], concentrado[7], concentrado[8],concentrado[9], concentrado[10], concentrado[11], concentrado[12],concentrado[13], 
-              concentrado[14], Number(concentrado[15]), concentrado[16]]).then(()=>{
+             return this.db.executeSql(sql,[concentrado[0].toUpperCase(),concentrado[1].toUpperCase(), concentrado[2].toUpperCase(),
+              concentrado[3].toUpperCase(), concentrado[4].toUpperCase(),concentrado[5].toUpperCase(), concentrado[6].toUpperCase(), 
+              concentrado[7].toUpperCase(), concentrado[8].toUpperCase(),concentrado[9].toUpperCase(), concentrado[10].toUpperCase(), 
+              concentrado[11].toUpperCase(), concentrado[12].toUpperCase(),concentrado[13].toUpperCase(),concentrado[14].toUpperCase(),
+               Number(concentrado[15].toUpperCase()), concentrado[16].toUpperCase()]).then(()=>{
                 //console.log("datos insertados Layout");
               }).
             catch(error=>console.log(error));
@@ -302,9 +307,11 @@ export class TasksService {
         let sql = 'INSERT INTO captura (empresa, num_inv, num_sap, descripcion, marca, modelo, serie, color,  largo, ancho, alto, edo_fisico, '+
                   ' ubicacion, comentarios, estatus,id_dato_fijo, fecha) '+
             ' VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)';
-             return this.db.executeSql(sql,[concentrado[0],concentrado[1], concentrado[2], concentrado[3], concentrado[4],concentrado[5], 
-              concentrado[6], concentrado[7], concentrado[8],concentrado[9], concentrado[10], concentrado[11], concentrado[12],concentrado[13], 
-              concentrado[14], Number(concentrado[15]), concentrado[16]]).then(response=>{
+             return this.db.executeSql(sql,[concentrado[0].toUpperCase(),concentrado[1].toUpperCase(), concentrado[2].toUpperCase(),
+              concentrado[3].toUpperCase(), concentrado[4].toUpperCase(),concentrado[5].toUpperCase(), concentrado[6].toUpperCase(), 
+              concentrado[7].toUpperCase(), concentrado[8].toUpperCase(),concentrado[9].toUpperCase(), concentrado[10].toUpperCase(), 
+              concentrado[11].toUpperCase(), concentrado[12].toUpperCase(),concentrado[13].toUpperCase(), 
+              concentrado[14].toUpperCase(), Number(concentrado[15]), concentrado[16]]).then(response=>{
                 console.log('datos insertados Layout' + JSON.stringify(response));
                 return (response);
               }).
@@ -314,12 +321,13 @@ export class TasksService {
       updateCaptura(datosCaptura:any){
         console.log("datos Captura: "  + JSON.stringify(datosCaptura));
         let sql = 'UPDATE captura SET id_dato_fijo = ?, num_inv =?, num_sap =?, empresa =?, descripcion = ?, ubicacion=?,'+
-                  'edo_fisico=?, desc_corta =?,  marca =?, modelo =?, serie =?, color=?, largo =?, alto =?, ancho =?, comentarios =?,' +
+                  'edo_fisico=?,  marca =?, modelo =?, serie =?, color=?, largo =?, alto =?, ancho =?, comentarios =?,' +
                   'estatus =? where id_captura =?';
-          return this.db.executeSql(sql,[ datosCaptura.idDatofijo, datosCaptura.numInv, datosCaptura.noSap, datosCaptura.empresa, 
-          datosCaptura.descripcion, datosCaptura.ubicacion, datosCaptura.edoFisico, datosCaptura.descCorta, datosCaptura.marca,
-                datosCaptura.modelo, datosCaptura.serie, datosCaptura.color, datosCaptura.largo, datosCaptura.alto, datosCaptura.ancho, 
-                datosCaptura.comentarios, datosCaptura.estatus, Number(datosCaptura.idCaptura)]).then(response =>{
+          return this.db.executeSql(sql,[ datosCaptura.idDatofijo, datosCaptura.numInv.toUpperCase(), datosCaptura.noSap.toUpperCase(), 
+            datosCaptura.empresa.toUpperCase(), datosCaptura.descripcion.toUpperCase(), datosCaptura.ubicacion.toUpperCase(), datosCaptura.edoFisico.toUpperCase(), 
+             datosCaptura.marca.toUpperCase(), datosCaptura.modelo.toUpperCase(), datosCaptura.serie.toUpperCase(),
+            datosCaptura.color.toUpperCase(), datosCaptura.largo.toUpperCase(), datosCaptura.alto.toUpperCase(), datosCaptura.ancho.toUpperCase(), 
+            datosCaptura.comentarios.toUpperCase(), datosCaptura.estatus.toUpperCase(), Number(datosCaptura.idCaptura)]).then(response =>{
                   var Resp = "registro actualizado";
                   return Promise.resolve(Resp);
                 })
@@ -382,7 +390,7 @@ export class TasksService {
     
       getCapturaByNumInv(numInv){
         let sql = 'select * from captura where num_inv = ?';
-        return this.db.executeSql(sql, [numInv])
+        return this.db.executeSql(sql, [numInv.toUpperCase()])
         .then(response => {
           var captura: any[] = [];    
           if(response.rows.length > 0 ){
@@ -400,7 +408,7 @@ export class TasksService {
 
       getCapturaByNumSap(numInv){
         let sql = 'select * from captura where num_sap = ?';
-        return this.db.executeSql(sql, [numInv])
+        return this.db.executeSql(sql, [numInv.toUpperCase()])
         .then(response => {
           var captura: any[] = [];   
           if(response.rows.length > 0 ){
@@ -418,7 +426,7 @@ export class TasksService {
 
       getCapturaBySerie(numInv){
         let sql = 'select * from captura where serie = ?';
-        return this.db.executeSql(sql, [numInv])
+        return this.db.executeSql(sql, [numInv.toUpperCase()])
         .then(response => {
           var captura: any[] = [];   
           if(response.rows.length > 0 ){

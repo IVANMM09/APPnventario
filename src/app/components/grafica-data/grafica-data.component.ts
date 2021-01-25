@@ -33,11 +33,11 @@ getDatosGrafica(){
       console.log("resultado " + JSON.stringify(response));
       
       for (let index = 0; index < response.length; index++) {
-        if(response[index].estatus === 'encontrado'){
+        if(response[index].estatus === 'ENCONTRADO'){
           this.conteo.encontrado = response[index].cantidad;
-        } else if(response[index].estatus === 'nuevo'){
+        } else if(response[index].estatus === 'NUEVO'){
           this.conteo.nuevo = response[index].cantidad;
-        }else if(response[index].estatus === 'faltante'){
+        }else if(response[index].estatus === 'FALTANTE'){
           this.conteo.faltante = response[index].cantidad;
         }
       }
