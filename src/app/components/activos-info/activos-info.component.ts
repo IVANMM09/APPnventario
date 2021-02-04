@@ -31,6 +31,8 @@ export class ActivosInfoComponent implements OnInit {
   estadoCheckC: boolean;
   edoButtonEdit: boolean;
   edoButtonGuardar = true;
+  edoButtonDuplicar = false;
+  edoButtonLimpiar = true;
   dFijoCheck = 1;
   dFormCheck: boolean;
   scanInfo: Concentrado[] = [];
@@ -111,7 +113,9 @@ export class ActivosInfoComponent implements OnInit {
           text: 'Editar',
           handler: () => {
           this.mostrarBotonEditar(true);
-          this.edoButtonGuardar = true;
+          this.edoButtonGuardar = false;
+          this.edoButtonDuplicar = true;
+          this.edoButtonLimpiar = false;
           }
         }
       ],
@@ -267,6 +271,7 @@ export class ActivosInfoComponent implements OnInit {
           this.msgService.presentMsgResp( 'registro duplicado '  );
           this.mostrarBotonEditar(false);
           this.edoButtonGuardar = true;
+          this.edoButtonDuplicar = false;
 
         } else {
                 this.msgService.presentMsgResp( 'registro NO encontrado'  );
@@ -320,6 +325,8 @@ export class ActivosInfoComponent implements OnInit {
   limpiarForm(){
     this.mostrarBotonEditar(false);
     this.edoButtonGuardar = true;
+    this.edoButtonLimpiar = true;
+    this.edoButtonDuplicar = false;
     this.  concentrado = {
       idCaptura :'',
       idDatofijo: this.concentrado.idDatofijo,
@@ -442,6 +449,7 @@ BuscarSAP(){
       this.msgService.presentMsgResp( 'registro duplicado '  );
       this.mostrarBotonEditar(false);
       this.edoButtonGuardar = true;
+      this.edoButtonDuplicar = false;
 
     } else {
             this.msgService.presentMsgResp( 'registro NO encontrado'  );
@@ -524,6 +532,7 @@ BuscarSerie(){
         this.msgService.presentMsgResp( 'registro duplicado '  );
         this.mostrarBotonEditar(false);
         this.edoButtonGuardar = true;
+        this.edoButtonDuplicar = false;
   
       } else {
               this.msgService.presentMsgResp( 'registro NO encontrado'  );

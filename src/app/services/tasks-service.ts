@@ -201,7 +201,7 @@ export class TasksService {
 		  .catch(error => Promise.reject(error));   
       }
      /*2021*/
-      getAllDf(){
+     /* getAllDf(){
         let sql = 'SELECT *  FROM datosFijos';
         return  this.db.executeSql(sql, [])
         .then(response => {
@@ -214,7 +214,7 @@ export class TasksService {
           return Promise.resolve( DatoF );
         })
         .catch(error => Promise.reject(error));
-      }
+      }*/
 
       getCC(idDatofijo : any){
         console.log("idDatoFijo " + JSON.stringify(idDatofijo));

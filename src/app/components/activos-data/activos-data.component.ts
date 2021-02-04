@@ -74,7 +74,7 @@ export class ActivosDataComponent implements OnInit {
         this.msgService.presentMsgError('surgio un error durante la busqueda' + JSON.stringify(error) ));
     }else if (this.textoBuscar.trim() == '*'){
       console.log('name' + this.textoBuscar);
-      this.tasksService.getAllDf()
+      this.tasksService.getIdDatoFijo ()
       .then(response => {
         this.datosFijos = response;
         if(this.datosFijos.length >= 1 ){
