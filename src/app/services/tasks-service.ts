@@ -274,15 +274,15 @@ export class TasksService {
       insertCaptura (concentrado: any){
         console.log("entro al insert captura estatus " + concentrado.estatus.toUpperCase());
         let sql = 'INSERT INTO captura(id_dato_fijo, num_inv, empresa, num_sap, descripcion, edo_fisico, '+
-                 'desc_corta, marca, modelo, serie, color, largo, alto, ancho, ubicacion, comentarios, estatus, centro_costos )'+
-                 ' VALUES(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)';
+                 ' marca, modelo, serie, color, largo, alto, ancho, ubicacion, comentarios, estatus )'+
+                 ' VALUES(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)';
         return this.db.executeSql(sql, [concentrado.idDatofijo, concentrado.numInv.toUpperCase(), 
           concentrado.empresa.toUpperCase(), concentrado.noSap.toUpperCase(), concentrado.descripcion.toUpperCase(), 
-          concentrado.edoFisico.toUpperCase(), concentrado.descCorta.toUpperCase(), concentrado.marca.toUpperCase(),
+          concentrado.edoFisico.toUpperCase(), concentrado.marca.toUpperCase(),
            concentrado.modelo.toUpperCase(), concentrado.serie.toUpperCase(), concentrado.color.toUpperCase(), 
            concentrado.largo.toUpperCase(), concentrado.alto.toUpperCase(), concentrado.ancho.toUpperCase(), 
-           concentrado.ubicacion.toUpperCase(), concentrado.comentarios.toUpperCase(), concentrado.estatus.toUpperCase(), 
-           concentrado.centroCostos.toUpperCase()]).then(response =>{
+           concentrado.ubicacion.toUpperCase(), concentrado.comentarios.toUpperCase(), concentrado.estatus.toUpperCase()
+           ]).then(response =>{
             var Resp = "datos guardados";
             return Promise.resolve(Resp);
           })

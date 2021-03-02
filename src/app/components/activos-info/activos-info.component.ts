@@ -50,7 +50,6 @@ export class ActivosInfoComponent implements OnInit {
     descripcion: '',
     ubicacion: '',
     edoFisico: '',
-    descCorta: '',
     marca: '',
     modelo: '',
     serie: '',
@@ -224,7 +223,6 @@ export class ActivosInfoComponent implements OnInit {
             this.concentrado.descripcion = response[0].descripcion;
             this.concentrado.ubicacion = response[0].ubicacion;
             this.concentrado.edoFisico = response[0].edo_fisico;
-            this.concentrado.descCorta = response[0].desc_corta;
             this.concentrado.marca = response[0].marca;
             this.concentrado.modelo = response[0].modelo;
             this.concentrado.serie = response[0].serie;
@@ -254,7 +252,6 @@ export class ActivosInfoComponent implements OnInit {
            this.concentrado.descripcion = response[0].descripcion;
            this.concentrado.ubicacion = response[0].ubicacion;
            this.concentrado.edoFisico = response[0].edo_fisico;
-           this.concentrado.descCorta = response[0].desc_corta;
            this.concentrado.marca = response[0].marca;
            this.concentrado.modelo = response[0].modelo;
            this.concentrado.serie = response[0].serie;
@@ -337,7 +334,6 @@ export class ActivosInfoComponent implements OnInit {
       descripcion: '',
       ubicacion: this.concentrado.ubicacion,
       edoFisico: '',
-      descCorta: '',
       marca: '',
       modelo: '',
       serie: '',
@@ -402,7 +398,6 @@ BuscarSAP(){
         this.concentrado.descripcion = response[0].descripcion;
         this.concentrado.ubicacion = response[0].ubicacion;
         this.concentrado.edoFisico = response[0].edo_fisico;
-        this.concentrado.descCorta = response[0].desc_corta;
         this.concentrado.marca = response[0].marca;
         this.concentrado.modelo = response[0].modelo;
         this.concentrado.serie = response[0].serie;
@@ -432,7 +427,6 @@ BuscarSAP(){
        this.concentrado.descripcion = response[0].descripcion;
        this.concentrado.ubicacion = response[0].ubicacion;
        this.concentrado.edoFisico = response[0].edo_fisico;
-       this.concentrado.descCorta = response[0].desc_corta;
        this.concentrado.marca = response[0].marca;
        this.concentrado.modelo = response[0].modelo;
        this.concentrado.serie = response[0].serie;
@@ -485,7 +479,6 @@ BuscarSerie(){
           this.concentrado.descripcion = response[0].descripcion;
           this.concentrado.ubicacion = response[0].ubicacion;
           this.concentrado.edoFisico = response[0].edo_fisico;
-          this.concentrado.descCorta = response[0].desc_corta;
           this.concentrado.marca = response[0].marca;
           this.concentrado.modelo = response[0].modelo;
           this.concentrado.serie = response[0].serie;
@@ -515,7 +508,6 @@ BuscarSerie(){
          this.concentrado.descripcion = response[0].descripcion;
          this.concentrado.ubicacion = response[0].ubicacion;
          this.concentrado.edoFisico = response[0].edo_fisico;
-         this.concentrado.descCorta = response[0].desc_corta;
          this.concentrado.marca = response[0].marca;
          this.concentrado.modelo = response[0].modelo;
          this.concentrado.serie = response[0].serie;
